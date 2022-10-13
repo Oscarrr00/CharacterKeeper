@@ -3,7 +3,7 @@ import 'package:character_keeper/items/data_hitpoints.dart';
 import 'package:character_keeper/items/square_stats.dart';
 import 'package:flutter/material.dart';
 
-class DetailsCharacter extends StatelessWidget {
+class DetailsCharacter extends StatefulWidget {
   final dynamic character;
   const DetailsCharacter({
     Key? key,
@@ -11,7 +11,13 @@ class DetailsCharacter extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<DetailsCharacter> createState() => _DetailsCharacterState();
+}
+
+class _DetailsCharacterState extends State<DetailsCharacter> {
+  @override
   Widget build(BuildContext context) {
+    int proficiency = 2;
     var maxHitpointsController = TextEditingController();
     var currentHitpointsController = TextEditingController();
     var temporaryHitpointsController = TextEditingController();
@@ -24,9 +30,9 @@ class DetailsCharacter extends StatelessWidget {
             SizedBox(),
             Column(
               children: [
-                Text("${character["name"]}"),
+                Text("${widget.character["name"]}"),
                 Text(
-                    "lvl ${character["level"]}   ${character["race"]}   ${character["class"]}",
+                    "lvl ${widget.character["level"]}   ${widget.character["race"]}   ${widget.character["class"]}",
                     style: TextStyle(fontSize: 13)),
               ],
             ),
@@ -45,7 +51,7 @@ class DetailsCharacter extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: 25),
-                        Text("${character["armor"]}",
+                        Text("${widget.character["armor"]}",
                             style: TextStyle(fontSize: 19)),
                         Text("Armor", style: TextStyle(fontSize: 14)),
                         Text("Class", style: TextStyle(fontSize: 14)),
@@ -58,12 +64,13 @@ class DetailsCharacter extends StatelessWidget {
                               color: Colors.black,
                             )))),
                 SquareData(
-                    content: character["dexterity"],
+                    content: widget.character["dexterity"],
                     name_content: "Initiative"),
-                SquareData(content: character["speed"], name_content: "Speed"),
+                SquareData(
+                    content: widget.character["speed"], name_content: "Speed"),
               ],
             ),
-            SizedBox(height: 7),
+            SizedBox(height: 10),
             Row(
               children: [
                 DataHitpoints(
@@ -76,7 +83,7 @@ class DetailsCharacter extends StatelessWidget {
                     controller: temporaryHitpointsController),
               ],
             ),
-            SizedBox(height: 7),
+            SizedBox(height: 10),
             Row(
               children: [
                 Container(
@@ -108,10 +115,59 @@ class DetailsCharacter extends StatelessWidget {
                             side: BorderSide(
                       color: Colors.black,
                     ))),
-                    child: Text("${character["hitDice"]}")),
+                    child: Text("${widget.character["hitDice"]}")),
               ],
             ),
-            SizedBox(height: 7),
+            SizedBox(height: 10),
+            Container(
+                width: 351,
+                height: 300,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            width: 336 / 3,
+                            height: 274 / 2,
+                            child: Column(children: [
+                              Text("Strength"),
+                              Row(children: [
+                                CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor: Colors.black,
+                                )
+                              ]),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text("10"),
+                                        decoration: ShapeDecoration(
+                                            shape: BeveledRectangleBorder(
+                                                side: BorderSide(
+                                          color: Colors.black,
+                                        )))),
+                                  ),
+                                ],
+                              )
+                            ]),
+                            decoration: ShapeDecoration(
+                                shape: BeveledRectangleBorder(
+                                    side: BorderSide(
+                              color: Colors.black,
+                            ))))
+                      ],
+                    )
+                  ],
+                ),
+                decoration: ShapeDecoration(
+                    shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                  color: Colors.black,
+                )))),
           ]),
         ));
   }
