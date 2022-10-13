@@ -10,6 +10,7 @@ class DetailsCharacter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var maxHitpointsController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
             title: Row(
@@ -56,13 +57,60 @@ class DetailsCharacter extends StatelessWidget {
           ),
           Container(
               width: 110,
-              height: 90,
+              height: 110,
               child: Column(
                 children: [
                   SizedBox(height: 25),
-                  Text("${character["armor"]}", style: TextStyle(fontSize: 19)),
-                  Text("Armor", style: TextStyle(fontSize: 14)),
-                  Text("Class", style: TextStyle(fontSize: 14)),
+                  Text("Maximum", style: TextStyle(fontSize: 12)),
+                  Text("Hitpoints", style: TextStyle(fontSize: 12)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(8.0),
+                            border: OutlineInputBorder(),
+                          ),
+                          controller: maxHitpointsController,
+                          keyboardType: TextInputType.numberWithOptions(
+                            decimal: false,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: ShapeDecoration(
+                                  shape: BeveledRectangleBorder(
+                                      side: BorderSide(
+                                color: Colors.black,
+                              ))),
+                              child: Icon(
+                                Icons.arrow_drop_up,
+                                size: 18.0,
+                              ),
+                            ),
+                            Container(
+                              decoration: ShapeDecoration(
+                                  shape: BeveledRectangleBorder(
+                                      side: BorderSide(
+                                color: Colors.black,
+                              ))),
+                              child: Icon(
+                                Icons.arrow_drop_down,
+                                size: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               decoration: ShapeDecoration(
