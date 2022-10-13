@@ -21,7 +21,8 @@ class CharactersUser extends StatelessWidget {
         "armor": 15,
         "level": 5,
         "dexterity": 2,
-        "speed": 30
+        "speed": 30,
+        "hitDice": "d8"
       },
       {
         "name": "Character #2",
@@ -30,7 +31,8 @@ class CharactersUser extends StatelessWidget {
         "armor": 15,
         "level": 5,
         "dexterity": 2,
-        "speed": 30
+        "speed": 30,
+        "hitDice": "d8"
       }
     ];
     return Scaffold(
