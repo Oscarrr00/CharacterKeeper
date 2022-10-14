@@ -1,9 +1,10 @@
 import 'package:character_keeper/items/data_de_increment.dart';
 import 'package:character_keeper/items/data_hitpoints.dart';
+import 'package:character_keeper/items/data_primary_stats.dart';
 import 'package:character_keeper/items/square_stats.dart';
 import 'package:flutter/material.dart';
 
-class DetailsCharacter extends StatefulWidget {
+class DetailsCharacter extends StatelessWidget {
   final dynamic character;
   const DetailsCharacter({
     Key? key,
@@ -11,13 +12,12 @@ class DetailsCharacter extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailsCharacter> createState() => _DetailsCharacterState();
-}
-
-class _DetailsCharacterState extends State<DetailsCharacter> {
-  @override
   Widget build(BuildContext context) {
-    int proficiency = 2;
+    ShapeDecoration decoration_border = new ShapeDecoration(
+        shape: BeveledRectangleBorder(
+            side: BorderSide(
+      color: Colors.black,
+    )));
     var maxHitpointsController = TextEditingController();
     var currentHitpointsController = TextEditingController();
     var temporaryHitpointsController = TextEditingController();
@@ -30,9 +30,9 @@ class _DetailsCharacterState extends State<DetailsCharacter> {
             SizedBox(),
             Column(
               children: [
-                Text("${widget.character["name"]}"),
+                Text("${character["name"]}"),
                 Text(
-                    "lvl ${widget.character["level"]}   ${widget.character["race"]}   ${widget.character["class"]}",
+                    "lvl ${character["level"]}   ${character["race"]}   ${character["class"]}",
                     style: TextStyle(fontSize: 13)),
               ],
             ),
@@ -51,7 +51,7 @@ class _DetailsCharacterState extends State<DetailsCharacter> {
                     child: Column(
                       children: [
                         SizedBox(height: 25),
-                        Text("${widget.character["armor"]}",
+                        Text("${character["armor"]}",
                             style: TextStyle(fontSize: 19)),
                         Text("Armor", style: TextStyle(fontSize: 14)),
                         Text("Class", style: TextStyle(fontSize: 14)),
@@ -64,10 +64,9 @@ class _DetailsCharacterState extends State<DetailsCharacter> {
                               color: Colors.black,
                             )))),
                 SquareData(
-                    content: widget.character["dexterity"],
+                    content: character["dexterity"],
                     name_content: "Initiative"),
-                SquareData(
-                    content: widget.character["speed"], name_content: "Speed"),
+                SquareData(content: character["speed"], name_content: "Speed"),
               ],
             ),
             SizedBox(height: 10),
@@ -90,84 +89,67 @@ class _DetailsCharacterState extends State<DetailsCharacter> {
                     alignment: Alignment.center,
                     height: 42,
                     width: 170,
-                    decoration: ShapeDecoration(
-                        shape: BeveledRectangleBorder(
-                            side: BorderSide(
-                      color: Colors.black,
-                    ))),
+                    decoration: decoration_border,
                     child: Text("Hit Dice ", style: TextStyle(fontSize: 14))),
                 Container(
                     alignment: Alignment.center,
                     height: 42,
                     width: 100,
-                    decoration: ShapeDecoration(
-                        shape: BeveledRectangleBorder(
-                            side: BorderSide(
-                      color: Colors.black,
-                    ))),
+                    decoration: decoration_border,
                     child: DataDeIncrement(controller: hitDiceController)),
                 Container(
                     alignment: Alignment.center,
                     height: 42,
                     width: 81,
-                    decoration: ShapeDecoration(
-                        shape: BeveledRectangleBorder(
-                            side: BorderSide(
-                      color: Colors.black,
-                    ))),
-                    child: Text("${widget.character["hitDice"]}")),
+                    decoration: decoration_border,
+                    child: Text("${character["hitDice"]}")),
               ],
             ),
             SizedBox(height: 10),
             Container(
                 width: 351,
-                height: 300,
+                height: 280,
                 padding: EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                            width: 336 / 3,
-                            height: 274 / 2,
-                            child: Column(children: [
-                              Text("Strength"),
-                              Row(children: [
-                                CircleAvatar(
-                                  radius: 10,
-                                  backgroundColor: Colors.black,
-                                )
-                              ]),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                        alignment: Alignment.center,
-                                        child: Text("10"),
-                                        decoration: ShapeDecoration(
-                                            shape: BeveledRectangleBorder(
-                                                side: BorderSide(
-                                          color: Colors.black,
-                                        )))),
-                                  ),
-                                ],
-                              )
-                            ]),
-                            decoration: ShapeDecoration(
-                                shape: BeveledRectangleBorder(
-                                    side: BorderSide(
-                              color: Colors.black,
-                            ))))
+                        DataPrimaryStats(
+                            stat: "Strength",
+                            stat_modifier: character["strength"],
+                            stat_number: 14),
+                        DataPrimaryStats(
+                            stat: "Dexterity",
+                            stat_modifier: character["dexterity"],
+                            stat_number: 14),
+                        DataPrimaryStats(
+                            stat: "Constitution",
+                            stat_modifier: character["constitution"],
+                            stat_number: 12),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DataPrimaryStats(
+                            stat: "Intelligence",
+                            stat_modifier: character["intelligence"],
+                            stat_number: 10),
+                        DataPrimaryStats(
+                            stat: "Wisdom",
+                            stat_modifier: character["wisdom"],
+                            stat_number: 12),
+                        DataPrimaryStats(
+                            stat: "Charisma",
+                            stat_modifier: character["charisma"],
+                            stat_number: 12),
                       ],
                     )
                   ],
                 ),
-                decoration: ShapeDecoration(
-                    shape: BeveledRectangleBorder(
-                        side: BorderSide(
-                  color: Colors.black,
-                )))),
+                decoration: decoration_border),
           ]),
         ));
   }

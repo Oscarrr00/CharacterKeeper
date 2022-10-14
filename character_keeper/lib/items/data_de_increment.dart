@@ -40,9 +40,12 @@ class DataDeIncrement extends StatelessWidget {
                         side: BorderSide(
                   color: Colors.black,
                 ))),
-                child: Icon(
-                  Icons.arrow_drop_up,
-                  size: 18.0,
+                child: InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.arrow_drop_up,
+                    size: 18.0,
+                  ),
                 ),
               ),
               Container(
@@ -52,9 +55,12 @@ class DataDeIncrement extends StatelessWidget {
                         side: BorderSide(
                   color: Colors.black,
                 ))),
-                child: Icon(
-                  Icons.arrow_drop_down,
-                  size: 18.0,
+                child: InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 18.0,
+                  ),
                 ),
               ),
             ],

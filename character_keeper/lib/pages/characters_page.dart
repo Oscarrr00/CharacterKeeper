@@ -21,6 +21,11 @@ class CharactersUser extends StatelessWidget {
         "armor": 15,
         "level": 5,
         "dexterity": 2,
+        "strength": 2,
+        "constitution": 1,
+        "intelligence": 0,
+        "wisdom": 1,
+        "charisma": 1,
         "speed": 30,
         "hitDice": "d8"
       },
@@ -31,6 +36,11 @@ class CharactersUser extends StatelessWidget {
         "armor": 15,
         "level": 5,
         "dexterity": 2,
+        "strength": 2,
+        "constitution": 1,
+        "intelligence": 0,
+        "wisdom": 1,
+        "charisma": 1,
         "speed": 30,
         "hitDice": "d8"
       }
