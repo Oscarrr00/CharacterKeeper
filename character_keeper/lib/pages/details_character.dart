@@ -72,14 +72,16 @@ class DetailsCharacter extends StatelessWidget {
                   SquareData(
                       content: character["dexterity"],
                       name_content: "Initiative"),
-                  SquareData(content: character["speed"], name_content: "Speed"),
+                  SquareData(
+                      content: character["speed"], name_content: "Speed"),
                 ],
               ),
               SizedBox(height: 10),
               Row(
                 children: [
                   DataHitpoints(
-                      first_title: "Maximum", controller: maxHitpointsController),
+                      first_title: "Maximum",
+                      controller: maxHitpointsController),
                   DataHitpoints(
                       first_title: "Current",
                       controller: currentHitpointsController),
@@ -113,8 +115,6 @@ class DetailsCharacter extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Container(
-                  width: 351,
-                  height: 280,
                   padding: EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,39 +156,59 @@ class DetailsCharacter extends StatelessWidget {
                     ],
                   ),
                   decoration: decoration_border),
-        
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                    ElevatedButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProficiencyPage()));
-                    }, child: Text("Proficiencies")),
-        
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AbilityPage()));
-                      }, child: Text("Abilities")),
-                    ),
-        
-                    ElevatedButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SpellPage()));
-                    }, child: Text("Spells")),
-                  ],),
-        
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                    ElevatedButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NotePage()));
-                    }, child: Text("Notes")),
-        
-                    ElevatedButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => InventoryPage()));
-                    }, child: Text("Inventory")),
-        
-                    
-                  ],)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProficiencyPage()));
+                      },
+                      child: Text("Proficiencies")),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AbilityPage()));
+                        },
+                        child: Text("Abilities")),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SpellPage()));
+                      },
+                      child: Text("Spells")),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotePage()));
+                      },
+                      child: Text("Notes")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InventoryPage()));
+                      },
+                      child: Text("Inventory")),
+                ],
+              )
             ]),
           ),
         ));
