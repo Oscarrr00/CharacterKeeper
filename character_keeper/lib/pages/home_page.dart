@@ -30,29 +30,46 @@ class HomePage extends StatelessWidget {
               hintText: "Password Here",
               controller: passwordController),
           SizedBox(height: 25),
-          MaterialButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CharactersUser(),
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0, left: 30),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CharactersUser(),
+                        ),
+                      );
+                    },
+                    child: Text("Login"),
                   ),
-                );
-              },
-              child: Text("Login"),
-              highlightColor: Colors.grey,
-              minWidth: 340),
+                ),
+              ],
+            ),
+          ),
           SizedBox(height: 45),
-          MaterialButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => NewAcount(),
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0, left: 30),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => NewAcount(),
+                        ),
+                      );
+                    },
+                    child: Text("Create New Acount"),
+                    color: Colors.grey,
                   ),
-                );
-              },
-              child: Text("Create New Acount"),
-              color: Colors.grey,
-              minWidth: 340),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     ));
