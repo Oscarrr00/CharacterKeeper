@@ -19,8 +19,8 @@ class DataPrimaryStats extends StatelessWidget {
       color: Colors.black,
     )));
     return Container(
-        width: 310 / 3,
-        height: 250 / 2,
+        width: MediaQuery.of(context).size.height / 8,
+        height: MediaQuery.of(context).size.height / 6,
         child: Column(children: [
           Text("${stat}", style: TextStyle(fontSize: 18)),
           Expanded(

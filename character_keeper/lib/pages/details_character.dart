@@ -136,6 +136,7 @@ class DetailsCharacter extends StatelessWidget {
                               stat_number: 12),
                         ],
                       ),
+                      SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
