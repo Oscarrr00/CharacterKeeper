@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 49,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "Dancing",
                       color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(height: 10),

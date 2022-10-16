@@ -63,6 +63,14 @@ flutter:
      - assets/images/background_dnd.jpg
   #   - images/a_dot_ham.jpeg
 
+  fonts:
+  - family: Dancing
+    fonts:
+      - asset: assets/fonts/dancing_bold.ttf
+      - asset: assets/fonts/dancing_regular.ttf
+      - asset: assets/fonts/dancing_semiBold.ttf
+      - asset: assets/fonts/dancing_medium.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
