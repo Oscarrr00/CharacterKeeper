@@ -9,7 +9,8 @@ class InputText extends StatelessWidget {
     Key? key,
     required this.label,
     required this.hintText,
-    required this.controller, required this.color,
+    required this.controller,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -20,11 +21,17 @@ class InputText extends StatelessWidget {
         children: [
           Text("${label}", style: TextStyle(fontSize: 19, color: color)),
           TextField(
+              style: TextStyle(color: color),
               controller: controller,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "${hintText}",
-              )),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 2, color: color),
+                  ),
+                  hintText: "${hintText}",
+                  hintStyle: TextStyle(color: color),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 2, color: color),
+                  ))),
         ],
       ),
     );

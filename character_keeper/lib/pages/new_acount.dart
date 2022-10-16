@@ -21,11 +21,13 @@ class NewAcount extends StatelessWidget {
             InputText(
                 label: "Choose a username",
                 hintText: "New username",
-                controller: newUsernameController),
+                controller: newUsernameController,
+                color: Colors.black),
             InputText(
                 label: "Enter an email",
                 hintText: "email@email.com",
-                controller: emailController),
+                controller: emailController,
+                color: Colors.black),
             SizedBox(height: 80),
             Text("Choose a password", style: TextStyle(fontSize: 19)),
             Text("It must be at least 8 characters long",
@@ -33,11 +35,13 @@ class NewAcount extends StatelessWidget {
             InputText(
                 label: "",
                 hintText: "New password",
-                controller: newPasswordController),
+                controller: newPasswordController,
+                color: Colors.black),
             InputText(
                 label: "",
                 hintText: "Confirm new password",
-                controller: confirmPasswordController),
+                controller: confirmPasswordController,
+                color: Colors.black),
             SizedBox(height: 60),
             MaterialButton(
                 onPressed: () {
