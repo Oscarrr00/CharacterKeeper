@@ -1,3 +1,4 @@
+import 'package:character_keeper/items/data_de_incremente_smaller.dart';
 import 'package:flutter/material.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -5,6 +6,24 @@ class InventoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic itemAcountController = [
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController()
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -71,7 +90,11 @@ class InventoryPage extends StatelessWidget {
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: [Text("5")],
+                                        children: [
+                                          DataDeIncrementSmaller(
+                                              controller:
+                                                  itemAcountController[index])
+                                        ],
                                       ),
                                     ),
                                     Expanded(
