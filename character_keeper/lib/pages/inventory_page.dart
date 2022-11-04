@@ -24,26 +24,7 @@ class InventoryPage extends StatelessWidget {
       TextEditingController(),
       TextEditingController()
     ];
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(),
-            Column(
-              children: [
-                Text("My character #1"),
-                Text(
-                  "Lvl 5 Human Bard",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                )
-              ],
-            ),
-            SizedBox(width: 40),
-          ],
-        ),
-      ),
-      body: Container(
+    return Container(
           child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
@@ -148,7 +129,7 @@ class InventoryPage extends StatelessWidget {
             )
           ],
         ),
-      )),
+      ),
     );
   }
 }

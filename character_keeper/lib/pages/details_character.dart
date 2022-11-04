@@ -27,24 +27,7 @@ class DetailsCharacter extends StatelessWidget {
     var currentHitpointsController = TextEditingController();
     var temporaryHitpointsController = TextEditingController();
     var hitDiceController = TextEditingController();
-    return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(),
-            Column(
-              children: [
-                Text("${character["name"]}"),
-                Text(
-                    "lvl ${character["level"]}   ${character["race"]}   ${character["class"]}",
-                    style: TextStyle(fontSize: 13)),
-              ],
-            ),
-            IconButton(onPressed: () {}, icon: Icon(Icons.edit))
-          ],
-        )),
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(children: [
@@ -157,61 +140,61 @@ class DetailsCharacter extends StatelessWidget {
                     ],
                   ),
                   decoration: decoration_border),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProficiencyPage()));
-                      },
-                      child: Text("Proficiencies")),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AbilityPage()));
-                        },
-                        child: Text("Abilities")),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SpellPage()));
-                      },
-                      child: Text("Spells")),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NotePage()));
-                      },
-                      child: Text("Notes")),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InventoryPage()));
-                      },
-                      child: Text("Inventory")),
-                ],
-              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     ElevatedButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => ProficiencyPage()));
+              //         },
+              //         child: Text("Proficiencies")),
+              //     Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: ElevatedButton(
+              //           onPressed: () {
+              //             Navigator.push(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                     builder: (context) => AbilityPage()));
+              //           },
+              //           child: Text("Abilities")),
+              //     ),
+              //     ElevatedButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => SpellPage()));
+              //         },
+              //         child: Text("Spells")),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     ElevatedButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => NotePage()));
+              //         },
+              //         child: Text("Notes")),
+              //     ElevatedButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => InventoryPage()));
+              //         },
+              //         child: Text("Inventory")),
+              //   ],
+              // )
             ]),
           ),
-        ));
+        );
   }
 }
