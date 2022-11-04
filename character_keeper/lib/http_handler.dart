@@ -13,14 +13,14 @@ class HttpHandler {
 
   Future<Map<String, dynamic>> findSpell(String nameSpell) async {
     var urlSpell = url + nameSpell;
-    var requestStatus = await http.post(Uri.parse(urlSpell));
+    var requestStatus = await http.get(Uri.parse(urlSpell));
 
     print(requestStatus.body);
 
     if (requestStatus.statusCode == 200) {
       Map<String, dynamic> spellJson = jsonDecode(requestStatus.body);
 
-      if (spellJson["result"] == null) {
+      if (spellJson == null) {
         throw Exception("The API couldn't find the spell");
       }
 

@@ -1,6 +1,7 @@
 import 'package:character_keeper/items/data_de_incremente_smaller.dart';
 import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SpellPage extends StatelessWidget {
   const SpellPage({super.key});
@@ -9,6 +10,8 @@ class SpellPage extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic spellFound;
     dynamic school;
+    dynamic classes;
+    dynamic subclasses;
     dynamic spellsController = [
       TextEditingController(),
       TextEditingController(),
@@ -26,13 +29,21 @@ class SpellPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Spell Info'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text("${spellFound["name"]}", style: TextStyle(fontSize: 18)),
-                  Text("${spellFound["level"]}th-level ${school["name"]}",
-                      style: TextStyle(fontSize: 14)),
+                  Text("${spellFound["name"]}",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary)),
+                  SizedBox(height: 10),
+                  (spellFound["ritual"] == true)
+                      ? Text(
+                          "${spellFound["level"]}th-level ${school["name"]} (ritual)",
+                          style: TextStyle(fontSize: 14))
+                      : Text("${spellFound["level"]}th-level ${school["name"]}",
+                          style: TextStyle(fontSize: 14)),
                   Row(
                     children: [
                       Text("Casting Time:",
@@ -51,7 +62,8 @@ class SpellPage extends StatelessWidget {
                     children: [
                       Text("Components:",
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(" ${spellFound["range"]}"),
+                      for (int i = 0; i < spellFound["components"].length; i++)
+                        Text(" ${spellFound["components"][i]}"),
                     ],
                   ),
                   Row(
@@ -60,7 +72,34 @@ class SpellPage extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(" ${spellFound["duration"]}"),
                     ],
-                  )
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  for (int i = 0; i < spellFound["desc"].length; i++)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 6.0),
+                      child: Text("${spellFound["desc"][i]}",
+                          style: TextStyle(fontSize: 14)),
+                    ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text("Classes:",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ${classes[0]["name"]}"),
+                    ],
+                  ),
+                  (subclasses.length != 0)
+                      ? Row(
+                          children: [
+                            Text("Subclasses:",
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(" ${subclasses[0]["name"]}"),
+                          ],
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
@@ -69,15 +108,6 @@ class SpellPage extends StatelessWidget {
                 child: const Text('Ok'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                      "La cancion fue eliminada de tus favoritos",
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ));
                 },
               ),
             ],
@@ -242,8 +272,25 @@ class SpellPage extends StatelessWidget {
                                         onPressed: () async {
                                           spellFound = await context
                                               .read<Character_Provide>()
-                                              .findSpell("fireball");
-                                          school = spellFound["school"];
+                                              .findSpell("find-familiar");
+                                          if (spellFound.length == 0) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(
+                                                "El hechizo no fue encontrado",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ));
+                                          } else {
+                                            school = spellFound["school"];
+                                            classes = spellFound["classes"];
+                                            subclasses =
+                                                spellFound["subclasses"];
+                                            _showMyDialog();
+                                          }
                                         }),
                                     IconButton(
                                         icon: Icon(Icons.delete),

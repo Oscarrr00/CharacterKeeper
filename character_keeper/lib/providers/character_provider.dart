@@ -8,7 +8,7 @@ class Character_Provide with ChangeNotifier {
       var spell = await httpHandler.findSpell(nameSpell);
       return spell;
     } catch (e) {
-      throw Exception("Something went wrong finding the spell");
+      return {};
     }
   }
 }
