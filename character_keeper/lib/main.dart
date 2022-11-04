@@ -1,8 +1,15 @@
 import 'package:character_keeper/pages/home_page.dart';
 import 'package:character_keeper/pages/page_select.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      ChangeNotifierProvider<Character_Provide>(
+        create: (context) => Character_Provide(),
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,12 +21,13 @@ class MyApp extends StatelessWidget {
       //home: HomePage(),
       home: PageSelect(),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red[800]!),
-        textTheme: TextTheme(
-          headline4: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
-          headline5: TextStyle(fontWeight: FontWeight.bold)
-        )
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red[800]!),
+          textTheme: TextTheme(
+              headline4: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+              headline5: TextStyle(fontWeight: FontWeight.bold))),
     );
   }
 }

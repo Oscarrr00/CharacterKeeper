@@ -1,4 +1,5 @@
 import 'package:character_keeper/items/data_de_incremente_smaller.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
 
 class SpellPage extends StatelessWidget {
@@ -6,6 +7,8 @@ class SpellPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic spellFound;
+    dynamic school;
     dynamic spellsController = [
       TextEditingController(),
       TextEditingController(),
@@ -17,8 +20,74 @@ class SpellPage extends StatelessWidget {
       TextEditingController(),
       TextEditingController()
     ];
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Spell Info'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text("${spellFound["name"]}", style: TextStyle(fontSize: 18)),
+                  Text("${spellFound["level"]}th-level ${school["name"]}",
+                      style: TextStyle(fontSize: 14)),
+                  Row(
+                    children: [
+                      Text("Casting Time:",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ${spellFound["casting_time"]}"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Range:",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ${spellFound["range"]}"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Components:",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ${spellFound["range"]}"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Duration:",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ${spellFound["duration"]}"),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      "La cancion fue eliminada de tus favoritos",
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Container(
-          child: Padding(
+      child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
@@ -170,7 +239,12 @@ class SpellPage extends StatelessWidget {
                                     ),
                                     IconButton(
                                         icon: Icon(Icons.search),
-                                        onPressed: () {}),
+                                        onPressed: () async {
+                                          spellFound = await context
+                                              .read<Character_Provide>()
+                                              .findSpell("fireball");
+                                          school = spellFound["school"];
+                                        }),
                                     IconButton(
                                         icon: Icon(Icons.delete),
                                         onPressed: () {})
