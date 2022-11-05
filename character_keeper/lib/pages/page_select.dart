@@ -1,4 +1,5 @@
 import 'package:character_keeper/items/character_app_bar.dart';
+import 'package:character_keeper/pages/ability_and_proficiency_page.dart';
 import 'package:character_keeper/pages/ability_page.dart';
 import 'package:character_keeper/pages/details_character.dart';
 import 'package:character_keeper/pages/inventory_page.dart';
@@ -52,7 +53,7 @@ class _PageSelectState extends State<PageSelect> {
   int _selectedIndex = 2;
   
   static const List<Widget> _widgetOptions = <Widget>[    
-    AbilityPage(),
+    AbilityAndProficiencyPage(),
     SpellPage(),
     DetailsCharacter(character: {
         "name": "Character #1",

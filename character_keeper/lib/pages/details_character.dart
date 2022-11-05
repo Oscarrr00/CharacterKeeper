@@ -2,11 +2,6 @@ import 'package:character_keeper/items/data_de_increment.dart';
 import 'package:character_keeper/items/data_hitpoints.dart';
 import 'package:character_keeper/items/data_primary_stats.dart';
 import 'package:character_keeper/items/square_stats.dart';
-import 'package:character_keeper/pages/ability_page.dart';
-import 'package:character_keeper/pages/inventory_page.dart';
-import 'package:character_keeper/pages/note_page.dart';
-import 'package:character_keeper/pages/proficiency_page.dart';
-import 'package:character_keeper/pages/spell_page.dart';
 import 'package:flutter/material.dart';
 
 class DetailsCharacter extends StatelessWidget {
@@ -140,60 +135,7 @@ class DetailsCharacter extends StatelessWidget {
                     ],
                   ),
                   decoration: decoration_border),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (context) => ProficiencyPage()));
-              //         },
-              //         child: Text("Proficiencies")),
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: ElevatedButton(
-              //           onPressed: () {
-              //             Navigator.push(
-              //                 context,
-              //                 MaterialPageRoute(
-              //                     builder: (context) => AbilityPage()));
-              //           },
-              //           child: Text("Abilities")),
-              //     ),
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (context) => SpellPage()));
-              //         },
-              //         child: Text("Spells")),
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (context) => NotePage()));
-              //         },
-              //         child: Text("Notes")),
-              //     ElevatedButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (context) => InventoryPage()));
-              //         },
-              //         child: Text("Inventory")),
-              //   ],
-              // )
-            ]),
+                          ]),
           ),
         );
   }
