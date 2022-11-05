@@ -1,4 +1,5 @@
 import 'package:character_keeper/items/character_app_bar.dart';
+import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/pages/ability_and_proficiency_page.dart';
 import 'package:character_keeper/pages/ability_page.dart';
 import 'package:character_keeper/pages/details_character.dart';
@@ -52,24 +53,10 @@ class PageSelect extends StatefulWidget {
 class _PageSelectState extends State<PageSelect> {
   int _selectedIndex = 2;
   
-  static const List<Widget> _widgetOptions = <Widget>[    
+  static List<Widget> _widgetOptions = <Widget>[    
     AbilityAndProficiencyPage(),
     SpellPage(),
-    DetailsCharacter(character: {
-        "name": "Character #1",
-        "race": "Human",
-        "class": "Bard",
-        "armor": 15,
-        "level": 5,
-        "dexterity": 2,
-        "strength": 2,
-        "constitution": 1,
-        "intelligence": 0,
-        "wisdom": 1,
-        "charisma": 1,
-        "speed": 30,
-        "hitDice": "d8"
-      },),
+    DetailsCharacter(character: Character.fromJson(myCharacter)),
     InventoryPage(),
     NotePage()
   ];

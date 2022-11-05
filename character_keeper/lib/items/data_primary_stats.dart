@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DataPrimaryStats extends StatelessWidget {
   final String stat;
-  final int stat_modifier;
+  final String stat_modifier;
   final int stat_number;
   DataPrimaryStats({
     Key? key,
@@ -30,7 +30,7 @@ class DataPrimaryStats extends StatelessWidget {
                 backgroundColor: Colors.black,
               ),
               SizedBox(width: 15),
-              Text("+${stat_modifier}", style: TextStyle(fontSize: 18)),
+              Text("${stat_modifier}", style: TextStyle(fontSize: 18)),
             ]),
           ),
           Row(

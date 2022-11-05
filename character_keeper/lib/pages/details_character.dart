@@ -1,14 +1,17 @@
+import 'dart:ffi';
+
 import 'package:character_keeper/items/data_de_increment.dart';
 import 'package:character_keeper/items/data_hitpoints.dart';
 import 'package:character_keeper/items/data_primary_stats.dart';
 import 'package:character_keeper/items/square_stats.dart';
+import 'package:character_keeper/objects/character.dart';
 import 'package:flutter/material.dart';
 
 class DetailsCharacter extends StatelessWidget {
-  final dynamic character;
+  final Character character;
   const DetailsCharacter({
     Key? key,
-    this.character,
+    required this.character,
   }) : super(key: key);
 
   @override
@@ -35,7 +38,7 @@ class DetailsCharacter extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(height: 25),
-                          Text("${character["armor"]}",
+                          Text("${character.armor_class}",
                               style: TextStyle(fontSize: 19)),
                           Text("Armor", style: TextStyle(fontSize: 14)),
                           Text("Class", style: TextStyle(fontSize: 14)),
@@ -48,10 +51,10 @@ class DetailsCharacter extends StatelessWidget {
                                 color: Colors.black,
                               )))),
                   SquareData(
-                      content: character["dexterity"],
+                      content: Character.getModifier(character.dexterity),
                       name_content: "Initiative"),
                   SquareData(
-                      content: character["speed"], name_content: "Speed"),
+                      content: character.speed, name_content: "Speed"),
                 ],
               ),
               SizedBox(height: 10),
@@ -74,7 +77,7 @@ class DetailsCharacter extends StatelessWidget {
                   Container(
                       alignment: Alignment.center,
                       height: 42,
-                      width: 170,
+                      width: MediaQuery.of(context).size.width / 3.5,
                       decoration: decoration_border,
                       child: Text("Hit Dice ", style: TextStyle(fontSize: 14))),
                   Container(
@@ -88,7 +91,7 @@ class DetailsCharacter extends StatelessWidget {
                       height: 42,
                       width: 81,
                       decoration: decoration_border,
-                      child: Text("${character["hitDice"]}")),
+                      child: Text("${character.hit_dice}")),
                 ],
               ),
               SizedBox(height: 10),
@@ -102,16 +105,16 @@ class DetailsCharacter extends StatelessWidget {
                         children: [
                           DataPrimaryStats(
                               stat: "Strength",
-                              stat_modifier: character["strength"],
-                              stat_number: 14),
+                              stat_modifier: Character.getStringModifier(character.strength),
+                              stat_number: character.strength),
                           DataPrimaryStats(
                               stat: "Dexterity",
-                              stat_modifier: character["dexterity"],
-                              stat_number: 14),
+                              stat_modifier: Character.getStringModifier(character.dexterity),
+                              stat_number: character.dexterity),
                           DataPrimaryStats(
                               stat: "Constitution",
-                              stat_modifier: character["constitution"],
-                              stat_number: 12),
+                              stat_modifier: Character.getStringModifier(character.constitution),
+                              stat_number: character.constitution),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -120,16 +123,16 @@ class DetailsCharacter extends StatelessWidget {
                         children: [
                           DataPrimaryStats(
                               stat: "Intelligence",
-                              stat_modifier: character["intelligence"],
-                              stat_number: 10),
+                              stat_modifier: Character.getStringModifier(character.intelligence),
+                              stat_number: character.intelligence),
                           DataPrimaryStats(
                               stat: "Wisdom",
-                              stat_modifier: character["wisdom"],
-                              stat_number: 12),
+                              stat_modifier: Character.getStringModifier(character.wisdom),
+                              stat_number: character.wisdom),
                           DataPrimaryStats(
                               stat: "Charisma",
-                              stat_modifier: character["charisma"],
-                              stat_number: 12),
+                              stat_modifier: Character.getStringModifier(character.charisma),
+                              stat_number: character.charisma),
                         ],
                       )
                     ],

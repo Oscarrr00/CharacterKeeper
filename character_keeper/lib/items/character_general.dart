@@ -1,8 +1,9 @@
+import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/pages/details_character.dart';
 import 'package:flutter/material.dart';
 
 class ItemCharacter extends StatelessWidget {
-  final Map<String, dynamic> character;
+  final Character character;
   ItemCharacter({
     Key? key,
     required this.character,
@@ -30,11 +31,11 @@ class ItemCharacter extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text("${character["name"]}",
+              Text("${character.name}",
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
               SizedBox(height: 20),
-              Text("${character["race"]} ${character["class"]}"),
-              Text("Lvl ${character["level"]}"),
+              Text("${character.race} ${character.character_class}"),
+              Text("Lvl ${character.level}"),
             ],
           ),
         ),
