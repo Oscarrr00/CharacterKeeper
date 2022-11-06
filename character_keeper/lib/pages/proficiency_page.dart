@@ -1,10 +1,66 @@
+import 'package:character_keeper/items/proficiency_circle.dart';
+import 'package:character_keeper/objects/character.dart';
 import 'package:flutter/material.dart';
 
 class ProficiencyPage extends StatelessWidget {
-  const ProficiencyPage({super.key});
+
+  Character character;
+  ProficiencyPage({required this.character});
+
+  
+
+//   enum ProficiencyList {
+  // acrobatics,
+  // animalHandling,
+  // arcana,
+  // athletics,
+  // deception,
+  // history,
+  // insight,
+  // intimidation,
+  // investigation,
+  // medicine,
+  // nature,
+  // perception,
+  // performance,
+  // persuasion,
+  // religion,
+  // sleightOfHand,
+  // stealth,
+  // survival
+// }
 
   @override
   Widget build(BuildContext context) {
+
+    String str = Character.getStringModifier(character.strength);
+    String dex = Character.getStringModifier(character.dexterity);
+    String int = Character.getStringModifier(character.intelligence);
+    String wis = Character.getStringModifier(character.wisdom);
+    String cha = Character.getStringModifier(character.charisma);
+
+  List proficiencies = [
+    ["Acrobatics", "DEX", dex],
+    ["Animal Handling", "WIS", wis],
+    ["Arcana", "INT", int],
+    ["Athletics", "STR", str],
+    ["Deception", "CHA", cha],
+    ["History", "INT", int],
+    ["Insight", "WIS", wis],
+    ["Intimidation", "CHA", cha],
+    ["Investigation", "INT", int],
+    ["Medicine", "WIS", wis],
+    ["Nature", "INT", int],
+    ["Perception", "WIS", wis],
+    ["Performance", "CHA", cha],
+    ["Persuasion", "CHA", cha],
+    ["Religion", "INT", int],
+    ["Sleight Of Hand", "DEX", dex],
+    ["Stealth", "DEX", dex],
+    ["Survival", "WIS", wis]
+  ];
+
+
     return Container(
           child: Padding(
         padding: EdgeInsets.all(8),
@@ -32,7 +88,7 @@ class ProficiencyPage extends StatelessWidget {
                           backgroundColor:
                               Theme.of(context).colorScheme.primary,
                           child: Text(
-                            "+2",
+                            "+${character.proficiency_bonus}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -74,15 +130,15 @@ class ProficiencyPage extends StatelessWidget {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: CircleAvatar(
-                                            backgroundColor: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                            radius: 10,
-                                          ),
-                                        ),
-                                        Expanded(child: Text("Athletics")),
-                                        Text("STR",
+                                          child: ProficiencyCircle(
+                                            status: character.proficiencies[index],
+                                            radius: 10
+                                          )
+                                        ),                                        
+                                        Text(proficiencies[index][2] + "   ", style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Expanded(child: Text(proficiencies[index][0])),
+                                        Text(proficiencies[index][1],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold))
                                       ],

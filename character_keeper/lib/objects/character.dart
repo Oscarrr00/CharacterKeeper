@@ -22,6 +22,7 @@ class Character {
    int wisdom;
    int charisma;
 
+   int proficiency_bonus;
    var proficiencies = [];
 
 
@@ -47,6 +48,7 @@ class Character {
    required this.wisdom,
    required this.charisma,
 
+   required this.proficiency_bonus,
    required this.proficiencies,
   });
 
@@ -71,6 +73,7 @@ class Character {
       intelligence: json["intelligence"],
       wisdom: json["wisdom"],
       charisma: json["charisma"],
+      proficiency_bonus: json["proficiency_bonus"],
       proficiencies: json["proficiencies"]
     );
 
@@ -88,7 +91,7 @@ class Character {
   static String getStringModifier(int score)
   {
     score = getModifier(score);
-    return score >= 0 ? "+${score}" : "-${score}";
+    return score >= 0 ? "+${score}" : "${score}";
   }
 
 }
@@ -113,6 +116,7 @@ const myCharacter =
   "intelligence": 10,
   "wisdom": 12,
   "charisma": 18,
+  "proficiency_bonus": 3,
   "proficiencies": [
     1,
     0,
@@ -120,7 +124,7 @@ const myCharacter =
     0,
     1,
     0,
-    1,
+    2,
     0,
     0,
     0,

@@ -1,3 +1,4 @@
+import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/pages/ability_page.dart';
 import 'package:character_keeper/pages/proficiency_page.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class AbilityAndProficiencyPage extends StatelessWidget {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              ProficiencyPage(),
+              ProficiencyPage(character: Character.fromJson(myCharacter),),
               AbilityPage(),
             ],
           ),
