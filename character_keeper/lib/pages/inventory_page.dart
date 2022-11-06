@@ -1,31 +1,107 @@
 import 'package:character_keeper/items/data_de_incremente_smaller.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    dynamic itemAcountController = [
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController()
-    ];
+    dynamic itemAcountController = [];
+    dynamic nameItem = TextEditingController();
+    dynamic descItem = TextEditingController();
+    dynamic quantityItem = TextEditingController();
+    List inventory = context.read<Character_Provide>().inventory;
+    for (int i = 0; i < inventory.length; i++) {
+      itemAcountController.add(TextEditingController());
+    }
+    Future<void> _showDialogAddItem() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Adding an Item'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: nameItem,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Name of the Item",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  TextField(
+                      decoration: InputDecoration(
+                        hintText: "Write the description of the Item here",
+                        contentPadding: EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 9,
+                      controller: descItem),
+                  Row(
+                    children: [
+                      Text("Quantity: "),
+                      SizedBox(
+                        height: 25,
+                        width: 30,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(8.0),
+                            border: OutlineInputBorder(),
+                          ),
+                          controller: quantityItem,
+                          keyboardType: TextInputType.numberWithOptions(
+                            decimal: false,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancelar'),
+                onPressed: () {
+                  nameItem.text = "";
+                  descItem.text = "";
+                  quantityItem.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Done'),
+                onPressed: () {
+                  context.read<Character_Provide>().addItem(nameItem.text,
+                      descItem.text, int.parse(quantityItem.text));
+                  inventory = context.read<Character_Provide>().inventory;
+                  nameItem.text = "";
+                  descItem.text = "";
+                  quantityItem.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Container(
-          child: Padding(
+      child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
@@ -52,70 +128,82 @@ class InventoryPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: GridView.count(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 4,
-                      childAspectRatio: 3.0,
-                      children: List.generate(
-                          15,
-                          (index) => Container(
-                                padding: EdgeInsets.all(4),
-                                color: index % 2 == 1 ? Colors.grey[350] : null,
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                  (inventory.length <= 0)
+                      ? Container()
+                      : Expanded(
+                          child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: GridView.count(
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 4,
+                            childAspectRatio: 3.0,
+                            children: List.generate(
+                                inventory.length,
+                                (index) => Container(
+                                      padding: EdgeInsets.all(4),
+                                      color: index % 2 == 1
+                                          ? Colors.grey[350]
+                                          : null,
+                                      child: Row(
                                         children: [
-                                          DataDeIncrementSmaller(
-                                              controller:
-                                                  itemAcountController[index])
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                DataDeIncrementSmaller(
+                                                    controller:
+                                                        itemAcountController[
+                                                            index])
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "${inventory[index]["name"]}",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        )),
+                                                    Text(
+                                                      "${inventory[index]["description"]}",
+                                                      maxLines: 4,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          ),
+                                          IconButton(
+                                              icon: Icon(Icons.delete),
+                                              splashColor: Colors.red[200],
+                                              onPressed: () {
+                                                context
+                                                    .read<Character_Provide>()
+                                                    .deleteItem(index);
+                                              })
                                         ],
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Acid (vial)",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  )),
-                                              Text(
-                                                "As an action, you can splash the contents of this vial onto a creature within 5 feet of you or throw the vial up to 20 feet, shattering it on impact. In either case, make a ranged attack against a creature or object, treating the acid as an improvised weapon. On a hit, the target takes 2d6 acid damage.",
-                                                maxLines: 4,
-                                                overflow: TextOverflow.ellipsis,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () {},
-                                      ),
-                                    ),
-                                    IconButton(
-                                        icon: Icon(Icons.delete),
-                                        splashColor: Colors.red[200],
-                                        onPressed: () {})
-                                  ],
-                                ),
-                              )),
-                    ),
-                  ))
+                                    )),
+                          ),
+                        ))
                 ],
               ),
             )),
@@ -123,7 +211,10 @@ class InventoryPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                      child: Text("Add an inventory entry"), onPressed: () {}),
+                      child: Text("Add an inventory entry"),
+                      onPressed: () {
+                        _showDialogAddItem();
+                      }),
                 )
               ],
             )
