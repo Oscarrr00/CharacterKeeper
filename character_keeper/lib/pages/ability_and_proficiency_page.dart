@@ -13,6 +13,7 @@ class AbilityAndProficiencyPage extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: const TabBar(
               tabs: [
                 Tab(text: "Proficiencies"),
