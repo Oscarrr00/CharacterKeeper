@@ -4,32 +4,27 @@ import 'package:character_keeper/pages/details_character.dart';
 import 'package:character_keeper/pages/inventory_page.dart';
 import 'package:character_keeper/pages/note_page.dart';
 import 'package:character_keeper/pages/spell_page.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class PageSelect extends StatefulWidget {
-  Character character;
-
-  PageSelect({
-    required this.character
-  });
+  
 
   @override
-  State<PageSelect> createState() => _PageSelectState(character: character);
+  State<PageSelect> createState() => _PageSelectState();
 }
 
 class _PageSelectState extends State<PageSelect> {
-  Character character;
+  
   int _selectedIndex = 2;
 
-  _PageSelectState({
-    required this.character
-  });
   
   static List<Widget> _widgetOptions = <Widget>[    
     AbilityAndProficiencyPage(),
     SpellPage(),
-    DetailsCharacter(character: Character.fromJson(myCharacter)),
+    DetailsCharacter(),
     InventoryPage(),
     NotePage()
   ];
@@ -42,6 +37,7 @@ class _PageSelectState extends State<PageSelect> {
 
   @override
   Widget build(BuildContext context) {
+    Character character = context.watch<Character_Provide>().currentCharacter;
     return Scaffold(
       appBar: AppBar(
         title: Row(

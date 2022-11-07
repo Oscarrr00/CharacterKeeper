@@ -152,6 +152,7 @@ class InventoryPage extends StatelessWidget {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 DataDeIncrementSmaller(
+                                                  startingValue: inventory[index].amount,
                                                     controller:
                                                         itemAcountController[
                                                             index])
@@ -181,6 +182,7 @@ class InventoryPage extends StatelessWidget {
                                                     Text(
                                                       "${inventory[index].description}",
                                                       maxLines: 4,
+                                                      textAlign: TextAlign.left,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     )

@@ -1,6 +1,8 @@
 import 'package:character_keeper/items/character_general.dart';
 import 'package:character_keeper/pages/profile.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CharactersUser extends StatelessWidget {
   const CharactersUser({
@@ -13,38 +15,122 @@ class CharactersUser extends StatelessWidget {
       "username": "Masterzombie",
       "email": "Masterzombie@gmail.com",
     };
-    dynamic characters = [
-      {
-        "name": "Character #1",
-        "race": "Human",
-        "class": "Bard",
-        "armor": 15,
-        "level": 5,
-        "dexterity": 2,
-        "strength": 2,
-        "constitution": 1,
-        "intelligence": 0,
-        "wisdom": 1,
-        "charisma": 1,
-        "speed": 30,
-        "hitDice": "d8"
-      },
-      {
-        "name": "Character #2",
-        "race": "Human",
-        "class": "Bard",
-        "armor": 15,
-        "level": 5,
-        "dexterity": 2,
-        "strength": 2,
-        "constitution": 1,
-        "intelligence": 0,
-        "wisdom": 1,
-        "charisma": 1,
-        "speed": 30,
-        "hitDice": "d8"
-      }
-    ];
+
+    dynamic characterName = TextEditingController();
+    dynamic characterLevel = TextEditingController();
+    dynamic characterClass = TextEditingController();
+    dynamic characterRace = TextEditingController();
+
+    Future<void> _showDialogAddCharacter() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Create a new character'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: characterName,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Your character's name",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: characterClass,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Your character's class",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: characterRace,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Your character's race",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: [
+                        Text("Character Level   "),
+                        SizedBox(
+                          height: 25,
+                          width: 30,
+                          child: TextFormField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(8.0),
+                              border: OutlineInputBorder(),
+                            ),
+                            controller: characterLevel,
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: false,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  characterName.text = "";
+                  characterClass.text = "";
+                  characterLevel.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Done'),
+                onPressed: () {
+                  context.read<Character_Provide>().addCharacter(characterName.text, characterClass.text, int.parse(characterLevel.text), characterRace.text);
+                  characterName.text = "";
+                  characterClass.text = "";
+                  characterLevel.text = "";
+                  characterRace.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  
+    List characters = context.watch<Character_Provide>().characterList;
+
     return Scaffold(
         appBar: AppBar(
             title: Row(
@@ -70,16 +156,22 @@ class CharactersUser extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 itemCount: characters.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ItemCharacter(character: characters[index]);
+                  return ItemCharacter(index: index,);
                 },
               ),
             ),
-            IconButton(
-                iconSize: 64,
-                splashRadius: 36,
-                onPressed: () {},
-                icon: Icon(Icons.add_circle_outline))
+            FloatingActionButton(
+              child: Icon(Icons.add),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              onPressed: (() {
+                _showDialogAddCharacter();
+            }))
           ],
         ));
   }
+
+
+  
 }
+
+

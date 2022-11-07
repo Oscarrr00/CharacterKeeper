@@ -1,37 +1,18 @@
 import 'package:character_keeper/items/proficiency_circle.dart';
 import 'package:character_keeper/objects/character.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProficiencyPage extends StatelessWidget {
 
   Character character;
   ProficiencyPage({required this.character});
 
-  
-
-//   enum ProficiencyList {
-  // acrobatics,
-  // animalHandling,
-  // arcana,
-  // athletics,
-  // deception,
-  // history,
-  // insight,
-  // intimidation,
-  // investigation,
-  // medicine,
-  // nature,
-  // perception,
-  // performance,
-  // persuasion,
-  // religion,
-  // sleightOfHand,
-  // stealth,
-  // survival
-// }
-
   @override
   Widget build(BuildContext context) {
+
+    character = context.watch<Character_Provide>().currentCharacter;
 
     String str = Character.getStringModifier(character.strength);
     String dex = Character.getStringModifier(character.dexterity);

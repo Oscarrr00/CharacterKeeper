@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 class DataDeIncrementSmaller extends StatelessWidget {
   final TextEditingController controller;
+  int startingValue;
   DataDeIncrementSmaller({
     Key? key,
+    required this.startingValue,
     required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    controller.text = startingValue.toString();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 
 class Character_Provide with ChangeNotifier {
 
+  List characterList = [Character.fromJson(myCharacter)];
+
   Character currentCharacter = Character.fromJson(myCharacter);
+  
 
   var httpHandler = new HttpHandler();
 
@@ -21,6 +24,11 @@ class Character_Provide with ChangeNotifier {
     } catch (e) {
       return {};
     }
+  }
+
+  void setCurrentCharacter(int index) {
+    currentCharacter = characterList[index];
+    notifyListeners();
   }
 
   void addSpell(String name, int level) {
@@ -67,4 +75,71 @@ class Character_Provide with ChangeNotifier {
     currentCharacter.abilities.removeAt(index);
     notifyListeners();
   }
+
+  void addCharacter(String name, String character_class, int level, String race) {
+    Character character = Character(
+      name: name,
+      character_class: character_class,
+      level: level,
+      race: race,
+      armor_class: 10,
+      initiative: 2,
+      speed: 30,
+      maximum_hitpoints: 10,
+      current_hitpoints: 10,
+      temporary_hitpoints: 0,
+      hit_dice: "d8",
+      hit_dice_amount: 5,
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10,
+      saving_throw_proficiencies: [0, 0, 0, 0, 0, 0],
+      proficiency_bonus: 2,
+      proficiencies: [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,        
+      ],
+      abilities: [],
+      inventory: [],
+      spells: [],
+      notes: [],
+      spell_slots: [
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+      ]
+    );
+
+    characterList.add(character);
+    notifyListeners();
+  }
+
+  
 }
+
+

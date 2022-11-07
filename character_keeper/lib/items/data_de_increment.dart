@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class DataDeIncrement extends StatelessWidget {
   final TextEditingController controller;
+  int startingValue;
   DataDeIncrement({
     Key? key,
+    required this.startingValue,
     required this.controller,
   }) : super(key: key);
 

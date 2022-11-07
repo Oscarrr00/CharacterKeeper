@@ -35,6 +35,8 @@ class Character {
    var inventory = [];
    var notes = [];
 
+   var spell_slots = [];
+
 
 
   Character({
@@ -65,7 +67,8 @@ class Character {
    required this.abilities,
    required this.inventory,
    required this.spells,
-   required this.notes
+   required this.notes,
+   required this.spell_slots,
   });
 
   factory Character.fromJson(Map<String, dynamic> json)
@@ -132,6 +135,7 @@ class Character {
       abilities: abilities,
       inventory: inventory,
       notes: notes,
+      spell_slots: json["spell_slots"],
     );
 
   }
@@ -247,6 +251,17 @@ const myCharacter =
       "title": "Khazan, the Sunsword",
       "description": "Khazan is currently under Strahd's possesion, and is probably being held at Castle Ravenloft."
     }
+  ],
+  "spell_slots": [
+    [4, 1],
+    [3, 1],
+    [2, 1],
+    [0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0]
   ]
 
 };

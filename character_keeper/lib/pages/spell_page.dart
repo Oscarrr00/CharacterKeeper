@@ -16,16 +16,17 @@ class SpellPage extends StatelessWidget {
     dynamic nameSpell = TextEditingController();
     dynamic lvlSpell = TextEditingController();
     List spells = context.watch<Character_Provide>().currentCharacter.spells;
+    List spellSlots = context.watch<Character_Provide>().currentCharacter.spell_slots;
     dynamic spellsController = [
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController()
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
+      [TextEditingController(), TextEditingController(),],
     ];
     Future<void> _showMyDialog() async {
       return showDialog<void>(
@@ -239,9 +240,9 @@ class SpellPage extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: DataDeIncrementSmaller(
+                                                      startingValue: spellSlots[index][0],
                                                       controller:
-                                                          spellsController[
-                                                              index]),
+                                                          spellsController[index][0]),
                                                 ),
                                               ],
                                             ),
@@ -251,9 +252,9 @@ class SpellPage extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: DataDeIncrementSmaller(
+                                                    startingValue: spellSlots[index][1],
                                                       controller:
-                                                          spellsController[
-                                                              index]),
+                                                          spellsController[index][1]),
                                                 ),
                                               ],
                                             ),

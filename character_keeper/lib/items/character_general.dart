@@ -1,23 +1,29 @@
 import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/pages/details_character.dart';
+import 'package:character_keeper/pages/page_select.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ItemCharacter extends StatelessWidget {
-  final Character character;
+  int index;
   ItemCharacter({
     Key? key,
-    required this.character,
+    required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
+    Character character = context.watch<Character_Provide>().characterList[index];
     return Padding(
       padding: const EdgeInsets.only(left: 50.0, right: 50.0, top: 25.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () {      
+          context.read<Character_Provide>().setCurrentCharacter(index);
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => DetailsCharacter(character: character),
+              builder: (context) => PageSelect(),
             ),
           );
         },

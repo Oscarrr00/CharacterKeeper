@@ -5,17 +5,19 @@ import 'package:character_keeper/items/data_hitpoints.dart';
 import 'package:character_keeper/items/data_primary_stats.dart';
 import 'package:character_keeper/items/square_stats.dart';
 import 'package:character_keeper/objects/character.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailsCharacter extends StatelessWidget {
-  final Character character;
+
   const DetailsCharacter({
     Key? key,
-    required this.character,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Character character = context.watch<Character_Provide>().currentCharacter;
     ShapeDecoration decoration_border = new ShapeDecoration(
         shape: BeveledRectangleBorder(
             side: BorderSide(
@@ -62,13 +64,16 @@ class DetailsCharacter extends StatelessWidget {
                 children: [
                   DataHitpoints(
                       first_title: "Maximum",
-                      controller: maxHitpointsController),
+                      controller: maxHitpointsController,
+                      startingValue: character.maximum_hitpoints,),
                   DataHitpoints(
                       first_title: "Current",
-                      controller: currentHitpointsController),
+                      controller: currentHitpointsController,
+                      startingValue: character.current_hitpoints,),
                   DataHitpoints(
                       first_title: "Temporary",
-                      controller: temporaryHitpointsController),
+                      controller: temporaryHitpointsController,
+                      startingValue: character.temporary_hitpoints),
                 ],
               ),
               SizedBox(height: 10),
@@ -85,7 +90,7 @@ class DetailsCharacter extends StatelessWidget {
                       height: 42,
                       width: 100,
                       decoration: decoration_border,
-                      child: DataDeIncrement(controller: hitDiceController)),
+                      child: DataDeIncrement(controller: hitDiceController, startingValue: character.hit_dice_amount,)),
                   Container(
                       alignment: Alignment.center,
                       height: 42,
