@@ -15,7 +15,7 @@ class SpellPage extends StatelessWidget {
     dynamic subclasses;
     dynamic nameSpell = TextEditingController();
     dynamic lvlSpell = TextEditingController();
-    List spells = context.watch<Character_Provide>().spells;
+    List spells = context.watch<Character_Provide>().currentCharacter.spells;
     dynamic spellsController = [
       TextEditingController(),
       TextEditingController(),
@@ -145,7 +145,7 @@ class SpellPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancelar'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -155,8 +155,7 @@ class SpellPage extends StatelessWidget {
                 onPressed: () {
                   context
                       .read<Character_Provide>()
-                      .addSpell(nameSpell.text, lvlSpell.text);
-                  spells = context.read<Character_Provide>().spells;
+                      .addSpell(nameSpell.text, int.parse(lvlSpell.text));
                   Navigator.of(context).pop();
                 },
               ),
@@ -314,13 +313,13 @@ class SpellPage extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           Text(
-                                              "Lvl. ${spells[index]["level"]}"),
+                                              "Lvl. ${spells[index].level}"),
                                           Expanded(
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Text(
-                                                  "${spells[index]["name"]}"),
+                                                  "${spells[index].name}"),
                                             ),
                                           ),
                                           IconButton(
@@ -329,12 +328,12 @@ class SpellPage extends StatelessWidget {
                                                 spellFound = await context
                                                     .read<Character_Provide>()
                                                     .findSpell(
-                                                        "${spells[index]["name"]}");
+                                                        "${spells[index].name}");
                                                 if (spellFound.length == 0) {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                     content: Text(
-                                                      "El hechizo no fue encontrado",
+                                                      "The spell could not be found",
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                       ),
@@ -359,7 +358,7 @@ class SpellPage extends StatelessWidget {
                                                     .deleteSpell(index);
                                                 spells = context
                                                     .read<Character_Provide>()
-                                                    .spells;
+                                                    .currentCharacter.spells;
                                               })
                                         ],
                                       ),

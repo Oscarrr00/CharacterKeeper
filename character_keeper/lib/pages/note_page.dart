@@ -9,7 +9,7 @@ class NotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic titleNote = TextEditingController();
     dynamic textNote = TextEditingController();
-    List notes = context.read<Character_Provide>().notes;
+    List notes = context.watch<Character_Provide>().currentCharacter.notes;
     Future<void> _showDialogAddNote() async {
       return showDialog<void>(
         context: context,
@@ -63,7 +63,6 @@ class NotePage extends StatelessWidget {
                   context
                       .read<Character_Provide>()
                       .addNote(titleNote.text, textNote.text);
-                  notes = context.read<Character_Provide>().notes;
                   titleNote.text = "";
                   textNote.text = "";
                   Navigator.of(context).pop();
@@ -132,7 +131,7 @@ class NotePage extends StatelessWidget {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          "${notes[index]["title"]}",
+                                                          "${notes[index].title}",
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -142,7 +141,7 @@ class NotePage extends StatelessWidget {
                                                               .ellipsis,
                                                         )),
                                                     Text(
-                                                      "${notes[index]["description"]}",
+                                                      "${notes[index].description}",
                                                       maxLines: 4,
                                                       overflow:
                                                           TextOverflow.ellipsis,

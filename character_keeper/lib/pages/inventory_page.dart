@@ -12,7 +12,7 @@ class InventoryPage extends StatelessWidget {
     dynamic nameItem = TextEditingController();
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
-    List inventory = context.read<Character_Provide>().inventory;
+    List inventory = context.watch<Character_Provide>().currentCharacter.inventory;
     for (int i = 0; i < inventory.length; i++) {
       itemAcountController.add(TextEditingController());
     }
@@ -74,7 +74,7 @@ class InventoryPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancelar'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   nameItem.text = "";
                   descItem.text = "";
@@ -87,7 +87,6 @@ class InventoryPage extends StatelessWidget {
                 onPressed: () {
                   context.read<Character_Provide>().addItem(nameItem.text,
                       descItem.text, int.parse(quantityItem.text));
-                  inventory = context.read<Character_Provide>().inventory;
                   nameItem.text = "";
                   descItem.text = "";
                   quantityItem.text = "";
@@ -170,7 +169,7 @@ class InventoryPage extends StatelessWidget {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          "${inventory[index]["name"]}",
+                                                          "${inventory[index].name}",
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -180,7 +179,7 @@ class InventoryPage extends StatelessWidget {
                                                               .ellipsis,
                                                         )),
                                                     Text(
-                                                      "${inventory[index]["description"]}",
+                                                      "${inventory[index].description}",
                                                       maxLines: 4,
                                                       overflow:
                                                           TextOverflow.ellipsis,

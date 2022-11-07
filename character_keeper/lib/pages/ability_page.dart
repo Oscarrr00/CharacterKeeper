@@ -1,10 +1,15 @@
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AbilityPage extends StatelessWidget {
   const AbilityPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    List abilities = context.watch<Character_Provide>().currentCharacter.abilities;
+
     return Container(
           child: Padding(
         padding: EdgeInsets.all(8),
@@ -36,12 +41,13 @@ class AbilityPage extends StatelessWidget {
                   Expanded(
                       child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: GridView.count(
+                    child: abilities.length <= 0 ? Container() :                    
+                    GridView.count(
                       crossAxisCount: 1,
                       mainAxisSpacing: 4,
                       childAspectRatio: 3.0,
                       children: List.generate(
-                          15,
+                          abilities.length,
                           (index) => Container(
                                 padding: EdgeInsets.all(4),
                                 color: index % 2 == 1 ? Colors.grey[350] : null,
@@ -57,7 +63,7 @@ class AbilityPage extends StatelessWidget {
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: Text(
-                                                    "Darkvision",
+                                                    abilities[index].name,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -66,7 +72,7 @@ class AbilityPage extends StatelessWidget {
                                                         TextOverflow.ellipsis,
                                                   )),
                                               Text(
-                                                "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+                                                abilities[index].description,
                                                 maxLines: 4,
                                                 overflow: TextOverflow.ellipsis,
                                               )
@@ -79,7 +85,9 @@ class AbilityPage extends StatelessWidget {
                                     IconButton(
                                         icon: Icon(Icons.delete),
                                         splashColor: Colors.red[200],
-                                        onPressed: () {})
+                                        onPressed: () {
+                                          context.read<Character_Provide>().deleteAbility(index);
+                                        })
                                   ],
                                 ),
                               )),

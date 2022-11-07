@@ -13,7 +13,7 @@ class DataHitpoints extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MediaQuery.of(context).size.height / 7.005,
+        width: MediaQuery.of(context).size.height / 7.15,
         height: 84,
         child: Column(
           children: [

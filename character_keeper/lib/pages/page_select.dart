@@ -1,7 +1,5 @@
-import 'package:character_keeper/items/character_app_bar.dart';
 import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/pages/ability_and_proficiency_page.dart';
-import 'package:character_keeper/pages/ability_page.dart';
 import 'package:character_keeper/pages/details_character.dart';
 import 'package:character_keeper/pages/inventory_page.dart';
 import 'package:character_keeper/pages/note_page.dart';
@@ -9,49 +7,24 @@ import 'package:character_keeper/pages/spell_page.dart';
 import 'package:flutter/material.dart';
 
 
-dynamic characters = [
-      {
-        "name": "Character #1",
-        "race": "Human",
-        "class": "Bard",
-        "armor": 15,
-        "level": 5,
-        "dexterity": 2,
-        "strength": 2,
-        "constitution": 1,
-        "intelligence": 0,
-        "wisdom": 1,
-        "charisma": 1,
-        "speed": 30,
-        "hitDice": "d8"
-      },
-      {
-        "name": "Character #2",
-        "race": "Human",
-        "class": "Bard",
-        "armor": 15,
-        "level": 5,
-        "dexterity": 2,
-        "strength": 2,
-        "constitution": 1,
-        "intelligence": 0,
-        "wisdom": 1,
-        "charisma": 1,
-        "speed": 30,
-        "hitDice": "d8"
-      }
-    ];
-
-
 class PageSelect extends StatefulWidget {
-  const PageSelect({super.key});
+  Character character;
+
+  PageSelect({
+    required this.character
+  });
 
   @override
-  State<PageSelect> createState() => _PageSelectState();
+  State<PageSelect> createState() => _PageSelectState(character: character);
 }
 
 class _PageSelectState extends State<PageSelect> {
+  Character character;
   int _selectedIndex = 2;
+
+  _PageSelectState({
+    required this.character
+  });
   
   static List<Widget> _widgetOptions = <Widget>[    
     AbilityAndProficiencyPage(),
@@ -77,9 +50,9 @@ class _PageSelectState extends State<PageSelect> {
             SizedBox(),
             Column(
               children: [
-                Text("My character #1"),
+                Text(character.name),
                 Text(
-                  "Lvl 5 Human Bard",
+                  "Lvl ${character.level} ${character.race} ${character.character_class}",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                 )
               ],

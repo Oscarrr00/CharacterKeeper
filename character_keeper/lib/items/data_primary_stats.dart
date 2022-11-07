@@ -1,14 +1,18 @@
+import 'package:character_keeper/items/proficiency_circle.dart';
 import 'package:flutter/material.dart';
 
 class DataPrimaryStats extends StatelessWidget {
   final String stat;
   final String stat_modifier;
   final int stat_number;
+  final int proficiency;
+
   DataPrimaryStats({
     Key? key,
     required this.stat,
     required this.stat_modifier,
     required this.stat_number,
+    required this.proficiency,
   }) : super(key: key);
 
   @override
@@ -22,13 +26,10 @@ class DataPrimaryStats extends StatelessWidget {
         width: MediaQuery.of(context).size.height / 8,
         height: MediaQuery.of(context).size.height / 6,
         child: Column(children: [
-          Text("${stat}", style: TextStyle(fontSize: 18)),
+          Text("${stat}", style: TextStyle(fontSize: 16)),
           Expanded(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              CircleAvatar(
-                radius: 12,
-                backgroundColor: Colors.black,
-              ),
+              ProficiencyCircle(radius: 12, status: this.proficiency),
               SizedBox(width: 15),
               Text("${stat_modifier}", style: TextStyle(fontSize: 18)),
             ]),
