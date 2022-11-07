@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "944917578107",
+    "project_id": "characterkeeper-be450",
+    "storage_bucket": "characterkeeper-be450.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944917578107:android:51a6c72b77e21849acbdde",
+        "android_client_info": {
+          "package_name": "com.example.character_keeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944917578107-r86q6f2kcsqvb2p01jqtke25o59ui6om.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.character_keeper",
+            "certificate_hash": "2c7d9d66b9ee168e3d8b9b475c1bbdc122ef4970"
+          }
+        },
+        {
+          "client_id": "944917578107-3qmp3q96tgj8ac2ddigpgslrbso4cs3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtudLkU3SvlZQuZaeb49oP6KUG3vEJeCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944917578107-3qmp3q96tgj8ac2ddigpgslrbso4cs3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
