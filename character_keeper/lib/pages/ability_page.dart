@@ -3,12 +3,79 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AbilityPage extends StatelessWidget {
-  const AbilityPage({super.key});
+  AbilityPage({super.key});
+
+  dynamic abilityName = TextEditingController();
+  dynamic abilityDescription = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
     List abilities = context.watch<Character_Provide>().currentCharacter.abilities;
+
+    Future<void> _showDialogAddAbility() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Adding an ability'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: abilityName,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Ability name",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Ability description",
+                          contentPadding: EdgeInsets.all(8.0),
+                          border: OutlineInputBorder(),
+                        ),
+                        maxLines: 10,
+                        controller: abilityDescription),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  abilityName.text = "";
+                  abilityDescription.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Done'),
+                onPressed: () {
+                  context
+                      .read<Character_Provide>()
+                      .addAbility(abilityName.text, abilityDescription.text);
+                  abilityName.text = "";
+                  abilityDescription.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Container(
           child: Padding(
@@ -100,7 +167,9 @@ class AbilityPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                      child: Text("Add an ability"), onPressed: () {}),
+                      child: Text("Add an ability"), onPressed: () {
+                        _showDialogAddAbility();
+                      }),
                 )
               ],
             )
