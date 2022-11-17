@@ -1,5 +1,8 @@
 import 'package:character_keeper/items/show_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/character_provider.dart';
 
 class Profile extends StatelessWidget {
   final dynamic profile;
@@ -58,7 +61,9 @@ class Profile extends StatelessWidget {
                 minWidth: 300),
             SizedBox(height: 30),
             MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<Character_Provide>().logoutUser();
+                },
                 child: Text("Logout"),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),

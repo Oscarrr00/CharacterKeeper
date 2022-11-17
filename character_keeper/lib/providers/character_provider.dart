@@ -4,6 +4,7 @@ import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/objects/inventory_entry.dart';
 import 'package:character_keeper/objects/note.dart';
 import 'package:character_keeper/objects/spell.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -139,13 +140,14 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future createUser(String email, String password) async {
+  Future createUser(String email, String password, String username) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      print(email);
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -156,6 +158,26 @@ class Character_Provide with ChangeNotifier {
       }
     } catch (e) {
       print(e);
+    }
+    print(password);
+    await _createUserCollectionFirebase(
+        FirebaseAuth.instance.currentUser!.uid, username);
+  }
+
+  Future<void> _createUserCollectionFirebase(
+      String uid, String username) async {
+    var userDoc =
+        await FirebaseFirestore.instance.collection("User").doc(uid).get();
+    // Si no exite el doc, lo crea con valor default lista vacia
+    if (!userDoc.exists) {
+      await FirebaseFirestore.instance.collection("User").doc(uid).set(
+        {
+          "username": username,
+        },
+      );
+    } else {
+      // Si ya existe el doc return
+      return;
     }
   }
 
@@ -170,5 +192,9 @@ class Character_Provide with ChangeNotifier {
         print('Wrong password provided for that user.');
       }
     }
+  }
+
+  Future logoutUser() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

@@ -1,6 +1,9 @@
 import 'package:character_keeper/items/input_text.dart';
 import 'package:character_keeper/pages/characters_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/character_provider.dart';
 
 class NewAcount extends StatelessWidget {
   const NewAcount({
@@ -14,6 +17,7 @@ class NewAcount extends StatelessWidget {
     var newPasswordController = TextEditingController();
     var confirmPasswordController = TextEditingController();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(title: Text("Create a new acount")),
         body: Column(
           children: [
@@ -45,11 +49,10 @@ class NewAcount extends StatelessWidget {
             SizedBox(height: 60),
             MaterialButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CharactersUser(),
-                    ),
-                  );
+                  context.read<Character_Provide>().createUser(
+                      emailController.text,
+                      confirmPasswordController.text,
+                      newUsernameController.text);
                 },
                 child: Text("Done"),
                 color: Colors.grey,
