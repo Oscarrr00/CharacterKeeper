@@ -1,7 +1,9 @@
 import 'package:character_keeper/items/input_text.dart';
 import 'package:character_keeper/pages/characters_page.dart';
 import 'package:character_keeper/pages/new_acount.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -44,11 +46,8 @@ class HomePage extends StatelessWidget {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => CharactersUser(),
-                            ),
-                          );
+                          context.read<Character_Provide>().loginUser(
+                              usernameController.text, passwordController.text);
                         },
                         color: Color.fromARGB(255, 101, 26, 21),
                         child: Text("Login",
