@@ -11,10 +11,7 @@ class CharactersUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic profile = {
-      "username": "Masterzombie",
-      "email": "Masterzombie@gmail.com",
-    };
+    dynamic profile;
 
     dynamic characterName = TextEditingController();
     dynamic characterLevel = TextEditingController();
@@ -75,7 +72,6 @@ class CharactersUser extends StatelessWidget {
                             borderSide:
                                 BorderSide(width: 2, color: Colors.black),
                           ))),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Row(
@@ -115,7 +111,11 @@ class CharactersUser extends StatelessWidget {
               TextButton(
                 child: const Text('Done'),
                 onPressed: () {
-                  context.read<Character_Provide>().addCharacter(characterName.text, characterClass.text, int.parse(characterLevel.text), characterRace.text);
+                  context.read<Character_Provide>().addCharacter(
+                      characterName.text,
+                      characterClass.text,
+                      int.parse(characterLevel.text),
+                      characterRace.text);
                   characterName.text = "";
                   characterClass.text = "";
                   characterLevel.text = "";
@@ -128,7 +128,7 @@ class CharactersUser extends StatelessWidget {
         },
       );
     }
-  
+
     List characters = context.watch<Character_Provide>().characterList;
 
     return Scaffold(
@@ -138,7 +138,9 @@ class CharactersUser extends StatelessWidget {
           children: [
             Text("Your Characters"),
             IconButton(
-                onPressed: () {
+                onPressed: () async {
+                  profile =
+                      await context.read<Character_Provide>().getProfile();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => Profile(profile: profile),
@@ -156,22 +158,19 @@ class CharactersUser extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 itemCount: characters.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ItemCharacter(index: index,);
+                  return ItemCharacter(
+                    index: index,
+                  );
                 },
               ),
             ),
             FloatingActionButton(
-              child: Icon(Icons.add),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: (() {
-                _showDialogAddCharacter();
-            }))
+                child: Icon(Icons.add),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                onPressed: (() {
+                  _showDialogAddCharacter();
+                }))
           ],
         ));
   }
-
-
-  
 }
-
-

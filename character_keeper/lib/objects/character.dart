@@ -125,6 +125,37 @@ class Character {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "race": race,
+      "character_class": character_class,
+      "level": level,
+      "armor_class": armor_class,
+      "initiative": initiative,
+      "speed": speed,
+      "maximum_hitpoints": maximum_hitpoints,
+      "current_hitpoints": current_hitpoints,
+      "temporary_hitpoints": temporary_hitpoints,
+      "hit_dice": hit_dice,
+      "hit_dice_amount": hit_dice_amount,
+      "strength": strength,
+      "dexterity": dexterity,
+      "constitution": constitution,
+      "intelligence": intelligence,
+      "wisdom": wisdom,
+      "charisma": charisma,
+      "saving_throw_proficiencies": saving_throw_proficiencies,
+      "proficiency_bonus": proficiency_bonus,
+      "proficiencies": proficiencies,
+      "spells": spells,
+      "abilities": abilities,
+      "inventory": inventory,
+      "notes": notes,
+      "spell_slots": spell_slots,
+    };
+  }
+
   static int getModifier(int score) {
     score = score - (score % 2);
     score -= 10;

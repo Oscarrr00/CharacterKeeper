@@ -77,8 +77,8 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  void addCharacter(
-      String name, String character_class, int level, String race) {
+  Future addCharacter(
+      String name, String character_class, int level, String race) async {
     Character character = Character(
         name: name,
         character_class: character_class,
@@ -135,7 +135,12 @@ class Character_Provide with ChangeNotifier {
           [0, 0],
           [0, 0],
         ]);
+    var currentUser = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid);
 
+    print(character.toJson());
+    await currentUser.collection("Character").add(character.toJson());
     characterList.add(character);
     notifyListeners();
   }
@@ -161,11 +166,11 @@ class Character_Provide with ChangeNotifier {
     }
     print(password);
     await _createUserCollectionFirebase(
-        FirebaseAuth.instance.currentUser!.uid, username);
+        FirebaseAuth.instance.currentUser!.uid, username, email);
   }
 
   Future<void> _createUserCollectionFirebase(
-      String uid, String username) async {
+      String uid, String username, String email) async {
     var userDoc =
         await FirebaseFirestore.instance.collection("User").doc(uid).get();
     // Si no exite el doc, lo crea con valor default lista vacia
@@ -173,6 +178,7 @@ class Character_Provide with ChangeNotifier {
       await FirebaseFirestore.instance.collection("User").doc(uid).set(
         {
           "username": username,
+          "email": email,
         },
       );
     } else {
@@ -196,5 +202,14 @@ class Character_Provide with ChangeNotifier {
 
   Future logoutUser() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  Future<Map<String, dynamic>> getProfile() async {
+    var user = await FirebaseFirestore.instance
+        .collection("User")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    var profile = user.data();
+    return profile!;
   }
 }
