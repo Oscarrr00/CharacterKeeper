@@ -1,4 +1,4 @@
-class Spell{
+class Spell {
   int level;
   String name;
 
@@ -6,4 +6,8 @@ class Spell{
     required this.level,
     required this.name,
   });
+
+  Map<String, dynamic> toJson() {
+    return {"name": name, "level": level};
+  }
 }

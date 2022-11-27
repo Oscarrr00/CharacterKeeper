@@ -2,11 +2,11 @@ import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DataDeIncrementSmaller extends StatelessWidget {
+class DataDeIncrementMedium extends StatelessWidget {
   final TextEditingController controller;
   int startingValue;
   int index;
-  DataDeIncrementSmaller({
+  DataDeIncrementMedium({
     Key? key,
     required this.startingValue,
     required this.controller,
@@ -20,8 +20,8 @@ class DataDeIncrementSmaller extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 25,
-          width: 30,
+          height: 35,
+          width: 40,
           child: TextFormField(
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -34,20 +34,18 @@ class DataDeIncrementSmaller extends StatelessWidget {
             ),
             onFieldSubmitted: (value) async {
               var num = int.parse(value);
-              await context
-                  .read<Character_Provide>()
-                  .updateSpellslot(index, num);
+              await context.read<Character_Provide>().updateAmount(index, num);
             },
           ),
         ),
         Container(
-          height: 25.0,
+          height: 35.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 12.5,
+                height: 17.5,
                 decoration: ShapeDecoration(
                     shape: BeveledRectangleBorder(
                         side: BorderSide(
@@ -60,16 +58,16 @@ class DataDeIncrementSmaller extends StatelessWidget {
                     controller.text = num.toString();
                     await context
                         .read<Character_Provide>()
-                        .updateSpellslot(index, num);
+                        .updateAmount(index, num);
                   },
                   child: Icon(
                     Icons.arrow_drop_up,
-                    size: 11.0,
+                    size: 15.0,
                   ),
                 ),
               ),
               Container(
-                height: 12.5,
+                height: 17.5,
                 decoration: ShapeDecoration(
                     shape: BeveledRectangleBorder(
                         side: BorderSide(
@@ -82,11 +80,11 @@ class DataDeIncrementSmaller extends StatelessWidget {
                     controller.text = num.toString();
                     await context
                         .read<Character_Provide>()
-                        .updateSpellslot(index, num);
+                        .updateAmount(index, num);
                   },
                   child: Icon(
                     Icons.arrow_drop_down,
-                    size: 11.0,
+                    size: 15.0,
                   ),
                 ),
               ),

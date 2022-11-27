@@ -140,7 +140,7 @@ class CharactersUser extends StatelessWidget {
             IconButton(
                 onPressed: () async {
                   profile =
-                      await context.read<Character_Provide>().getProfile();
+                      await context.read<Character_Provide>().logoutUser();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => Profile(profile: profile),

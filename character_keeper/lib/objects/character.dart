@@ -235,15 +235,5 @@ const myCharacter = {
           "Khazan is currently under Strahd's possesion, and is probably being held at Castle Ravenloft."
     }
   ],
-  "spell_slots": [
-    [4, 1],
-    [3, 1],
-    [2, 1],
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0]
-  ]
+  "spell_slots": [4, 1, 3, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };

@@ -1,4 +1,4 @@
-import 'package:character_keeper/items/data_de_incremente_smaller.dart';
+import 'package:character_keeper/items/data_de_increment_medium.dart';
 import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,8 @@ class InventoryPage extends StatelessWidget {
     dynamic nameItem = TextEditingController();
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
-    List inventory = context.watch<Character_Provide>().currentCharacter.inventory;
+    List inventory =
+        context.watch<Character_Provide>().currentCharacter.inventory;
     for (int i = 0; i < inventory.length; i++) {
       itemAcountController.add(TextEditingController());
     }
@@ -149,13 +150,17 @@ class InventoryPage extends StatelessWidget {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                DataDeIncrementSmaller(
-                                                  startingValue: inventory[index].amount,
+                                                SizedBox(),
+                                                DataDeIncrementMedium(
+                                                    startingValue:
+                                                        inventory[index].amount,
                                                     controller:
                                                         itemAcountController[
-                                                            index])
+                                                            index],
+                                                    index: index),
+                                                SizedBox(height: 20),
                                               ],
                                             ),
                                           ),
@@ -179,12 +184,17 @@ class InventoryPage extends StatelessWidget {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         )),
-                                                    Text(
-                                                      "${inventory[index].description}",
-                                                      maxLines: 4,
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "${inventory[index].description}",
+                                                        maxLines: 4,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
                                                     )
                                                   ],
                                                 ),

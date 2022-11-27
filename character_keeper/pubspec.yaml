@@ -75,6 +75,14 @@ flutter:
       - asset: assets/fonts/dancing_regular.ttf
       - asset: assets/fonts/dancing_semiBold.ttf
       - asset: assets/fonts/dancing_medium.ttf
+  - family: Araboto
+    fonts:
+      - asset: assets/fonts/Araboto_Black_400.ttf
+      - asset: assets/fonts/Araboto_Bold_400.ttf
+      - asset: assets/fonts/Araboto_Light_400.ttf
+      - asset: assets/fonts/Araboto_Medium_400.ttf
+      - asset: assets/fonts/Araboto_Normal_400.ttf
+      - asset: assets/fonts/Araboto_Thin_400.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

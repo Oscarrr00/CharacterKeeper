@@ -15,8 +15,6 @@ class HttpHandler {
     var urlSpell = url + nameSpell;
     var requestStatus = await http.get(Uri.parse(urlSpell));
 
-    print(requestStatus.body);
-
     if (requestStatus.statusCode == 200) {
       Map<String, dynamic> spellJson = jsonDecode(requestStatus.body);
 

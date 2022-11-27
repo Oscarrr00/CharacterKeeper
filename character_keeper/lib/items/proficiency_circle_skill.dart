@@ -1,18 +1,31 @@
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ProficiencyCircle extends StatelessWidget {
+class ProficiencyCircleSkill extends StatelessWidget {
   double radius;
   int status;
+  int index;
 
-  ProficiencyCircle({
+  ProficiencyCircleSkill({
     required this.radius,
     required this.status,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        if (this.status == 1)
+          await context
+              .read<Character_Provide>()
+              .updateProficiency(this.index, 0);
+        if (this.status == 0)
+          await context
+              .read<Character_Provide>()
+              .updateProficiency(this.index, 1);
+      },
       child: CircleAvatar(
         radius: this.radius + 3,
         backgroundColor: Colors.black,

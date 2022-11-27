@@ -22,10 +22,7 @@ class HomePage extends StatelessWidget {
             children: [
               Text("D&D Character Keeper",
                   style: TextStyle(
-                      fontSize: 49,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Dancing",
-                      color: Colors.white),
+                      fontSize: 49, fontFamily: "Araboto", color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
               InputText(

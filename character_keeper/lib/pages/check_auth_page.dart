@@ -1,7 +1,9 @@
 import 'package:character_keeper/pages/characters_page.dart';
 import 'package:character_keeper/pages/home_page.dart';
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CheckAuthPage extends StatelessWidget {
   @override

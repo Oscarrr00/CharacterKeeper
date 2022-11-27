@@ -14,13 +14,14 @@ class ItemCharacter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    Character character = context.watch<Character_Provide>().characterList[index];
+    print(context.watch<Character_Provide>().characterList[index]);
+    Character character =
+        context.watch<Character_Provide>().characterList[index];
     return Padding(
       padding: const EdgeInsets.only(left: 50.0, right: 50.0, top: 25.0),
       child: GestureDetector(
-        onTap: () {      
-          context.read<Character_Provide>().setCurrentCharacter(index);
+        onTap: () async {
+          await context.read<Character_Provide>().setCurrentCharacter(index);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => PageSelect(),

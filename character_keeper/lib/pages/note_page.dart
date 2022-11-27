@@ -135,16 +135,21 @@ class NotePage extends StatelessWidget {
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold),
+                                                                      .bold,
+                                                              fontSize: 16),
                                                           maxLines: 1,
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         )),
-                                                    Text(
-                                                      "${notes[index].description}",
-                                                      maxLines: 4,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "${notes[index].description}",
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
                                                     )
                                                   ],
                                                 ),

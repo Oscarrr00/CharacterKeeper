@@ -27,6 +27,7 @@ class DataDeIncrement extends StatelessWidget {
             keyboardType: TextInputType.numberWithOptions(
               decimal: false,
             ),
+            onFieldSubmitted: (value) {},
           ),
         ),
         Container(

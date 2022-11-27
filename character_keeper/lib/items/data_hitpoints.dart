@@ -13,17 +13,20 @@ class DataHitpoints extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     controller.text = startingValue.toString();
     return Container(
-        width: MediaQuery.of(context).size.height / 7.15,
+        width: MediaQuery.of(context).size.height / 7.40,
         height: 84,
         child: Column(
           children: [
             Text("${first_title}", style: TextStyle(fontSize: 14)),
             Text("Hitpoints", style: TextStyle(fontSize: 14)),
             SizedBox(height: 3),
-            DataDeIncrement(controller: controller, startingValue: startingValue,)
+            DataDeIncrement(
+              controller: controller,
+              startingValue: startingValue,
+            )
           ],
         ),
         decoration: ShapeDecoration(

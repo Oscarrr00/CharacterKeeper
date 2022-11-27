@@ -10,8 +10,8 @@ class AbilityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    List abilities = context.watch<Character_Provide>().currentCharacter.abilities;
+    List abilities =
+        context.watch<Character_Provide>().currentCharacter.abilities;
 
     Future<void> _showDialogAddAbility() async {
       return showDialog<void>(
@@ -78,7 +78,7 @@ class AbilityPage extends StatelessWidget {
     }
 
     return Container(
-          child: Padding(
+      child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
@@ -108,57 +108,70 @@ class AbilityPage extends StatelessWidget {
                   Expanded(
                       child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: abilities.length <= 0 ? Container() :                    
-                    GridView.count(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 4,
-                      childAspectRatio: 3.0,
-                      children: List.generate(
-                          abilities.length,
-                          (index) => Container(
-                                padding: EdgeInsets.all(4),
-                                color: index % 2 == 1 ? Colors.grey[350] : null,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: InkWell(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    abilities[index].name,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  )),
-                                              Text(
-                                                abilities[index].description,
-                                                maxLines: 4,
-                                                overflow: TextOverflow.ellipsis,
-                                              )
-                                            ],
+                    child: abilities.length <= 0
+                        ? Container()
+                        : GridView.count(
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 4,
+                            childAspectRatio: 3.0,
+                            children: List.generate(
+                                abilities.length,
+                                (index) => Container(
+                                      padding: EdgeInsets.all(4),
+                                      color: index % 2 == 1
+                                          ? Colors.grey[350]
+                                          : null,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          abilities[index].name,
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        )),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        abilities[index]
+                                                            .description,
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              onTap: () {},
+                                            ),
                                           ),
-                                        ),
-                                        onTap: () {},
+                                          IconButton(
+                                              icon: Icon(Icons.delete),
+                                              splashColor: Colors.red[200],
+                                              onPressed: () {
+                                                context
+                                                    .read<Character_Provide>()
+                                                    .deleteAbility(index);
+                                              })
+                                        ],
                                       ),
-                                    ),
-                                    IconButton(
-                                        icon: Icon(Icons.delete),
-                                        splashColor: Colors.red[200],
-                                        onPressed: () {
-                                          context.read<Character_Provide>().deleteAbility(index);
-                                        })
-                                  ],
-                                ),
-                              )),
-                    ),
+                                    )),
+                          ),
                   ))
                 ],
               ),
@@ -167,7 +180,8 @@ class AbilityPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                      child: Text("Add an ability"), onPressed: () {
+                      child: Text("Add an ability"),
+                      onPressed: () {
                         _showDialogAddAbility();
                       }),
                 )
