@@ -5,11 +5,13 @@ class DataHitpoints extends StatelessWidget {
   final TextEditingController controller;
   final String first_title;
   int startingValue;
+  final String nameValue;
   DataHitpoints({
     Key? key,
     required this.startingValue,
     required this.controller,
     required this.first_title,
+    required this.nameValue,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,7 @@ class DataHitpoints extends StatelessWidget {
             Text("${first_title}", style: TextStyle(fontSize: 14)),
             Text("Hitpoints", style: TextStyle(fontSize: 14)),
             SizedBox(height: 3),
-            DataDeIncrement(
-              controller: controller,
-              startingValue: startingValue,
-            )
+            DataDeIncrement(controller: controller, nameValue: nameValue)
           ],
         ),
         decoration: ShapeDecoration(

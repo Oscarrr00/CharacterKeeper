@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:character_keeper/items/data_de_increment.dart';
 import 'package:character_keeper/items/data_hitpoints.dart';
 import 'package:character_keeper/items/data_primary_stats.dart';
+import 'package:character_keeper/items/square_data_edit.dart';
 import 'package:character_keeper/items/square_stats.dart';
 import 'package:character_keeper/objects/character.dart';
 import 'package:character_keeper/providers/character_provider.dart';
@@ -26,7 +27,26 @@ class DetailsCharacter extends StatelessWidget {
     var currentHitpointsController = TextEditingController();
     var temporaryHitpointsController = TextEditingController();
     var hitDiceController = TextEditingController();
+    hitDiceController.text = "${character.hit_dice_amount}";
     var armor_classController = TextEditingController();
+    var dexterityController = TextEditingController();
+    dexterityController.text = "${character.dexterity}";
+    var intelligenceController = TextEditingController();
+    intelligenceController.text = "${character.intelligence}";
+    var strengthController = TextEditingController();
+    strengthController.text = "${character.strength}";
+    var constitutionController = TextEditingController();
+    constitutionController.text = "${character.constitution}";
+    var wisdomController = TextEditingController();
+    wisdomController.text = "${character.wisdom}";
+    var charismaController = TextEditingController();
+    charismaController.text = "${character.charisma}";
+
+    var speedController = TextEditingController();
+    speedController.text = "${character.speed}";
+
+    var hitDiceNumberController = TextEditingController();
+    hitDiceNumberController.text = character.hit_dice;
     armor_classController.text = "${character.armor_class}";
     return SingleChildScrollView(
       child: Padding(
@@ -45,7 +65,7 @@ class DetailsCharacter extends StatelessWidget {
                         width: 35,
                         child: TextFormField(
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 19),
+                          style: TextStyle(fontSize: 21),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                           ),
@@ -53,7 +73,12 @@ class DetailsCharacter extends StatelessWidget {
                           keyboardType: TextInputType.numberWithOptions(
                             decimal: false,
                           ),
-                          onFieldSubmitted: (value) {},
+                          onFieldSubmitted: (value) {
+                            int num = int.parse(value);
+                            context
+                                .read<Character_Provide>()
+                                .updateArmorClass(num);
+                          },
                         ),
                       ),
                       Text("Armor", style: TextStyle(fontSize: 14)),
@@ -69,26 +94,28 @@ class DetailsCharacter extends StatelessWidget {
               SquareData(
                   content: Character.getModifier(character.dexterity),
                   name_content: "Initiative"),
-              SquareData(content: character.speed, name_content: "Speed"),
+              SquareDataEdit(
+                  name_content: "Speed", controller: speedController),
             ],
           ),
           SizedBox(height: 10),
           Row(
             children: [
               DataHitpoints(
-                first_title: "Maximum",
-                controller: maxHitpointsController,
-                startingValue: character.maximum_hitpoints,
-              ),
+                  first_title: "Maximum",
+                  controller: maxHitpointsController,
+                  startingValue: character.maximum_hitpoints,
+                  nameValue: "maximum_hitpoints"),
               DataHitpoints(
-                first_title: "Current",
-                controller: currentHitpointsController,
-                startingValue: character.current_hitpoints,
-              ),
+                  first_title: "Current",
+                  controller: currentHitpointsController,
+                  startingValue: character.current_hitpoints,
+                  nameValue: "current_hitpoints"),
               DataHitpoints(
                   first_title: "Temporary",
                   controller: temporaryHitpointsController,
-                  startingValue: character.temporary_hitpoints),
+                  startingValue: character.temporary_hitpoints,
+                  nameValue: "temporary_hitpoints"),
             ],
           ),
           SizedBox(height: 10),
@@ -106,15 +133,29 @@ class DetailsCharacter extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 3.6,
                   decoration: decoration_border,
                   child: DataDeIncrement(
-                    controller: hitDiceController,
-                    startingValue: character.hit_dice_amount,
-                  )),
+                      controller: hitDiceController,
+                      nameValue: "hit_dice_amount")),
               Container(
-                  alignment: Alignment.center,
-                  height: 42,
-                  width: MediaQuery.of(context).size.width / 3.6,
-                  decoration: decoration_border,
-                  child: Text("${character.hit_dice}")),
+                alignment: Alignment.center,
+                height: 42,
+                width: MediaQuery.of(context).size.width / 3.6,
+                decoration: decoration_border,
+                child: SizedBox(
+                  height: 30,
+                  width: 35,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    controller: hitDiceNumberController,
+                    onFieldSubmitted: (value) {
+                      context.read<Character_Provide>().updateHitDice(value);
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: 10),
@@ -127,26 +168,23 @@ class DetailsCharacter extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DataPrimaryStats(
-                        stat: "Strength",
-                        stat_modifier:
-                            Character.getStringModifier(character.strength),
-                        stat_number: character.strength,
-                        proficiency: character.saving_throw_proficiencies[0],
-                      ),
+                          stat: "Strength",
+                          stat_modifier:
+                              Character.getStringModifier(character.strength),
+                          proficiency: character.saving_throw_proficiencies[0],
+                          controller: strengthController),
                       DataPrimaryStats(
-                        stat: "Dexterity",
-                        stat_modifier:
-                            Character.getStringModifier(character.dexterity),
-                        stat_number: character.dexterity,
-                        proficiency: character.saving_throw_proficiencies[1],
-                      ),
+                          stat: "Dexterity",
+                          stat_modifier:
+                              Character.getStringModifier(character.dexterity),
+                          proficiency: character.saving_throw_proficiencies[1],
+                          controller: dexterityController),
                       DataPrimaryStats(
-                        stat: "Constitution",
-                        stat_modifier:
-                            Character.getStringModifier(character.constitution),
-                        stat_number: character.constitution,
-                        proficiency: character.saving_throw_proficiencies[2],
-                      ),
+                          stat: "Constitution",
+                          stat_modifier: Character.getStringModifier(
+                              character.constitution),
+                          proficiency: character.saving_throw_proficiencies[2],
+                          controller: constitutionController),
                     ],
                   ),
                   SizedBox(height: 10),
@@ -154,26 +192,23 @@ class DetailsCharacter extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DataPrimaryStats(
-                        stat: "Intelligence",
-                        stat_modifier:
-                            Character.getStringModifier(character.intelligence),
-                        stat_number: character.intelligence,
-                        proficiency: character.saving_throw_proficiencies[3],
-                      ),
+                          stat: "Intelligence",
+                          stat_modifier: Character.getStringModifier(
+                              character.intelligence),
+                          proficiency: character.saving_throw_proficiencies[3],
+                          controller: intelligenceController),
                       DataPrimaryStats(
-                        stat: "Wisdom",
-                        stat_modifier:
-                            Character.getStringModifier(character.wisdom),
-                        stat_number: character.wisdom,
-                        proficiency: character.saving_throw_proficiencies[4],
-                      ),
+                          stat: "Wisdom",
+                          stat_modifier:
+                              Character.getStringModifier(character.wisdom),
+                          proficiency: character.saving_throw_proficiencies[4],
+                          controller: wisdomController),
                       DataPrimaryStats(
-                        stat: "Charisma",
-                        stat_modifier:
-                            Character.getStringModifier(character.charisma),
-                        stat_number: character.charisma,
-                        proficiency: character.saving_throw_proficiencies[5],
-                      ),
+                          stat: "Charisma",
+                          stat_modifier:
+                              Character.getStringModifier(character.charisma),
+                          proficiency: character.saving_throw_proficiencies[5],
+                          controller: charismaController),
                     ],
                   )
                 ],

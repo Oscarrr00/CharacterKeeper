@@ -32,11 +32,9 @@ class DataDeIncrementSmaller extends StatelessWidget {
             keyboardType: TextInputType.numberWithOptions(
               decimal: false,
             ),
-            onFieldSubmitted: (value) async {
+            onFieldSubmitted: (value) {
               var num = int.parse(value);
-              await context
-                  .read<Character_Provide>()
-                  .updateSpellslot(index, num);
+              context.read<Character_Provide>().updateSpellslot(index, num);
             },
           ),
         ),
@@ -54,11 +52,11 @@ class DataDeIncrementSmaller extends StatelessWidget {
                   color: Colors.black,
                 ))),
                 child: InkWell(
-                  onTap: () async {
+                  onTap: () {
                     var num = int.parse(controller.text);
                     num++;
                     controller.text = num.toString();
-                    await context
+                    context
                         .read<Character_Provide>()
                         .updateSpellslot(index, num);
                   },
@@ -76,11 +74,11 @@ class DataDeIncrementSmaller extends StatelessWidget {
                   color: Colors.black,
                 ))),
                 child: InkWell(
-                  onTap: () async {
+                  onTap: () {
                     var num = int.parse(controller.text);
                     num--;
                     controller.text = num.toString();
-                    await context
+                    context
                         .read<Character_Provide>()
                         .updateSpellslot(index, num);
                   },

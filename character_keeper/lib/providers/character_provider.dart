@@ -73,7 +73,7 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateSpellslot(int index, int slot) async {
+  void updateSpellslot(int index, int slot) {
     currentCharacter.spell_slots[index] = slot;
     currentCharacter_firebase
         .update({"spell_slots": currentCharacter.spell_slots})
@@ -187,7 +187,7 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateProficiency(int index, int status) async {
+  void updateProficiency(int index, int status) {
     currentCharacter.proficiencies[index] = status;
     currentCharacter_firebase
         .update({"proficiencies": currentCharacter.proficiencies})
@@ -197,6 +197,177 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
+  //Aqui iria los updates que se hacen en la pagina
+
+  void updateHitpoints(String nameValue, int num) {
+    if (nameValue == "maximum_hitpoints") {
+      currentCharacter.maximum_hitpoints = num;
+      currentCharacter_firebase
+          .update({"maximum_hitpoints": num})
+          .then((value) => print("maximum_hitpoints Updated"))
+          .catchError(
+              (error) => print("Failed to update maximum_hitpoints: $error"));
+    } else if (nameValue == "current_hitpoints") {
+      currentCharacter.current_hitpoints = num;
+      currentCharacter_firebase
+          .update({"current_hitpoints": num})
+          .then((value) => print("current_hitpoints Updated"))
+          .catchError(
+              (error) => print("Failed to update current_hitpoints: $error"));
+    } else if (nameValue == "temporary_hitpoints") {
+      currentCharacter.temporary_hitpoints = num;
+      currentCharacter_firebase
+          .update({"temporary_hitpoints": num})
+          .then((value) => print("temporary_hitpoints Updated"))
+          .catchError(
+              (error) => print("Failed to update temporary_hitpoints: $error"));
+    } else {
+      currentCharacter.hit_dice_amount = num;
+      currentCharacter_firebase
+          .update({"hit_dice_amount": num})
+          .then((value) => print("hit_dice_amount Updated"))
+          .catchError(
+              (error) => print("Failed to update hit_dice_amount: $error"));
+    }
+    notifyListeners();
+  }
+
+  void updateHitDice(String value) {
+    currentCharacter.hit_dice = value;
+    currentCharacter_firebase
+        .update({"hit_dice": value})
+        .then((value) => print("hit_dice Updated"))
+        .catchError((error) => print("Failed to update hit_dice: $error"));
+    notifyListeners();
+  }
+
+  void updateSpeed(int num) {
+    currentCharacter.speed = num;
+    currentCharacter_firebase
+        .update({"speed": num})
+        .then((value) => print("Speed Updated"))
+        .catchError((error) => print("Failed to update Speed: $error"));
+    notifyListeners();
+  }
+
+  void updateArmorClass(int num) {
+    currentCharacter.armor_class = num;
+    currentCharacter_firebase
+        .update({"armor_class": num})
+        .then((value) => print("Armor_class Updated"))
+        .catchError((error) => print("Failed to update Armor_class: $error"));
+    notifyListeners();
+  }
+
+  void updateStatPrimary(int num, String nameValue) {
+    if (nameValue == "Strength") {
+      currentCharacter.strength = num;
+      currentCharacter_firebase
+          .update({"strength": num})
+          .then((value) => print("strength Updated"))
+          .catchError((error) => print("Failed to update strength: $error"));
+    } else if (nameValue == "Dexterity") {
+      currentCharacter.dexterity = num;
+      currentCharacter_firebase
+          .update({"dexterity": num})
+          .then((value) => print("Dexterity Updated"))
+          .catchError((error) => print("Failed to update Dexterity: $error"));
+    } else if (nameValue == "Wisdom") {
+      currentCharacter.wisdom = num;
+      currentCharacter_firebase
+          .update({"wisdom": num})
+          .then((value) => print("Wisdom Updated"))
+          .catchError((error) => print("Failed to update Wisdom: $error"));
+    } else if (nameValue == "Charisma") {
+      currentCharacter.charisma = num;
+      currentCharacter_firebase
+          .update({"charisma": num})
+          .then((value) => print("Charisma Updated"))
+          .catchError((error) => print("Failed to update Charisma: $error"));
+    } else if (nameValue == "Constitution") {
+      currentCharacter.constitution = num;
+      currentCharacter_firebase
+          .update({"constitution": num})
+          .then((value) => print("Constitution Updated"))
+          .catchError(
+              (error) => print("Failed to update Constitution: $error"));
+    } else {
+      currentCharacter.intelligence = num;
+      currentCharacter_firebase
+          .update({"intelligence": num})
+          .then((value) => print("Intelligence Updated"))
+          .catchError(
+              (error) => print("Failed to update Intelligence: $error"));
+    }
+    notifyListeners();
+  }
+
+  void updateSavingThrows(int status, String stat) {
+    if (stat == "Strength") {
+      currentCharacter.saving_throw_proficiencies[0] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    } else if (stat == "Dexterity") {
+      currentCharacter.saving_throw_proficiencies[1] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    } else if (stat == "Wisdom") {
+      currentCharacter.saving_throw_proficiencies[4] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    } else if (stat == "Charisma") {
+      currentCharacter.saving_throw_proficiencies[5] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    } else if (stat == "Constitution") {
+      currentCharacter.saving_throw_proficiencies[2] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    } else {
+      currentCharacter.saving_throw_proficiencies[3] = status;
+      currentCharacter_firebase
+          .update({
+            "saving_throw_proficiencies":
+                currentCharacter.saving_throw_proficiencies
+          })
+          .then((value) => print("Saving_throw_proficiencies Updated"))
+          .catchError((error) =>
+              print("Failed to update Saving_throw_proficiencies: $error"));
+    }
+    notifyListeners();
+  }
+
+  //Aqui se agregara personajes y checar todo lo que contiene el personaje
   Future addCharacter(
       String name, String character_class, int level, String race) async {
     Character character = Character(
@@ -297,50 +468,12 @@ class Character_Provide with ChangeNotifier {
           charisma: character["charisma"],
           saving_throw_proficiencies: character["saving_throw_proficiencies"],
           proficiency_bonus: character["proficiency_bonus"],
-          proficiencies: [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-          ],
+          proficiencies: character["proficiencies"],
           abilities: [],
           inventory: [],
           spells: [],
           notes: [],
-          spell_slots: [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-          ]);
+          spell_slots: character["spell_slots"]);
       characterList.add(newcharacter);
     }
 

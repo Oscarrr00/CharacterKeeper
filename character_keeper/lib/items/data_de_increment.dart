@@ -1,12 +1,14 @@
+import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DataDeIncrement extends StatelessWidget {
   final TextEditingController controller;
-  int startingValue;
+  final String nameValue;
   DataDeIncrement({
     Key? key,
-    required this.startingValue,
     required this.controller,
+    required this.nameValue,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,10 @@ class DataDeIncrement extends StatelessWidget {
             keyboardType: TextInputType.numberWithOptions(
               decimal: false,
             ),
-            onFieldSubmitted: (value) {},
+            onFieldSubmitted: (value) {
+              var num = int.parse(value);
+              context.read<Character_Provide>().updateHitpoints(nameValue, num);
+            },
           ),
         ),
         Container(
@@ -44,7 +49,14 @@ class DataDeIncrement extends StatelessWidget {
                   color: Colors.black,
                 ))),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    var num = int.parse(controller.text);
+                    num++;
+                    controller.text = num.toString();
+                    context
+                        .read<Character_Provide>()
+                        .updateHitpoints(nameValue, num);
+                  },
                   child: Icon(
                     Icons.arrow_drop_up,
                     size: 18.0,
@@ -59,7 +71,14 @@ class DataDeIncrement extends StatelessWidget {
                   color: Colors.black,
                 ))),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    var num = int.parse(controller.text);
+                    num--;
+                    controller.text = num.toString();
+                    context
+                        .read<Character_Provide>()
+                        .updateHitpoints(nameValue, num);
+                  },
                   child: Icon(
                     Icons.arrow_drop_down,
                     size: 18.0,

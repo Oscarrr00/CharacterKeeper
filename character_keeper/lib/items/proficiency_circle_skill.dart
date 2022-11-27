@@ -16,15 +16,12 @@ class ProficiencyCircleSkill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        if (this.status == 1)
-          await context
-              .read<Character_Provide>()
-              .updateProficiency(this.index, 0);
-        if (this.status == 0)
-          await context
-              .read<Character_Provide>()
-              .updateProficiency(this.index, 1);
+      onTap: () {
+        status++;
+        if (status > 2) {
+          status = 0;
+        }
+        context.read<Character_Provide>().updateProficiency(this.index, status);
       },
       child: CircleAvatar(
         radius: this.radius + 3,
