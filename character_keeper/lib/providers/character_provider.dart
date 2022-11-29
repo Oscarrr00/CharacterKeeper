@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class Character_Provide with ChangeNotifier {
   List characterList = [];
@@ -49,6 +48,12 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
+  // Aqui es donde se agrega los personajes y sus contenidos ===============================================================
+  ////////////////////////////////
+  ///
+  ///
+  ///
+
   void addSpell(String name, int level) {
     currentCharacter_firebase
         .collection("Spell")
@@ -64,67 +69,28 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteSpell(int index) async {
-    var spell_query = await currentCharacter_firebase.collection("Spell").get();
-
-    for (var doc in spell_query.docs) {
-      if (doc["name"] == currentCharacter.spells[index].name) {
-        await doc.reference.delete();
-      }
-    }
-
-    currentCharacter.spells.removeAt(index);
-    notifyListeners();
-  }
-
-  void updateSpellslot(int index, int slot) {
-    currentCharacter.spell_slots[index] = slot;
-    currentCharacter_firebase
-        .update({"spell_slots": currentCharacter.spell_slots})
-        .then((value) => print("Spellslot Updated"))
-        .catchError((error) => print("Failed to update Spellslot: $error"));
-
-    notifyListeners();
-  }
-
   void addNote(String title, String description, String image) async {
-
     String imageURL = "";
-    if(image != "") {
+    if (image != "") {
       File file = File(image);
-      String username = await user.get().data;
+      var userDoc = await user.get();
+      var userData = userDoc.data();
+      String username = userData["username"];
       String imagePath = 'images/' + username + (DateTime.now().toString());
 
-      UploadTask task = FirebaseStorage.instance.ref().child(imagePath).putFile(file);
-      
-
+      dynamic taskref = FirebaseStorage.instance.ref().child(imagePath);
+      await taskref.putFile(file);
+      imageURL = await taskref.getDownloadURL();
     }
 
     currentCharacter_firebase
         .collection("Note")
-        .add({
-          'title': title,
-          'description': description,
-          'image': imageURL
-        })
+        .add({'title': title, 'description': description, 'image': imageURL})
         .then((value) => print("Note Added"))
         .catchError((error) => print("Failed to add note: $error"));
 
     Note note = Note(title: title, description: description, image: imageURL);
     currentCharacter.notes.add(note);
-    notifyListeners();
-  }
-
-  Future deleteNote(int index) async {
-    var notes_query = await currentCharacter_firebase.collection("Note").get();
-
-    for (var doc in notes_query.docs) {
-      if (doc["title"] == currentCharacter.notes[index].title) {
-        await doc.reference.delete();
-      }
-    }
-
-    currentCharacter.notes.removeAt(index);
     notifyListeners();
   }
 
@@ -145,6 +111,127 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
+  void addAbility(String name, String description) {
+    currentCharacter_firebase
+        .collection("Ability")
+        .add({
+          'name': name,
+          'description': description,
+        })
+        .then((value) => print("Ability Added"))
+        .catchError((error) => print("Failed to add ability: $error"));
+
+    Ability ability = Ability(name: name, description: description);
+    currentCharacter.abilities.add(ability);
+    notifyListeners();
+  }
+
+  Future addCharacter(
+      String name, String character_class, int level, String race) async {
+    Character character = Character(
+        name: name,
+        character_class: character_class,
+        level: level,
+        race: race,
+        armor_class: 10,
+        initiative: 2,
+        speed: 30,
+        maximum_hitpoints: 10,
+        current_hitpoints: 10,
+        temporary_hitpoints: 0,
+        hit_dice: "d8",
+        hit_dice_amount: 5,
+        strength: 10,
+        dexterity: 10,
+        constitution: 10,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 10,
+        saving_throw_proficiencies: [0, 0, 0, 0, 0, 0],
+        proficiency_bonus: 2,
+        proficiencies: [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ],
+        abilities: [],
+        inventory: [],
+        spells: [],
+        notes: [],
+        spell_slots: [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]);
+
+    print(character.toJson());
+    await user.collection("Character").add(character.toJson());
+    characterList.add(character);
+    notifyListeners();
+  }
+
+  //Aqui estaran todas las funciones de eliminar los contenidos =======================================================
+  ////////////////////////////////
+  ///
+  ///
+  ///
+
+  Future deleteSpell(int index) async {
+    var spell_query = await currentCharacter_firebase.collection("Spell").get();
+
+    for (var doc in spell_query.docs) {
+      if (doc["name"] == currentCharacter.spells[index].name) {
+        await doc.reference.delete();
+      }
+    }
+
+    currentCharacter.spells.removeAt(index);
+    notifyListeners();
+  }
+
+  Future deleteNote(int index) async {
+    var notes_query = await currentCharacter_firebase.collection("Note").get();
+
+    for (var doc in notes_query.docs) {
+      if (doc["title"] == currentCharacter.notes[index].title) {
+        await doc.reference.delete();
+      }
+    }
+
+    currentCharacter.notes.removeAt(index);
+    notifyListeners();
+  }
+
   Future deleteItem(int index) async {
     var item_query =
         await currentCharacter_firebase.collection("Inventory_Entry").get();
@@ -155,6 +242,37 @@ class Character_Provide with ChangeNotifier {
       }
     }
     currentCharacter.inventory.removeAt(index);
+    notifyListeners();
+  }
+
+  Future deleteAbility(int index) async {
+    var ability_query =
+        await currentCharacter_firebase.collection("Ability").get();
+
+    for (var doc in ability_query.docs) {
+      if (doc["name"] == currentCharacter.abilities[index].name) {
+        await doc.reference.delete();
+      }
+    }
+
+    currentCharacter.abilities.removeAt(index);
+    notifyListeners();
+  }
+
+  //Aqui iria los updates que se hacen en la pagina =============================================================
+  ////////////////////////////////
+  ///
+  ///
+  ///
+  ///
+
+  void updateSpellslot(int index, int slot) {
+    currentCharacter.spell_slots[index] = slot;
+    currentCharacter_firebase
+        .update({"spell_slots": currentCharacter.spell_slots})
+        .then((value) => print("Spellslot Updated"))
+        .catchError((error) => print("Failed to update Spellslot: $error"));
+
     notifyListeners();
   }
 
@@ -175,35 +293,6 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  void addAbility(String name, String description) {
-    currentCharacter_firebase
-        .collection("Ability")
-        .add({
-          'name': name,
-          'description': description,
-        })
-        .then((value) => print("Ability Added"))
-        .catchError((error) => print("Failed to add ability: $error"));
-
-    Ability ability = Ability(name: name, description: description);
-    currentCharacter.abilities.add(ability);
-    notifyListeners();
-  }
-
-  Future deleteAbility(int index) async {
-    var ability_query =
-        await currentCharacter_firebase.collection("Ability").get();
-
-    for (var doc in ability_query.docs) {
-      if (doc["name"] == currentCharacter.abilities[index].name) {
-        await doc.reference.delete();
-      }
-    }
-
-    currentCharacter.abilities.removeAt(index);
-    notifyListeners();
-  }
-
   void updateProficiency(int index, int status) {
     currentCharacter.proficiencies[index] = status;
     currentCharacter_firebase
@@ -213,8 +302,6 @@ class Character_Provide with ChangeNotifier {
 
     notifyListeners();
   }
-
-  //Aqui iria los updates que se hacen en la pagina
 
   void updateHitpoints(String nameValue, int num) {
     if (nameValue == "maximum_hitpoints") {
@@ -384,80 +471,11 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  //Aqui se agregara personajes y checar todo lo que contiene el personaje
-  Future addCharacter(
-      String name, String character_class, int level, String race) async {
-    Character character = Character(
-        name: name,
-        character_class: character_class,
-        level: level,
-        race: race,
-        armor_class: 10,
-        initiative: 2,
-        speed: 30,
-        maximum_hitpoints: 10,
-        current_hitpoints: 10,
-        temporary_hitpoints: 0,
-        hit_dice: "d8",
-        hit_dice_amount: 5,
-        strength: 10,
-        dexterity: 10,
-        constitution: 10,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        saving_throw_proficiencies: [0, 0, 0, 0, 0, 0],
-        proficiency_bonus: 2,
-        proficiencies: [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ],
-        abilities: [],
-        inventory: [],
-        spells: [],
-        notes: [],
-        spell_slots: [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]);
-
-    print(character.toJson());
-    await user.collection("Character").add(character.toJson());
-    characterList.add(character);
-    notifyListeners();
-  }
+  // Aqui es para obtener el contenido de lo que tiene el usuario ============================================================
+  ////////////////////////////////
+  ///
+  ///
+  ///
 
   Future getCharactersList() async {
     var character_query = await user.collection("Character").get();
@@ -543,8 +561,10 @@ class Character_Provide with ChangeNotifier {
       List noteList = [];
       for (var doc in note_query.docs) {
         var note = doc.data();
-        noteList
-            .add(Note(title: note["title"], description: note["description"], image: note["image"]));
+        noteList.add(Note(
+            title: note["title"],
+            description: note["description"],
+            image: note["image"]));
       }
       currentCharacter.notes = noteList;
       characterList[index].notes = noteList;
@@ -572,6 +592,12 @@ class Character_Provide with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //Esta parte es para la creacion y loguearse con usuarios =======================================================
+  ////////////////////////////////
+  ///
+  ///
+  ///
 
   Future createUser(String email, String password, String username) async {
     try {

@@ -12,6 +12,7 @@ class InventoryPage extends StatelessWidget {
     dynamic nameItem = TextEditingController();
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
+    dynamic searchItem = TextEditingController();
     List inventory =
         context.watch<Character_Provide>().currentCharacter.inventory;
     for (int i = 0; i < inventory.length; i++) {
@@ -126,6 +127,32 @@ class InventoryPage extends StatelessWidget {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold))))
                       ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: TextField(
+                      onSubmitted: ((value) {
+                        if (value == "") {
+                          inventory = context
+                              .watch<Character_Provide>()
+                              .currentCharacter
+                              .inventory;
+                        } else {
+                          // inventory = context
+                          //     .read<Character_Provide>()
+                          //     .searchItem(value);
+                        }
+                      }),
+                      controller: searchItem,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        hintText: "Busca el Item",
+                      ),
                     ),
                   ),
                   (inventory.length <= 0)
