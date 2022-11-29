@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:character_keeper/http_handler.dart';
 import 'package:character_keeper/objects/ability.dart';
 import 'package:character_keeper/objects/character.dart';
@@ -6,7 +8,9 @@ import 'package:character_keeper/objects/note.dart';
 import 'package:character_keeper/objects/spell.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Character_Provide with ChangeNotifier {
   List characterList = [];
@@ -83,17 +87,30 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  void addNote(String title, String description) {
+  void addNote(String title, String description, String image) async {
+
+    String imageURL = "";
+    if(image != "") {
+      File file = File(image);
+      String username = await user.get().data;
+      String imagePath = 'images/' + username + (DateTime.now().toString());
+
+      UploadTask task = FirebaseStorage.instance.ref().child(imagePath).putFile(file);
+      
+
+    }
+
     currentCharacter_firebase
         .collection("Note")
         .add({
           'title': title,
           'description': description,
+          'image': imageURL
         })
         .then((value) => print("Note Added"))
         .catchError((error) => print("Failed to add note: $error"));
 
-    Note note = Note(title: title, description: description);
+    Note note = Note(title: title, description: description, image: imageURL);
     currentCharacter.notes.add(note);
     notifyListeners();
   }
@@ -527,7 +544,7 @@ class Character_Provide with ChangeNotifier {
       for (var doc in note_query.docs) {
         var note = doc.data();
         noteList
-            .add(Note(title: note["title"], description: note["description"]));
+            .add(Note(title: note["title"], description: note["description"], image: note["image"]));
       }
       currentCharacter.notes = noteList;
       characterList[index].notes = noteList;

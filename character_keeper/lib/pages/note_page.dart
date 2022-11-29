@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class NotePage extends StatelessWidget {
   const NotePage({super.key});
@@ -9,7 +13,11 @@ class NotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic titleNote = TextEditingController();
     dynamic textNote = TextEditingController();
+    XFile imageToAdd;
+    String imagePath = "";
+
     List notes = context.watch<Character_Provide>().currentCharacter.notes;
+
     Future<void> _showDialogAddNote() async {
       return showDialog<void>(
         context: context,
@@ -45,12 +53,17 @@ class NotePage extends StatelessWidget {
                         maxLines: 10,
                         controller: textNote),
                   ),
+                  imagePath == "" ? 
+                    Text("") :
+                    Container(
+                      child: Image.network(imagePath),
+                    )
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancelar'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   titleNote.text = "";
                   textNote.text = "";
@@ -62,7 +75,7 @@ class NotePage extends StatelessWidget {
                 onPressed: () {
                   context
                       .read<Character_Provide>()
-                      .addNote(titleNote.text, textNote.text);
+                      .addNote(titleNote.text, textNote.text, imageToAddPath);
                   titleNote.text = "";
                   textNote.text = "";
                   Navigator.of(context).pop();
@@ -72,7 +85,36 @@ class NotePage extends StatelessWidget {
           );
         },
       );
+
     }
+
+    Future<void> _showDialogNoteWithInitialValues(String initialTitle, String initialDescription, String initialImage) async {
+      titleNote.text = initialTitle;
+      textNote.text = initialDescription;
+      imagePath = initialImage;
+
+      await _showDialogAddNote();
+
+      imagePath = "";
+      
+    }
+
+    void getImage(int mode) async {
+
+    final ImagePicker _imagePicker = ImagePicker();
+    final XFile? image;
+
+    if(mode == 0)
+      image = await _imagePicker.pickImage(source: ImageSource.camera); 
+    else
+      image = await _imagePicker.pickImage(source: ImageSource.gallery);                
+                        
+    if(image != null) {
+      imageToAddPath = image.path;
+      await _showDialogAddNote();
+      imageToAddPath = "";      
+    }
+  }
 
     return Container(
       child: Padding(
@@ -116,7 +158,7 @@ class NotePage extends StatelessWidget {
                                 (index) => Container(
                                       padding: EdgeInsets.all(4),
                                       color: index % 2 == 1
-                                          ? Colors.grey[350]
+                                          ? Color.fromARGB(24, 71, 71, 71)
                                           : null,
                                       child: Row(
                                         children: [
@@ -130,16 +172,23 @@ class NotePage extends StatelessWidget {
                                                     Align(
                                                         alignment: Alignment
                                                             .centerLeft,
-                                                        child: Text(
-                                                          "${notes[index].title}",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 16),
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
+                                                        child: Row(
+                                                          children: [
+                                                            notes[index].image != "" ? 
+                                                              Icon(Icons.image) : 
+                                                              Text(""),                                                             
+                                                            Text(
+                                                              "${notes[index].title}",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16),
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                            ),
+                                                          ],
                                                         )),
                                                     Align(
                                                       alignment:
@@ -150,13 +199,22 @@ class NotePage extends StatelessWidget {
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                       ),
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                _showDialogNoteWithInitialValues(notes[index].title, notes[index].description, notes[index].image);
+                                              },
                                             ),
                                           ),
+                                          Column(children: [
+
+                                          IconButton(
+                                              icon: Icon(Icons.share),
+                                              onPressed: () {
+                                                Share.share(notes[index].title + '\n' + notes[index].description);
+                                              }),
                                           IconButton(
                                               icon: Icon(Icons.delete),
                                               splashColor: Colors.red[200],
@@ -164,7 +222,9 @@ class NotePage extends StatelessWidget {
                                                 context
                                                     .read<Character_Provide>()
                                                     .deleteNote(index);
-                                              })
+                                              }),
+
+                                          ],)
                                         ],
                                       ),
                                     )),
@@ -179,6 +239,8 @@ class NotePage extends StatelessWidget {
                   child: ElevatedButton(
                       child: Text("Add a note"),
                       onPressed: () {
+
+                         
                         _showDialogAddNote();
                       }),
                 ),
@@ -187,7 +249,17 @@ class NotePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                     ),
-                    onPressed: () {})
+                    onPressed: () async {
+                      getImage(0);
+                    }),
+                ElevatedButton(
+                    child: Icon(Icons.image),
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                    ),
+                    onPressed: () async {
+                      getImage(1);
+                    }),
               ],
             )
           ],
@@ -196,3 +268,6 @@ class NotePage extends StatelessWidget {
     );
   }
 }
+
+
+

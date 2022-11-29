@@ -92,7 +92,9 @@ class Character {
     for (i = 0; i < json["notes"].length; i++) {
       notes.add(Note(
           title: json["notes"][i]["title"],
-          description: json["notes"][i]["description"]));
+          description: json["notes"][i]["description"],
+          image: json["notes"][i]["image"]          
+          ));
     }
 
     return Character(
@@ -227,12 +229,14 @@ const myCharacter = {
     {
       "title": "How to defeat Strahd",
       "description":
-          "Strahd is known to be weak to sunlight, running water and radiant damage."
+          "Strahd is known to be weak to sunlight, running water and radiant damage.",
+      "image": ""
     },
     {
       "title": "Khazan, the Sunsword",
       "description":
-          "Khazan is currently under Strahd's possesion, and is probably being held at Castle Ravenloft."
+          "Khazan is currently under Strahd's possesion, and is probably being held at Castle Ravenloft.",
+      "image": "https://www.dndbeyond.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg"
     }
   ],
   "spell_slots": [4, 1, 3, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -32,7 +32,7 @@ class NewAcount extends StatelessWidget {
                 hintText: "email@email.com",
                 controller: emailController,
                 color: Colors.black),
-            SizedBox(height: 80),
+            SizedBox(height: 30),
             Text("Choose a password", style: TextStyle(fontSize: 19)),
             Text("It must be at least 8 characters long",
                 style: TextStyle(fontSize: 19)),
