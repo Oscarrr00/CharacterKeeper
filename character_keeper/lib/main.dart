@@ -1,5 +1,4 @@
 import 'package:character_keeper/pages/check_auth_page.dart';
-import 'package:character_keeper/pages/note_page.dart';
 import 'package:character_keeper/providers/character_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: NotePage(),
+      home: CheckAuthPage(),
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red[800]!),
           textTheme: TextTheme(
@@ -35,5 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
