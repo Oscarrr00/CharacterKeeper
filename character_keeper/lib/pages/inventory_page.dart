@@ -140,9 +140,9 @@ class InventoryPage extends StatelessWidget {
                               .currentCharacter
                               .inventory;
                         } else {
-                          // inventory = context
-                          //     .read<Character_Provide>()
-                          //     .searchItem(value);
+                          inventory = context
+                              .read<Character_Provide>()
+                              .searchItem(value);
                         }
                       }),
                       controller: searchItem,
