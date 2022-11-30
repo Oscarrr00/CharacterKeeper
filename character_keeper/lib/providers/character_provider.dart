@@ -224,6 +224,16 @@ class Character_Provide with ChangeNotifier {
 
     for (var doc in notes_query.docs) {
       if (doc["title"] == currentCharacter.notes[index].title) {
+
+        if (currentCharacter.notes[index].image != "") {
+          String s = currentCharacter.notes[index].image;
+          String imagePath = s.substring(s.lastIndexOf('images/'));
+          print(imagePath);
+
+          dynamic imageRef = FirebaseStorage.instance.ref().child(imagePath);
+          await imageRef.delete();
+        }
+
         await doc.reference.delete();
       }
     }
@@ -231,6 +241,7 @@ class Character_Provide with ChangeNotifier {
     currentCharacter.notes.removeAt(index);
     notifyListeners();
   }
+
 
   Future deleteItem(int index) async {
     var item_query =
@@ -471,6 +482,63 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
+  Future updateNote(int index, String title, String description) async {
+    var item_query = await currentCharacter_firebase
+        .collection("Note")
+        .where("title", isEqualTo: currentCharacter.notes[index].title)
+        .where("description", isEqualTo: currentCharacter.notes[index].description)
+        .get();
+
+    currentCharacter_firebase
+        .collection("Note")
+        .doc(item_query.docs.first.id)
+        .update({"title": title, "description": description})        
+        .then((value) => print("Item Updated"))
+        .catchError((error) => print("Failed to update Item: $error"));
+
+    currentCharacter.notes[index].title = title;
+    currentCharacter.notes[index].description = description;
+    notifyListeners();
+  }
+
+  Future updateInventory(int index, String name, String description) async {
+    var item_query = await currentCharacter_firebase
+        .collection("Inventory_Entry")
+        .where("name", isEqualTo: currentCharacter.inventory[index].name)
+        .where("description", isEqualTo: currentCharacter.inventory[index].description)
+        .get();
+
+    currentCharacter_firebase
+        .collection("Inventory_Entry")
+        .doc(item_query.docs.first.id)
+        .update({"name": name, "description": description})        
+        .then((value) => print("Inventory Entry Updated"))
+        .catchError((error) => print("Failed to update Inventory Entry: $error"));
+
+    currentCharacter.inventory[index].name = name;
+    currentCharacter.inventory[index].description = description;
+    notifyListeners();
+  }
+
+  Future updateAbility(int index, String name, String description) async {
+    var item_query = await currentCharacter_firebase
+        .collection("Ability")
+        .where("name", isEqualTo: currentCharacter.abilities[index].name)
+        .where("description", isEqualTo: currentCharacter.abilities[index].description)
+        .get();
+
+    currentCharacter_firebase
+        .collection("Ability")
+        .doc(item_query.docs.first.id)
+        .update({"name": name, "description": description})        
+        .then((value) => print("Ability Entry Updated"))
+        .catchError((error) => print("Failed to update Ability Entry: $error"));
+
+    currentCharacter.abilities[index].name = name;
+    currentCharacter.abilities[index].description = description;
+    notifyListeners();
+  }
+  
   // Aqui es para obtener el contenido de lo que tiene el usuario ============================================================
   ////////////////////////////////
   ///

@@ -15,12 +15,14 @@ class NotePage extends StatelessWidget {
     dynamic textNote = TextEditingController();
     String imageToAddPath = "";
     String imagePath = "";
+    int currentIndex = 0;
 
     List notes = context.watch<Character_Provide>().currentCharacter.notes;
 
     Future<void> _showDialogAddNote() async {
       return showDialog<void>(
         context: context,
+
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -87,13 +89,84 @@ class NotePage extends StatelessWidget {
       );
     }
 
+    Future<void> _showDialogNote() async {
+      return showDialog<void>(
+        context: context,
+        
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Your Note'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: titleNote,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Title of the note",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Write your note here",
+                          contentPadding: EdgeInsets.all(8.0),
+                          border: OutlineInputBorder(),
+                        ),
+                        maxLines: 10,
+                        controller: textNote),
+                  ),
+                  imagePath == ""
+                      ? Text("")
+                      : Container(
+                          child: Image.network(imagePath),
+                        )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  titleNote.text = "";
+                  textNote.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Edit Note'),
+                onPressed: () {
+                  context
+                      .read<Character_Provide>()
+                      .updateNote(currentIndex, titleNote.text, textNote.text);
+                  titleNote.text = "";
+                  textNote.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     Future<void> _showDialogNoteWithInitialValues(String initialTitle,
-        String initialDescription, String initialImage) async {
+        String initialDescription, String initialImage, int index) async {
       titleNote.text = initialTitle;
       textNote.text = initialDescription;
       imagePath = initialImage;
+      currentIndex = index;
 
-      await _showDialogAddNote();
+      await _showDialogNote();
 
       imagePath = "";
     }
@@ -209,7 +282,8 @@ class NotePage extends StatelessWidget {
                                                 await _showDialogNoteWithInitialValues(
                                                     notes[index].title,
                                                     notes[index].description,
-                                                    notes[index].image);
+                                                    notes[index].image,
+                                                    index);
                                               },
                                             ),
                                           ),
