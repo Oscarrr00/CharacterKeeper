@@ -325,7 +325,7 @@ class SpellPage extends StatelessWidget {
                                 (index) => Container(
                                       padding: EdgeInsets.all(4),
                                       color: index % 2 == 1
-                                          ? Colors.grey[350]
+                                          ? Color.fromARGB(64, 169, 169, 169)
                                           : null,
                                       child: Row(
                                         children: [

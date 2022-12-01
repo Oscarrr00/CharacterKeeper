@@ -514,7 +514,7 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateInventory(int index, String name, String description) async {
+  Future updateItem(int index, String name, String description, int quantity) async {
     var item_query = await currentCharacter_firebase
         .collection("Inventory_Entry")
         .where("name", isEqualTo: currentCharacter.inventory[index].name)
@@ -525,7 +525,7 @@ class Character_Provide with ChangeNotifier {
     currentCharacter_firebase
         .collection("Inventory_Entry")
         .doc(item_query.docs.first.id)
-        .update({"name": name, "description": description})
+        .update({"name": name, "description": description, "quantity": quantity})
         .then((value) => print("Inventory Entry Updated"))
         .catchError(
             (error) => print("Failed to update Inventory Entry: $error"));

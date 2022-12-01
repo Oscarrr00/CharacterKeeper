@@ -13,6 +13,7 @@ class InventoryPage extends StatelessWidget {
     dynamic nameItem = TextEditingController();
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
+    int currentIndex = 0;
 
     List inventory = context.watch<Character_Provide>().displayInventory;
     for (int i = 0; i < inventory.length; i++) {
@@ -100,6 +101,88 @@ class InventoryPage extends StatelessWidget {
           );
         },
       );
+    }
+
+    Future<void> _showDialogEditItem() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Your Item'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: nameItem,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Name of the Item",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  TextField(
+                      decoration: InputDecoration(
+                        hintText: "Write the description of the Item here",
+                        contentPadding: EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 9,
+                      controller: descItem),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  nameItem.text = "";
+                  descItem.text = "";
+                  quantityItem.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Edit'),
+                onPressed: () {
+                  int n;
+                  try {
+                    n = int.parse(quantityItem.text);
+                  } catch(e) {
+                    n = 0;
+                  }
+                  context.read<Character_Provide>().updateItem(currentIndex, nameItem.text,
+                      descItem.text, n);
+                    context
+                              .read<Character_Provide>()
+                              .searchItem(searchItem.text);
+                  nameItem.text = "";
+                  descItem.text = "";
+                  quantityItem.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _showDialogNoteWithInitialValues(String initialName,
+        String initialDescription, int initialQuantity, int index) async {
+      nameItem.text = initialName;
+      descItem.text = initialDescription;
+      quantityItem.text = initialQuantity.toString();
+      currentIndex = index;
+
+      await _showDialogEditItem();
     }
 
     return Container(
@@ -219,7 +302,9 @@ class InventoryPage extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                _showDialogNoteWithInitialValues(inventory[index].name, inventory[index].description, inventory[index].amount, index);
+                                              },
                                             ),
                                           ),
                                           IconButton(
