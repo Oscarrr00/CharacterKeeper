@@ -1,4 +1,5 @@
 import 'package:character_keeper/items/show_data.dart';
+import 'package:character_keeper/pages/check_auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -63,6 +64,11 @@ class Profile extends StatelessWidget {
             MaterialButton(
                 onPressed: () {
                   context.read<Character_Provide>().logoutUser();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CheckAuthPage(),
+                    ),
+                  );
                 },
                 child: Text("Logout"),
                 shape: RoundedRectangleBorder(

@@ -130,7 +130,7 @@ class CharactersUser extends StatelessWidget {
     }
 
     List characters = context.watch<Character_Provide>().characterList;
-
+    print(characters);
     return Scaffold(
         appBar: AppBar(
             title: Row(
@@ -140,7 +140,7 @@ class CharactersUser extends StatelessWidget {
             IconButton(
                 onPressed: () async {
                   profile =
-                      await context.read<Character_Provide>().logoutUser();
+                      await context.read<Character_Provide>().getProfile();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => Profile(profile: profile),

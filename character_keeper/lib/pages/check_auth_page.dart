@@ -8,14 +8,19 @@ import 'package:provider/provider.dart';
 class CheckAuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var userLoggedData = context.watch<Character_Provide>().userLoggedData;
     return Scaffold(
         body: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (userLoggedData) {
+                return CharactersUser();
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
-                return CharactersUser();
+                print("Aqui lo hago");
+                context.read<Character_Provide>().loginUser("", "");
+                return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text("Algo salio mal"),

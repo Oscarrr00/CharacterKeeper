@@ -14,8 +14,7 @@ class InventoryPage extends StatelessWidget {
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
 
-    List inventory =
-        context.watch<Character_Provide>().displayInventory;
+    List inventory = context.watch<Character_Provide>().displayInventory;
     for (int i = 0; i < inventory.length; i++) {
       itemAcountController.add(TextEditingController());
     }
@@ -90,9 +89,7 @@ class InventoryPage extends StatelessWidget {
                 onPressed: () {
                   context.read<Character_Provide>().addItem(nameItem.text,
                       descItem.text, int.parse(quantityItem.text));
-                    context
-                              .read<Character_Provide>()
-                              .searchItem(searchItem.text);
+                  context.read<Character_Provide>().searchItem(searchItem.text);
                   nameItem.text = "";
                   descItem.text = "";
                   quantityItem.text = "";
@@ -138,10 +135,8 @@ class InventoryPage extends StatelessWidget {
                     height: 40,
                     child: TextField(
                       onSubmitted: ((value) {
-                          context
-                              .read<Character_Provide>()
-                              .searchItem(value);
-                          searchItem.text = value;
+                        context.read<Character_Provide>().searchItem(value);
+                        searchItem.text = value;
                       }),
                       controller: searchItem,
                       decoration: InputDecoration(
@@ -234,9 +229,10 @@ class InventoryPage extends StatelessWidget {
                                                 context
                                                     .read<Character_Provide>()
                                                     .deleteItem(index);
-                                                    context
-                              .read<Character_Provide>()
-                              .searchItem(searchItem.text);
+                                                context
+                                                    .read<Character_Provide>()
+                                                    .searchItem(
+                                                        searchItem.text);
                                               })
                                         ],
                                       ),

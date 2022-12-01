@@ -7,22 +7,24 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NotePage extends StatelessWidget {
-  const NotePage({super.key});
+  NotePage({super.key});
+
+  dynamic searchNote = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     dynamic titleNote = TextEditingController();
     dynamic textNote = TextEditingController();
+
     String imageToAddPath = "";
     String imagePath = "";
     int currentIndex = 0;
 
-    List notes = context.watch<Character_Provide>().currentCharacter.notes;
+    List notes = context.watch<Character_Provide>().displayNotes;
 
     Future<void> _showDialogAddNote() async {
       return showDialog<void>(
         context: context,
-
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -78,6 +80,7 @@ class NotePage extends StatelessWidget {
                   context
                       .read<Character_Provide>()
                       .addNote(titleNote.text, textNote.text, imageToAddPath);
+                  context.read<Character_Provide>().searchNote(searchNote.text);
                   titleNote.text = "";
                   textNote.text = "";
                   Navigator.of(context).pop();
@@ -92,7 +95,6 @@ class NotePage extends StatelessWidget {
     Future<void> _showDialogNote() async {
       return showDialog<void>(
         context: context,
-        
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -215,6 +217,24 @@ class NotePage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: TextField(
+                      onSubmitted: ((value) {
+                        context.read<Character_Provide>().searchNote(value);
+                        searchNote.text = value;
+                      }),
+                      controller: searchNote,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        hintText: "Search for an Note",
+                      ),
+                    ),
+                  ),
                   (notes.length <= 0)
                       ? Container()
                       : Expanded(
@@ -306,6 +326,11 @@ class NotePage extends StatelessWidget {
                                                         .read<
                                                             Character_Provide>()
                                                         .deleteNote(index);
+                                                    context
+                                                        .read<
+                                                            Character_Provide>()
+                                                        .searchNote(
+                                                            searchNote.text);
                                                   }),
                                             ],
                                           )

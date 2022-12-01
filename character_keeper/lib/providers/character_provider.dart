@@ -16,11 +16,14 @@ class Character_Provide with ChangeNotifier {
 
   Character currentCharacter = Character.fromJson(myCharacter);
 
-  var displayInventory;
+  var displayInventory = [];
+  var displayNotes = [];
+  var displayAbilities = [];
 
   var httpHandler = new HttpHandler();
 
   var user;
+  bool userLoggedData = false;
   var currentCharacter_firebase;
 
   Future<Map<String, dynamic>> findSpell(String nameSpell) async {
@@ -48,6 +51,8 @@ class Character_Provide with ChangeNotifier {
     await getInventoryCharacter(index);
 
     displayInventory = currentCharacter.inventory;
+    displayNotes = currentCharacter.notes;
+    displayAbilities = currentCharacter.abilities;
 
     notifyListeners();
   }
@@ -558,7 +563,7 @@ class Character_Provide with ChangeNotifier {
 
   Future getCharactersList() async {
     var character_query = await user.collection("Character").get();
-
+    characterList = [];
     for (var doc in character_query.docs) {
       var character = doc.data();
       var newcharacter = Character(
@@ -590,7 +595,8 @@ class Character_Provide with ChangeNotifier {
           spell_slots: character["spell_slots"]);
       characterList.add(newcharacter);
     }
-
+    print("Aqui es cuando los agarro: ${characterList}");
+    userLoggedData = true;
     notifyListeners();
   }
 
@@ -702,6 +708,7 @@ class Character_Provide with ChangeNotifier {
     user = FirebaseFirestore.instance
         .collection("User")
         .doc(FirebaseAuth.instance.currentUser!.uid);
+    userLoggedData = true;
   }
 
   Future<void> _createUserCollectionFirebase(
@@ -723,26 +730,34 @@ class Character_Provide with ChangeNotifier {
   }
 
   Future loginUser(String email, String password) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+    if (FirebaseAuth.instance.currentUser != null) {
       user = FirebaseFirestore.instance
           .collection("User")
           .doc(FirebaseAuth.instance.currentUser!.uid);
       await getCharactersList();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+    } else {
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        user = FirebaseFirestore.instance
+            .collection("User")
+            .doc(FirebaseAuth.instance.currentUser!.uid);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
       }
     }
   }
 
   Future logoutUser() async {
     characterList = [];
-    characterList = [];
+
+    userLoggedData = false;
     await FirebaseAuth.instance.signOut();
+    notifyListeners();
   }
 
   Future<Map<String, dynamic>> getProfile() async {
@@ -758,17 +773,47 @@ class Character_Provide with ChangeNotifier {
   ///
 
   void searchItem(String name) {
-    if(name == ""){
+    if (name == "") {
       displayInventory = currentCharacter.inventory;
     }
     List result = [];
     for (var item in currentCharacter.inventory) {
-      if (item.name.toLowerCase().contains(name) || item.description.toLowerCase().contains(name)) {
+      if (item.name.toLowerCase().contains(name) ||
+          item.description.toLowerCase().contains(name)) {
         result.add(item);
       }
     }
     displayInventory = result;
     notifyListeners();
-  
+  }
+
+  void searchNote(String name) {
+    if (name == "") {
+      displayNotes = currentCharacter.notes;
+    }
+    List result = [];
+    for (var note in currentCharacter.notes) {
+      if (note.title.toLowerCase().contains(name) ||
+          note.description.toLowerCase().contains(name)) {
+        result.add(note);
+      }
+    }
+    displayNotes = result;
+    notifyListeners();
+  }
+
+  void searchAbility(String name) {
+    if (name == "") {
+      displayAbilities = currentCharacter.abilities;
+    }
+    List result = [];
+    for (var ability in currentCharacter.abilities) {
+      if (ability.name.toLowerCase().contains(name) ||
+          ability.description.toLowerCase().contains(name)) {
+        result.add(ability);
+      }
+    }
+    displayAbilities = result;
+    notifyListeners();
   }
 }

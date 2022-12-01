@@ -7,11 +7,10 @@ class AbilityPage extends StatelessWidget {
 
   dynamic abilityName = TextEditingController();
   dynamic abilityDescription = TextEditingController();
-
+  dynamic searchAbility = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    List abilities =
-        context.watch<Character_Provide>().currentCharacter.abilities;
+    List abilities = context.watch<Character_Provide>().displayAbilities;
 
     Future<void> _showDialogAddAbility() async {
       return showDialog<void>(
@@ -66,6 +65,9 @@ class AbilityPage extends StatelessWidget {
                   context
                       .read<Character_Provide>()
                       .addAbility(abilityName.text, abilityDescription.text);
+                  context
+                      .read<Character_Provide>()
+                      .searchNote(searchAbility.text);
                   abilityName.text = "";
                   abilityDescription.text = "";
                   Navigator.of(context).pop();
@@ -103,6 +105,24 @@ class AbilityPage extends StatelessWidget {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold))))
                       ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: TextField(
+                      onSubmitted: ((value) {
+                        context.read<Character_Provide>().searchAbility(value);
+                        searchAbility.text = value;
+                      }),
+                      controller: searchAbility,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        hintText: "Search for an Ability",
+                      ),
                     ),
                   ),
                   Expanded(
@@ -167,6 +187,10 @@ class AbilityPage extends StatelessWidget {
                                                 context
                                                     .read<Character_Provide>()
                                                     .deleteAbility(index);
+                                                context
+                                                    .read<Character_Provide>()
+                                                    .searchNote(
+                                                        searchAbility.text);
                                               })
                                         ],
                                       ),
