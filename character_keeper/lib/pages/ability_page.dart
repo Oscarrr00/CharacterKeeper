@@ -8,6 +8,7 @@ class AbilityPage extends StatelessWidget {
   dynamic abilityName = TextEditingController();
   dynamic abilityDescription = TextEditingController();
   dynamic searchAbility = TextEditingController();
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     List abilities = context.watch<Character_Provide>().displayAbilities;
@@ -77,6 +78,82 @@ class AbilityPage extends StatelessWidget {
           );
         },
       );
+    }
+
+    Future<void> _showDialogEditAbility() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Your ability'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: abilityName,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "Ability name",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Ability description",
+                          contentPadding: EdgeInsets.all(8.0),
+                          border: OutlineInputBorder(),
+                        ),
+                        maxLines: 10,
+                        controller: abilityDescription),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  abilityName.text = "";
+                  abilityDescription.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Edit'),
+                onPressed: () {
+                  context
+                      .read<Character_Provide>()
+                      .updateAbility(currentIndex, abilityName.text, abilityDescription.text);
+                  context
+                      .read<Character_Provide>()
+                      .searchNote(searchAbility.text);
+                  abilityName.text = "";
+                  abilityDescription.text = "";
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _showDialogNoteWithInitialValues(String initialName,
+        String initialDescription, int index) async {
+      abilityName.text = initialName;
+      abilityDescription.text = initialDescription;
+      currentIndex = index;
+
+      await _showDialogEditAbility();
     }
 
     return Container(
@@ -177,7 +254,9 @@ class AbilityPage extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                _showDialogNoteWithInitialValues(abilities[index].name, abilities[index].description, index);
+                                              },
                                             ),
                                           ),
                                           IconButton(
