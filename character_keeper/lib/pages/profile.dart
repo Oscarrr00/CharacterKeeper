@@ -43,24 +43,9 @@ class Profile extends StatelessWidget {
                   child: Text("Email")),
               Column(children: [
                 ShowData(content: "${profile["email"]}"),
-                MaterialButton(
-                    onPressed: () {},
-                    child: Text("Change Email"),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.black)),
-                    minWidth: 250)
               ])
             ]),
             SizedBox(height: 80),
-            MaterialButton(
-                onPressed: () {},
-                child: Text("Change Password"),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    side: BorderSide(color: Colors.black)),
-                minWidth: 300),
-            SizedBox(height: 30),
             MaterialButton(
                 onPressed: () {
                   context.read<Character_Provide>().logoutUser();
@@ -76,16 +61,6 @@ class Profile extends StatelessWidget {
                     side: BorderSide(color: Colors.black)),
                 minWidth: 300,
                 color: Colors.grey),
-            SizedBox(height: 30),
-            MaterialButton(
-                onPressed: () {},
-                child: Text("Delete Acount",
-                    style: TextStyle(color: Colors.white)),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    side: BorderSide(color: Colors.black)),
-                minWidth: 300,
-                color: Color.fromARGB(255, 75, 73, 73)),
           ],
         ));
   }
