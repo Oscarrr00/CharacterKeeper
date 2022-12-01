@@ -25,15 +25,11 @@ class ProficiencyCircle extends StatelessWidget {
       },
       child: CircleAvatar(
         radius: this.radius + 3,
-        backgroundColor: Colors.black,
-        child: CircleAvatar(
-          backgroundColor: this.status == 2
-              ? Theme.of(context).colorScheme.primary
-              : this.status == 1
-                  ? Colors.black
-                  : Colors.white,
-          radius: this.radius,
-        ),
+        backgroundColor: this.status == 2
+            ? Theme.of(context).colorScheme.primary
+            : this.status == 1
+                ? Color.fromARGB(255, 243, 243, 244)
+                : Theme.of(context).colorScheme.background,
       ),
     );
   }

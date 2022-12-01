@@ -13,45 +13,36 @@ class SquareDataEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: 90,
-        height: 90,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("+", style: TextStyle(fontSize: 21)),
-                SizedBox(
-                  height: 38,
-                  width: 30,
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 21),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    controller: controller,
-                    keyboardType: TextInputType.numberWithOptions(
-                      decimal: false,
-                    ),
-                    onFieldSubmitted: (value) {
-                      int num = int.parse(value);
-                      context.read<Character_Provide>().updateSpeed(num);
-                    },
-                  ),
+            Text("+", style: TextStyle(fontSize: 21)),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 13,
+              width: 35,
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height / 31),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
                 ),
-              ],
+                controller: controller,
+                keyboardType: TextInputType.numberWithOptions(
+                  decimal: false,
+                ),
+                onFieldSubmitted: (value) {
+                  int num = int.parse(value);
+                  context.read<Character_Provide>().updateSpeed(num);
+                },
+              ),
             ),
-            Text("${name_content}", style: TextStyle(fontSize: 17)),
           ],
         ),
-        decoration: ShapeDecoration(
-            shape: BeveledRectangleBorder(
-                side: BorderSide(
-          color: Colors.black,
-        ))));
+        Text("${name_content}", style: Theme.of(context).textTheme.headline3),
+      ],
+    );
   }
 }

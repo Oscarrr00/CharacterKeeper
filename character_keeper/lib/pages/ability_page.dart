@@ -19,24 +19,17 @@ class AbilityPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Adding an ability'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: abilityName,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Ability name",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Ability name",
+                      )),
                   SizedBox(height: 20),
                   Expanded(
                     child: TextField(
@@ -53,7 +46,9 @@ class AbilityPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   abilityName.text = "";
                   abilityDescription.text = "";
@@ -61,7 +56,9 @@ class AbilityPage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Done'),
+                child: Text('Done',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   context
                       .read<Character_Provide>()
@@ -162,24 +159,27 @@ class AbilityPage extends StatelessWidget {
           children: [
             Center(
                 child: Text(
-              "Abilities",
+              "ABILITIES",
               style: Theme.of(context).textTheme.headline6,
             )),
+            SizedBox(height: 10),
             Expanded(
-                child: Card(
+                child: Container(
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.secondary,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                             child: Center(
-                                child: Text("Ability Name and Description",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))))
+                                child: Text("ABILITY NAME AND DESCRIPTION",
+                                    style:
+                                        Theme.of(context).textTheme.headline3)))
                       ],
                     ),
                   ),
@@ -201,6 +201,7 @@ class AbilityPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
                   Expanded(
                       child: Padding(
                     padding: EdgeInsets.all(8),
@@ -212,69 +213,79 @@ class AbilityPage extends StatelessWidget {
                             childAspectRatio: 3.0,
                             children: List.generate(
                                 abilities.length,
-                                (index) => Container(
-                                      padding: EdgeInsets.all(4),
-                                      color: index % 2 == 1
-                                          ? Colors.grey[350]
-                                          : null,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    Align(
+                                (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: InkWell(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            abilities[index]
+                                                                .name,
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          )),
+                                                      Align(
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          abilities[index].name,
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                          maxLines: 1,
+                                                          abilities[index]
+                                                              .description,
+                                                          maxLines: 4,
                                                           overflow: TextOverflow
                                                               .ellipsis,
-                                                        )),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        abilities[index]
-                                                            .description,
-                                                        maxLines: 4,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    )
-                                                  ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
+                                                onTap: () {
+                                                  _showDialogNoteWithInitialValues(
+                                                      abilities[index].name,
+                                                      abilities[index]
+                                                          .description,
+                                                      index);
+                                                },
                                               ),
-                                              onTap: () {
-                                                _showDialogNoteWithInitialValues(
-                                                    abilities[index].name,
-                                                    abilities[index]
-                                                        .description,
-                                                    index);
-                                              },
                                             ),
-                                          ),
-                                          IconButton(
-                                              icon: Icon(Icons.delete),
-                                              splashColor: Colors.red[200],
-                                              onPressed: () async {
-                                                await context
-                                                    .read<Character_Provide>()
-                                                    .deleteAbility(index);
-                                                context
-                                                    .read<Character_Provide>()
-                                                    .searchNote(
-                                                        searchAbility.text);
-                                              })
-                                        ],
+                                            IconButton(
+                                                icon: Icon(Icons.delete),
+                                                splashColor: Colors.red[200],
+                                                onPressed: () async {
+                                                  await context
+                                                      .read<Character_Provide>()
+                                                      .deleteAbility(index);
+                                                  context
+                                                      .read<Character_Provide>()
+                                                      .searchNote(
+                                                          searchAbility.text);
+                                                })
+                                          ],
+                                        ),
                                       ),
                                     )),
                           ),

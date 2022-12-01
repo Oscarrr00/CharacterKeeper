@@ -19,73 +19,81 @@ class DataDeIncrementSmaller extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 25,
-          width: 30,
-          child: TextFormField(
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(8.0),
-              border: OutlineInputBorder(),
-            ),
-            controller: controller,
-            keyboardType: TextInputType.numberWithOptions(
-              decimal: false,
-            ),
-            onFieldSubmitted: (value) {
-              var num = int.parse(value);
-              context.read<Character_Provide>().updateSpellslot(index, num);
-            },
-          ),
-        ),
         Container(
-          height: 25.0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          width: 52,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 12.5,
-                decoration: ShapeDecoration(
-                    shape: BeveledRectangleBorder(
-                        side: BorderSide(
-                  color: Colors.black,
-                ))),
-                child: InkWell(
-                  onTap: () {
-                    var num = int.parse(controller.text);
-                    num++;
-                    controller.text = num.toString();
+              SizedBox(
+                height: 25,
+                width: 30,
+                child: TextFormField(
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 14, bottom: 14),
+                    border: InputBorder.none,
+                  ),
+                  controller: controller,
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: false,
+                  ),
+                  onFieldSubmitted: (value) {
+                    var num = int.parse(value);
                     context
                         .read<Character_Provide>()
                         .updateSpellslot(index, num);
                   },
-                  child: Icon(
-                    Icons.arrow_drop_up,
-                    size: 11.0,
-                  ),
                 ),
               ),
               Container(
-                height: 12.5,
-                decoration: ShapeDecoration(
-                    shape: BeveledRectangleBorder(
-                        side: BorderSide(
-                  color: Colors.black,
-                ))),
-                child: InkWell(
-                  onTap: () {
-                    var num = int.parse(controller.text);
-                    num--;
-                    controller.text = num.toString();
-                    context
-                        .read<Character_Provide>()
-                        .updateSpellslot(index, num);
-                  },
-                  child: Icon(
-                    Icons.arrow_drop_down,
-                    size: 11.0,
-                  ),
+                height: 39.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 16,
+                      child: InkWell(
+                        onTap: () {
+                          var num = int.parse(controller.text);
+                          num++;
+                          controller.text = num.toString();
+                          context
+                              .read<Character_Provide>()
+                              .updateSpellslot(index, num);
+                        },
+                        child: Icon(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          Icons.arrow_drop_up,
+                          size: 19.0,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 16,
+                      child: InkWell(
+                        onTap: () {
+                          var num = int.parse(controller.text);
+                          num--;
+                          controller.text = num.toString();
+                          context
+                              .read<Character_Provide>()
+                              .updateSpellslot(index, num);
+                        },
+                        child: Icon(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          Icons.arrow_drop_down,
+                          size: 19.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

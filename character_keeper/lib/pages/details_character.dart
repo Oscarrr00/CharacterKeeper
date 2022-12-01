@@ -18,11 +18,7 @@ class DetailsCharacter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Character character = context.watch<Character_Provide>().currentCharacter;
-    ShapeDecoration decoration_border = new ShapeDecoration(
-        shape: BeveledRectangleBorder(
-            side: BorderSide(
-      color: Colors.black,
-    )));
+
     var maxHitpointsController = TextEditingController();
     var currentHitpointsController = TextEditingController();
     var temporaryHitpointsController = TextEditingController();
@@ -44,28 +40,32 @@ class DetailsCharacter extends StatelessWidget {
 
     var speedController = TextEditingController();
     speedController.text = "${character.speed}";
+    var initiativeController = TextEditingController();
+    initiativeController.text = "${Character.getModifier(character.dexterity)}";
 
     var hitDiceNumberController = TextEditingController();
     hitDiceNumberController.text = character.hit_dice;
     armor_classController.text = "${character.armor_class}";
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(children: [
+        Container(
+          padding: EdgeInsets.all(15),
+          color: Theme.of(context).colorScheme.secondary,
+          child: Column(
             children: [
-              Container(
-                  width: 100,
-                  height: 100,
-                  child: Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
                     children: [
                       SizedBox(
-                        height: 45,
+                        height: MediaQuery.of(context).size.height / 13,
                         width: 35,
                         child: TextFormField(
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 21),
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.height / 31,
+                          ),
                           decoration: InputDecoration(
                             border: InputBorder.none,
                           ),
@@ -81,141 +81,142 @@ class DetailsCharacter extends StatelessWidget {
                           },
                         ),
                       ),
-                      Text("Armor", style: TextStyle(fontSize: 14)),
-                      Text("Class", style: TextStyle(fontSize: 14)),
+                      Text("ARMOR CLASS",
+                          style: Theme.of(context).textTheme.headline3),
                     ],
                   ),
-                  decoration: ShapeDecoration(
-                      shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          side: BorderSide(
-                            color: Colors.black,
-                          )))),
-              SquareData(
-                  content: Character.getModifier(character.dexterity),
-                  name_content: "Initiative"),
-              SquareDataEdit(
-                  name_content: "Speed", controller: speedController),
-            ],
-          ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              DataHitpoints(
-                  first_title: "Maximum",
-                  controller: maxHitpointsController,
-                  startingValue: character.maximum_hitpoints,
-                  nameValue: "maximum_hitpoints"),
-              DataHitpoints(
-                  first_title: "Current",
-                  controller: currentHitpointsController,
-                  startingValue: character.current_hitpoints,
-                  nameValue: "current_hitpoints"),
-              DataHitpoints(
-                  first_title: "Temporary",
-                  controller: temporaryHitpointsController,
-                  startingValue: character.temporary_hitpoints,
-                  nameValue: "temporary_hitpoints"),
-            ],
-          ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Container(
-                  alignment: Alignment.center,
-                  height: 42,
-                  width: MediaQuery.of(context).size.width / 3.6,
-                  decoration: decoration_border,
-                  child: Text("Hit Dice ", style: TextStyle(fontSize: 14))),
-              Container(
-                  alignment: Alignment.center,
-                  height: 42,
-                  width: MediaQuery.of(context).size.width / 3.6,
-                  decoration: decoration_border,
-                  child: DataDeIncrement(
-                      controller: hitDiceController,
-                      nameValue: "hit_dice_amount")),
-              Container(
-                alignment: Alignment.center,
-                height: 42,
-                width: MediaQuery.of(context).size.width / 3.6,
-                decoration: decoration_border,
-                child: SizedBox(
-                  height: 30,
-                  width: 35,
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    controller: hitDiceNumberController,
-                    onFieldSubmitted: (value) {
-                      context.read<Character_Provide>().updateHitDice(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DataPrimaryStats(
-                          stat: "Strength",
-                          stat_modifier:
-                              Character.getStringModifier(character.strength),
-                          proficiency: character.saving_throw_proficiencies[0],
-                          controller: strengthController),
-                      DataPrimaryStats(
-                          stat: "Dexterity",
-                          stat_modifier:
-                              Character.getStringModifier(character.dexterity),
-                          proficiency: character.saving_throw_proficiencies[1],
-                          controller: dexterityController),
-                      DataPrimaryStats(
-                          stat: "Constitution",
-                          stat_modifier: Character.getStringModifier(
-                              character.constitution),
-                          proficiency: character.saving_throw_proficiencies[2],
-                          controller: constitutionController),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DataPrimaryStats(
-                          stat: "Intelligence",
-                          stat_modifier: Character.getStringModifier(
-                              character.intelligence),
-                          proficiency: character.saving_throw_proficiencies[3],
-                          controller: intelligenceController),
-                      DataPrimaryStats(
-                          stat: "Wisdom",
-                          stat_modifier:
-                              Character.getStringModifier(character.wisdom),
-                          proficiency: character.saving_throw_proficiencies[4],
-                          controller: wisdomController),
-                      DataPrimaryStats(
-                          stat: "Charisma",
-                          stat_modifier:
-                              Character.getStringModifier(character.charisma),
-                          proficiency: character.saving_throw_proficiencies[5],
-                          controller: charismaController),
-                    ],
-                  )
+                  SizedBox(width: 15),
+                  SquareData(
+                      controller: initiativeController,
+                      name_content: "INITIATIVE"),
+                  SizedBox(width: 15),
+                  SquareDataEdit(
+                      name_content: "FT. SPEED", controller: speedController),
                 ],
               ),
-              decoration: decoration_border),
-        ]),
-      ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DataHitpoints(
+                      first_title: "Temporary",
+                      controller: temporaryHitpointsController,
+                      startingValue: character.temporary_hitpoints,
+                      nameValue: "temporary_hitpoints"),
+                  DataHitpoints(
+                      first_title: "Current",
+                      controller: currentHitpointsController,
+                      startingValue: character.current_hitpoints,
+                      nameValue: "current_hitpoints"),
+                  DataHitpoints(
+                      first_title: "Maximum",
+                      controller: maxHitpointsController,
+                      startingValue: character.maximum_hitpoints,
+                      nameValue: "maximum_hitpoints"),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      alignment: Alignment.center,
+                      height: 42,
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Text(
+                        "CURRENT\nHIT DICE ",
+                        style: Theme.of(context).textTheme.headline3,
+                        textAlign: TextAlign.center,
+                      )),
+                  Container(
+                      alignment: Alignment.center,
+                      height: 42,
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: DataDeIncrement(
+                          controller: hitDiceController,
+                          nameValue: "hit_dice_amount")),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: SizedBox(
+                      height: 50,
+                      width: 35,
+                      child: TextFormField(
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline2,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        controller: hitDiceNumberController,
+                        onFieldSubmitted: (value) {
+                          context
+                              .read<Character_Provide>()
+                              .updateHitDice(value);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DataPrimaryStats(
+                      stat: "Strength",
+                      stat_modifier:
+                          Character.getStringModifier(character.strength),
+                      proficiency: character.saving_throw_proficiencies[0],
+                      controller: strengthController),
+                  DataPrimaryStats(
+                      stat: "Dexterity",
+                      stat_modifier:
+                          Character.getStringModifier(character.dexterity),
+                      proficiency: character.saving_throw_proficiencies[1],
+                      controller: dexterityController),
+                  DataPrimaryStats(
+                      stat: "Constitution",
+                      stat_modifier:
+                          Character.getStringModifier(character.constitution),
+                      proficiency: character.saving_throw_proficiencies[2],
+                      controller: constitutionController),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DataPrimaryStats(
+                      stat: "Intelligence",
+                      stat_modifier:
+                          Character.getStringModifier(character.intelligence),
+                      proficiency: character.saving_throw_proficiencies[3],
+                      controller: intelligenceController),
+                  DataPrimaryStats(
+                      stat: "Wisdom",
+                      stat_modifier:
+                          Character.getStringModifier(character.wisdom),
+                      proficiency: character.saving_throw_proficiencies[4],
+                      controller: wisdomController),
+                  DataPrimaryStats(
+                      stat: "Charisma",
+                      stat_modifier:
+                          Character.getStringModifier(character.charisma),
+                      proficiency: character.saving_throw_proficiencies[5],
+                      controller: charismaController),
+                ],
+              )
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

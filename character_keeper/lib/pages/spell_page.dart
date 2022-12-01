@@ -44,14 +44,12 @@ class SpellPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.background,
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   Text("${spellFound["name"]}",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary)),
+                      style: Theme.of(context).textTheme.headline1),
                   SizedBox(height: 10),
                   (spellFound["ritual"] == true)
                       ? Text(
@@ -90,7 +88,7 @@ class SpellPage extends StatelessWidget {
                   ),
                   Divider(
                     thickness: 3,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                   for (int i = 0; i < spellFound["desc"].length; i++)
                     Padding(
@@ -120,7 +118,9 @@ class SpellPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Ok'),
+                child: Text('Ok',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -137,7 +137,9 @@ class SpellPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Add New Spell'),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Text('Add New Spell',
+                style: Theme.of(context).textTheme.headline6),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -145,12 +147,12 @@ class SpellPage extends StatelessWidget {
                       label: "",
                       hintText: "Name",
                       controller: nameSpell,
-                      color: Colors.black),
+                      color: Theme.of(context).colorScheme.tertiary),
                   InputText(
                       label: "",
                       hintText: "Level",
                       controller: lvlSpell,
-                      color: Colors.black),
+                      color: Theme.of(context).colorScheme.tertiary),
                 ],
               ),
             ),
@@ -177,138 +179,140 @@ class SpellPage extends StatelessWidget {
     }
 
     return Container(
-      child: Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Center(
-                child: Text(
-              "Spells",
-              style: Theme.of(context).textTheme.headline6,
-            )),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 150),
-              child: Card(
-                child: Column(children: [
-                  Container(
-                    color: Theme.of(context).colorScheme.secondary,
-                    padding: EdgeInsets.only(top: 6, bottom: 6),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Spell Slots",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
+      child: Column(
+        children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 230),
+            child: Container(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Column(children: [
+                Container(
+                  padding: EdgeInsets.only(top: 30, bottom: 6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("SPELL SLOTS",
+                          style: Theme.of(context).textTheme.headline3),
+                    ],
                   ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          color: Theme.of(context).colorScheme.secondary,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                "Level",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                              Expanded(
-                                child: Text("Max",
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                              Expanded(
-                                  child: Text("Current",
-                                      style: TextStyle(color: Colors.white)))
-                            ],
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 5, right: 8),
+                        child: Column(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              "LEVEL",
+                              style: Theme.of(context).textTheme.headline3,
+                            )),
+                            Expanded(
+                              child: Text("MAX",
+                                  style: Theme.of(context).textTheme.headline3),
+                            ),
+                            Expanded(
+                                child: Text("CURRENT",
+                                    style:
+                                        Theme.of(context).textTheme.headline3))
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(7.0),
+                          child: GridView.count(
+                            scrollDirection: Axis.horizontal,
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 7,
+                            crossAxisSpacing: 7,
+                            childAspectRatio: 2,
+                            children: List.generate(
+                                9,
+                                ((index) => Column(
+                                      children: [
+                                        Text(
+                                          "${index + 1}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3,
+                                        ),
+                                        SizedBox(height: 12),
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: DataDeIncrementSmaller(
+                                                    startingValue:
+                                                        spellSlots[index],
+                                                    controller:
+                                                        spellsController[index],
+                                                    index: index),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: DataDeIncrementSmaller(
+                                                    startingValue:
+                                                        spellSlots[index + 9],
+                                                    controller:
+                                                        spellsController[
+                                                            index + 9],
+                                                    index: index + 9),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 14),
+                                      ],
+                                    ))),
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(7.0),
-                            child: GridView.count(
-                              scrollDirection: Axis.horizontal,
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 7,
-                              crossAxisSpacing: 7,
-                              childAspectRatio: 1.5,
-                              children: List.generate(
-                                  9,
-                                  ((index) => Column(
-                                        children: [
-                                          Expanded(
-                                              child: Text(
-                                            "${index + 1}",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: DataDeIncrementSmaller(
-                                                      startingValue:
-                                                          spellSlots[index],
-                                                      controller:
-                                                          spellsController[
-                                                              index],
-                                                      index: index),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: DataDeIncrementSmaller(
-                                                      startingValue:
-                                                          spellSlots[index + 9],
-                                                      controller:
-                                                          spellsController[
-                                                              index + 9],
-                                                      index: index + 9),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ))),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ]),
-              ),
+                ),
+              ]),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Expanded(
-                child: Card(
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Expanded(
+              child: Padding(
+            padding:
+                const EdgeInsets.only(top: 3, bottom: 8.0, left: 8.0, right: 8),
+            child: Card(
+              color: Theme.of(context).colorScheme.background,
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.secondary,
-                    child: Row(
-                      children: [
-                        Text("Level",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                        Expanded(
-                            child: Center(
-                                child: Text("Spell name",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))))
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Row(
+                        children: [
+                          Text("LEVEL",
+                              style: Theme.of(context).textTheme.headline3),
+                          SizedBox(width: 35),
+                          Center(
+                              child: Text("SPELL NAME",
+                                  style: Theme.of(context).textTheme.headline3))
+                        ],
+                      ),
                     ),
                   ),
                   (spells.length <= 0)
@@ -322,76 +326,89 @@ class SpellPage extends StatelessWidget {
                             childAspectRatio: 6.0,
                             children: List.generate(
                                 spells.length,
-                                (index) => Container(
-                                      padding: EdgeInsets.all(4),
-                                      color: index % 2 == 1
-                                          ? Color.fromARGB(64, 169, 169, 169)
-                                          : null,
-                                      child: Row(
-                                        children: [
-                                          Text("Lvl. ${spells[index].level}"),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child:
-                                                  Text("${spells[index].name}"),
+                                (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 4.0),
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text("Lvl. ${spells[index].level}"),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8.0,
+                                                    bottom: 8.0,
+                                                    left: 40.0,
+                                                    right: 8.0),
+                                                child: Text(
+                                                    "${spells[index].name}"),
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                              icon: Icon(Icons.search),
-                                              onPressed: () async {
-                                                spellFound = await context
-                                                    .read<Character_Provide>()
-                                                    .findSpell(
-                                                        "${spells[index].name}");
-                                                if (spellFound.length == 0) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                      "The spell could not be found",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
+                                            IconButton(
+                                                icon: Icon(Icons.search),
+                                                onPressed: () async {
+                                                  spellFound = await context
+                                                      .read<Character_Provide>()
+                                                      .findSpell(
+                                                          "${spells[index].name}");
+                                                  if (spellFound.length == 0) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                      content: Text(
+                                                        "The spell could not be found",
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
                                                       ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ));
-                                                } else {
-                                                  school = spellFound["school"];
-                                                  classes =
-                                                      spellFound["classes"];
-                                                  subclasses =
-                                                      spellFound["subclasses"];
-                                                  _showMyDialog();
-                                                }
-                                              }),
-                                          IconButton(
-                                              icon: Icon(Icons.delete),
-                                              onPressed: () {
-                                                context
-                                                    .read<Character_Provide>()
-                                                    .deleteSpell(index);
-                                                spells = context
-                                                    .read<Character_Provide>()
-                                                    .currentCharacter
-                                                    .spells;
-                                              })
-                                        ],
+                                                    ));
+                                                  } else {
+                                                    school =
+                                                        spellFound["school"];
+                                                    classes =
+                                                        spellFound["classes"];
+                                                    subclasses = spellFound[
+                                                        "subclasses"];
+                                                    _showMyDialog();
+                                                  }
+                                                }),
+                                            IconButton(
+                                                icon: Icon(Icons.delete),
+                                                onPressed: () {
+                                                  context
+                                                      .read<Character_Provide>()
+                                                      .deleteSpell(index);
+                                                  spells = context
+                                                      .read<Character_Provide>()
+                                                      .currentCharacter
+                                                      .spells;
+                                                })
+                                          ],
+                                        ),
                                       ),
                                     )),
                           ),
                         ))
                 ],
               ),
-            )),
-            ElevatedButton(
-                child: Text("Add a spell"),
-                onPressed: () {
-                  _showDialogAddSpell();
-                })
-          ],
-        ),
+            ),
+          )),
+          ElevatedButton(
+              child: Text("Add a spell"),
+              onPressed: () {
+                _showDialogAddSpell();
+              })
+        ],
       ),
     );
   }

@@ -18,20 +18,17 @@ class DataHitpoints extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.text = startingValue.toString();
     return Container(
-        width: MediaQuery.of(context).size.height / 7.40,
-        height: 84,
-        child: Column(
-          children: [
-            Text("${first_title}", style: TextStyle(fontSize: 14)),
-            Text("Hitpoints", style: TextStyle(fontSize: 14)),
-            SizedBox(height: 3),
-            DataDeIncrement(controller: controller, nameValue: nameValue)
-          ],
-        ),
-        decoration: ShapeDecoration(
-            shape: BeveledRectangleBorder(
-                side: BorderSide(
-          color: Colors.black,
-        ))));
+      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.height / 8,
+      child: Column(
+        children: [
+          DataDeIncrement(controller: controller, nameValue: nameValue),
+          SizedBox(height: 7),
+          Text("${first_title.toUpperCase()}",
+              style: Theme.of(context).textTheme.headline3),
+          Text("HIT POINTS", style: Theme.of(context).textTheme.headline3),
+        ],
+      ),
+    );
   }
 }

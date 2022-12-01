@@ -19,54 +19,62 @@ class DataPrimaryStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShapeDecoration decoration_border = new ShapeDecoration(
-        shape: BeveledRectangleBorder(
-            side: BorderSide(
-      color: Colors.black,
-    )));
     return Container(
-        width: MediaQuery.of(context).size.height / 8,
-        height: MediaQuery.of(context).size.height / 6,
-        child: Column(children: [
-          Text("${stat}", style: TextStyle(fontSize: 16)),
-          Expanded(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      width: MediaQuery.of(context).size.width / 3.5,
+      height: MediaQuery.of(context).size.height / 6,
+      child: Stack(children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 15),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          width: MediaQuery.of(context).size.width / 3.5,
+          height: MediaQuery.of(context).size.height / 7.1,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text("${stat.toUpperCase()}",
+                style: Theme.of(context).textTheme.headline3),
+            SizedBox(height: 15),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               ProficiencyCircle(
                   radius: 12, status: this.proficiency, stat: stat),
-              SizedBox(width: 15),
-              Text("${stat_modifier}", style: TextStyle(fontSize: 18)),
+              SizedBox(width: 7),
+              Text("${stat_modifier}", style: TextStyle(fontSize: 27)),
             ]),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      height: 25,
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        controller: controller,
-                        keyboardType: TextInputType.numberWithOptions(
-                          decimal: false,
-                        ),
-                        onFieldSubmitted: (value) {
-                          int num = int.parse(value);
-                          context
-                              .read<Character_Provide>()
-                              .updateStatPrimary(num, stat);
-                        },
-                      ),
-                    ),
-                    decoration: decoration_border),
+          ]),
+        ),
+        Positioned(
+          bottom: 0,
+          left: MediaQuery.of(context).size.width / 3.5 / 3.5,
+          child: Container(
+            width: 51,
+            height: 39,
+            alignment: Alignment.bottomCenter,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                  color: Theme.of(context).colorScheme.secondary, width: 1.8),
+            ),
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(bottom: 8.0),
               ),
-            ],
-          )
-        ]),
-        decoration: decoration_border);
+              controller: controller,
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+              ),
+              onFieldSubmitted: (value) {
+                int num = int.parse(value);
+                context.read<Character_Provide>().updateStatPrimary(num, stat);
+              },
+            ),
+          ),
+        )
+      ]),
+    );
   }
 }

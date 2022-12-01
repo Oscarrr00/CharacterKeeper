@@ -46,19 +46,19 @@ class ProficiencyPage extends StatelessWidget {
           children: [
             Center(
                 child: Text(
-              "Skill Proficiencies",
+              "SKILL PROFICIENCIES",
               style: Theme.of(context).textTheme.headline6,
             )),
             Expanded(
-                child: Card(
+                child: Container(
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Proficiency Bonus",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "PROFICIENCY BONUS",
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -77,15 +77,18 @@ class ProficiencyPage extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.secondary,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                             child: Center(
-                                child: Text("Skill Proficiencies",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))))
+                                child: Text(
+                          "SKILL PROFICIENCIES",
+                          style: Theme.of(context).textTheme.headline6,
+                        )))
                       ],
                     ),
                   ),
@@ -98,33 +101,42 @@ class ProficiencyPage extends StatelessWidget {
                       childAspectRatio: 7.0,
                       children: List.generate(
                           18,
-                          (index) => Container(
-                                padding: EdgeInsets.all(4),
-                                color: index % 2 == 1 ? Colors.grey[350] : null,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                        child: Row(
-                                      children: [
-                                        Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: ProficiencyCircleSkill(
-                                                status: character
-                                                    .proficiencies[index],
-                                                radius: 10,
-                                                index: index)),
-                                        Text(proficiencies[index][2] + "   ",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Expanded(
-                                            child:
-                                                Text(proficiencies[index][0])),
-                                        Text(proficiencies[index][1],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold))
-                                      ],
-                                    )),
-                                  ],
+                          (index) => Padding(
+                                padding: const EdgeInsets.only(bottom: 6.0),
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: 4, right: 8, bottom: 4, left: 4),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Row(
+                                        children: [
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ProficiencyCircleSkill(
+                                                  status: character
+                                                      .proficiencies[index],
+                                                  radius: 10,
+                                                  index: index)),
+                                          Text(proficiencies[index][2] + "   ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Expanded(
+                                              child: Text(
+                                                  proficiencies[index][0])),
+                                          Text(proficiencies[index][1],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold))
+                                        ],
+                                      )),
+                                    ],
+                                  ),
                                 ),
                               )),
                     ),
