@@ -6,14 +6,63 @@ import 'package:provider/provider.dart';
 import '../providers/character_provider.dart';
 
 class Profile extends StatelessWidget {
-  final dynamic profile;
   const Profile({
     Key? key,
-    this.profile,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    dynamic profile = context.watch<Character_Provide>().profile;
+    var usernameController = TextEditingController();
+    Future<void> _showDialogUpdateUsername() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Change Username'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintText: "${profile["username"]}",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.black),
+                          ))),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Done'),
+                onPressed: () {
+                  context
+                      .read<Character_Provide>()
+                      .updateUsername(usernameController.text);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Your Profile"),
@@ -28,7 +77,9 @@ class Profile extends StatelessWidget {
               Column(children: [
                 ShowData(content: "${profile["username"]}"),
                 MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _showDialogUpdateUsername();
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide(color: Colors.black)),

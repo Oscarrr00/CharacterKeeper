@@ -23,6 +23,7 @@ class Character_Provide with ChangeNotifier {
   var httpHandler = new HttpHandler();
 
   var user;
+  dynamic profile;
   bool userLoggedData = false;
   var currentCharacter_firebase;
 
@@ -232,22 +233,12 @@ class Character_Provide with ChangeNotifier {
     var notes_query = await currentCharacter_firebase.collection("Note").get();
 
     for (var doc in notes_query.docs) {
-      if (doc["title"] == currentCharacter.notes[index].title) {
-        if (currentCharacter.notes[index].image != "") {
-          String s = currentCharacter.notes[index].image;
-          print(s);
-          String imagePath = s.substring(s.lastIndexOf('images/'));
-          print(imagePath);
-
-          dynamic imageRef = FirebaseStorage.instance.ref().child(imagePath);
-          await imageRef.delete();
-        }
-
+      if (doc["title"] == displayNotes[index].title) {
         await doc.reference.delete();
       }
     }
 
-    currentCharacter.notes.removeAt(index);
+    currentCharacter.notes.remove(displayNotes[index]);
     notifyListeners();
   }
 
@@ -260,7 +251,7 @@ class Character_Provide with ChangeNotifier {
         await doc.reference.delete();
       }
     }
-    currentCharacter.inventory.removeAt(index);
+    currentCharacter.inventory.remove(displayInventory[index]);
     notifyListeners();
   }
 
@@ -269,12 +260,33 @@ class Character_Provide with ChangeNotifier {
         await currentCharacter_firebase.collection("Ability").get();
 
     for (var doc in ability_query.docs) {
-      if (doc["name"] == currentCharacter.abilities[index].name) {
+      if (doc["name"] == displayAbilities[index].name) {
         await doc.reference.delete();
       }
     }
 
-    currentCharacter.abilities.removeAt(index);
+    currentCharacter.abilities.remove(displayAbilities[index]);
+    notifyListeners();
+  }
+
+  Future deleteCharacter(int index) async {
+    var character_query = await user.collection("Character").get();
+    var characaterToDelete = characterList[index].toJson();
+    for (var doc in character_query.docs) {
+      var character = doc.data();
+
+      if (character["name"] == characaterToDelete["name"] &&
+          character["level"] == characaterToDelete["level"] &&
+          character["race"] == characaterToDelete["race"] &&
+          character["character_class"] ==
+              characaterToDelete["character_class"]) {
+        print("Si se igualo");
+        await doc.reference.delete();
+      }
+    }
+
+    characterList.removeAt(index);
+
     notifyListeners();
   }
 
@@ -514,7 +526,8 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateItem(int index, String name, String description, int quantity) async {
+  Future updateItem(
+      int index, String name, String description, int quantity) async {
     var item_query = await currentCharacter_firebase
         .collection("Inventory_Entry")
         .where("name", isEqualTo: currentCharacter.inventory[index].name)
@@ -525,7 +538,8 @@ class Character_Provide with ChangeNotifier {
     currentCharacter_firebase
         .collection("Inventory_Entry")
         .doc(item_query.docs.first.id)
-        .update({"name": name, "description": description, "quantity": quantity})
+        .update(
+            {"name": name, "description": description, "quantity": quantity})
         .then((value) => print("Inventory Entry Updated"))
         .catchError(
             (error) => print("Failed to update Inventory Entry: $error"));
@@ -552,6 +566,18 @@ class Character_Provide with ChangeNotifier {
 
     currentCharacter.abilities[index].name = name;
     currentCharacter.abilities[index].description = description;
+    notifyListeners();
+  }
+
+  void updateUsername(String username) {
+    user = FirebaseFirestore.instance
+        .collection("User")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"username": username})
+        .then((value) => print("Username Updated"))
+        .catchError((error) => print("Failed to update Username: $error"));
+
+    profile["username"] = username;
     notifyListeners();
   }
 
@@ -760,10 +786,9 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> getProfile() async {
-    var profile = await user.get();
-    print(profile.data);
-    return profile.data();
+  Future getProfile() async {
+    profile = await user.get();
+    profile = profile.data();
   }
 
 //Esta parte es para la busqueda de las cosas==============================================
@@ -776,6 +801,7 @@ class Character_Provide with ChangeNotifier {
     if (name == "") {
       displayInventory = currentCharacter.inventory;
     }
+    name = name.toLowerCase();
     List result = [];
     for (var item in currentCharacter.inventory) {
       if (item.name.toLowerCase().contains(name) ||
@@ -791,6 +817,7 @@ class Character_Provide with ChangeNotifier {
     if (name == "") {
       displayNotes = currentCharacter.notes;
     }
+    name = name.toLowerCase();
     List result = [];
     for (var note in currentCharacter.notes) {
       if (note.title.toLowerCase().contains(name) ||
@@ -806,6 +833,7 @@ class Character_Provide with ChangeNotifier {
     if (name == "") {
       displayAbilities = currentCharacter.abilities;
     }
+    name = name.toLowerCase();
     List result = [];
     for (var ability in currentCharacter.abilities) {
       if (ability.name.toLowerCase().contains(name) ||

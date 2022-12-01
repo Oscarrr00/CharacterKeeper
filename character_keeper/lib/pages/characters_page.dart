@@ -11,8 +11,6 @@ class CharactersUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic profile;
-
     dynamic characterName = TextEditingController();
     dynamic characterLevel = TextEditingController();
     dynamic characterClass = TextEditingController();
@@ -139,11 +137,10 @@ class CharactersUser extends StatelessWidget {
             Text("Your Characters"),
             IconButton(
                 onPressed: () async {
-                  profile =
-                      await context.read<Character_Provide>().getProfile();
+                  await context.read<Character_Provide>().getProfile();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => Profile(profile: profile),
+                      builder: (context) => Profile(),
                     ),
                   );
                 },

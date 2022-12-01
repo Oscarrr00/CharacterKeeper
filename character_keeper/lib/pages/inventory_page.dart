@@ -155,14 +155,12 @@ class InventoryPage extends StatelessWidget {
                   int n;
                   try {
                     n = int.parse(quantityItem.text);
-                  } catch(e) {
+                  } catch (e) {
                     n = 0;
                   }
-                  context.read<Character_Provide>().updateItem(currentIndex, nameItem.text,
-                      descItem.text, n);
-                    context
-                              .read<Character_Provide>()
-                              .searchItem(searchItem.text);
+                  context.read<Character_Provide>().updateItem(
+                      currentIndex, nameItem.text, descItem.text, n);
+                  context.read<Character_Provide>().searchItem(searchItem.text);
                   nameItem.text = "";
                   descItem.text = "";
                   quantityItem.text = "";
@@ -303,15 +301,20 @@ class InventoryPage extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
-                                                _showDialogNoteWithInitialValues(inventory[index].name, inventory[index].description, inventory[index].amount, index);
+                                                _showDialogNoteWithInitialValues(
+                                                    inventory[index].name,
+                                                    inventory[index]
+                                                        .description,
+                                                    inventory[index].amount,
+                                                    index);
                                               },
                                             ),
                                           ),
                                           IconButton(
                                               icon: Icon(Icons.delete),
                                               splashColor: Colors.red[200],
-                                              onPressed: () {
-                                                context
+                                              onPressed: () async {
+                                                await context
                                                     .read<Character_Provide>()
                                                     .deleteItem(index);
                                                 context

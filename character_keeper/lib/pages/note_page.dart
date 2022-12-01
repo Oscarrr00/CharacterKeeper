@@ -321,8 +321,8 @@ class NotePage extends StatelessWidget {
                                               IconButton(
                                                   icon: Icon(Icons.delete),
                                                   splashColor: Colors.red[200],
-                                                  onPressed: () {
-                                                    context
+                                                  onPressed: () async {
+                                                    await context
                                                         .read<
                                                             Character_Provide>()
                                                         .deleteNote(index);

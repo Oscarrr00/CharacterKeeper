@@ -130,9 +130,8 @@ class AbilityPage extends StatelessWidget {
               TextButton(
                 child: const Text('Edit'),
                 onPressed: () {
-                  context
-                      .read<Character_Provide>()
-                      .updateAbility(currentIndex, abilityName.text, abilityDescription.text);
+                  context.read<Character_Provide>().updateAbility(
+                      currentIndex, abilityName.text, abilityDescription.text);
                   context
                       .read<Character_Provide>()
                       .searchNote(searchAbility.text);
@@ -147,8 +146,8 @@ class AbilityPage extends StatelessWidget {
       );
     }
 
-    Future<void> _showDialogNoteWithInitialValues(String initialName,
-        String initialDescription, int index) async {
+    Future<void> _showDialogNoteWithInitialValues(
+        String initialName, String initialDescription, int index) async {
       abilityName.text = initialName;
       abilityDescription.text = initialDescription;
       currentIndex = index;
@@ -255,15 +254,19 @@ class AbilityPage extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
-                                                _showDialogNoteWithInitialValues(abilities[index].name, abilities[index].description, index);
+                                                _showDialogNoteWithInitialValues(
+                                                    abilities[index].name,
+                                                    abilities[index]
+                                                        .description,
+                                                    index);
                                               },
                                             ),
                                           ),
                                           IconButton(
                                               icon: Icon(Icons.delete),
                                               splashColor: Colors.red[200],
-                                              onPressed: () {
-                                                context
+                                              onPressed: () async {
+                                                await context
                                                     .read<Character_Provide>()
                                                     .deleteAbility(index);
                                                 context
