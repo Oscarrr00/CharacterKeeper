@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InventoryPage extends StatelessWidget {
-  const InventoryPage({super.key});
+  InventoryPage({super.key});
 
+  dynamic searchItem = TextEditingController();
   @override
   Widget build(BuildContext context) {
     dynamic itemAcountController = [];
     dynamic nameItem = TextEditingController();
     dynamic descItem = TextEditingController();
     dynamic quantityItem = TextEditingController();
-    dynamic searchItem = TextEditingController();
+
     List inventory =
-        context.watch<Character_Provide>().currentCharacter.inventory;
+        context.watch<Character_Provide>().displayInventory;
     for (int i = 0; i < inventory.length; i++) {
       itemAcountController.add(TextEditingController());
     }
@@ -89,6 +90,9 @@ class InventoryPage extends StatelessWidget {
                 onPressed: () {
                   context.read<Character_Provide>().addItem(nameItem.text,
                       descItem.text, int.parse(quantityItem.text));
+                    context
+                              .read<Character_Provide>()
+                              .searchItem(searchItem.text);
                   nameItem.text = "";
                   descItem.text = "";
                   quantityItem.text = "";
@@ -134,16 +138,10 @@ class InventoryPage extends StatelessWidget {
                     height: 40,
                     child: TextField(
                       onSubmitted: ((value) {
-                        if (value == "") {
-                          inventory = context
-                              .watch<Character_Provide>()
-                              .currentCharacter
-                              .inventory;
-                        } else {
-                          inventory = context
+                          context
                               .read<Character_Provide>()
                               .searchItem(value);
-                        }
+                          searchItem.text = value;
                       }),
                       controller: searchItem,
                       decoration: InputDecoration(
@@ -151,7 +149,7 @@ class InventoryPage extends StatelessWidget {
                             top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25)),
-                        hintText: "Busca el Item",
+                        hintText: "Search for an item",
                       ),
                     ),
                   ),
@@ -169,7 +167,7 @@ class InventoryPage extends StatelessWidget {
                                 (index) => Container(
                                       padding: EdgeInsets.all(4),
                                       color: index % 2 == 1
-                                          ? Colors.grey[350]
+                                          ? Color.fromARGB(51, 162, 161, 161)
                                           : null,
                                       child: Row(
                                         children: [
@@ -236,6 +234,9 @@ class InventoryPage extends StatelessWidget {
                                                 context
                                                     .read<Character_Provide>()
                                                     .deleteItem(index);
+                                                    context
+                              .read<Character_Provide>()
+                              .searchItem(searchItem.text);
                                               })
                                         ],
                                       ),

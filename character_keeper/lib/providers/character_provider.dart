@@ -16,6 +16,8 @@ class Character_Provide with ChangeNotifier {
 
   Character currentCharacter = Character.fromJson(myCharacter);
 
+  var displayInventory;
+
   var httpHandler = new HttpHandler();
 
   var user;
@@ -44,6 +46,8 @@ class Character_Provide with ChangeNotifier {
     await getAbilitiesCharacter(index);
     await getNotesCharacter(index);
     await getInventoryCharacter(index);
+
+    displayInventory = currentCharacter.inventory;
 
     notifyListeners();
   }
@@ -247,7 +251,7 @@ class Character_Provide with ChangeNotifier {
         await currentCharacter_firebase.collection("Inventory_Entry").get();
 
     for (var doc in item_query.docs) {
-      if (doc["name"] == currentCharacter.inventory[index].name) {
+      if (doc["name"] == displayInventory[index].name) {
         await doc.reference.delete();
       }
     }
@@ -753,13 +757,18 @@ class Character_Provide with ChangeNotifier {
   ///
   ///
 
-  List searchItem(String name) {
+  void searchItem(String name) {
+    if(name == ""){
+      displayInventory = currentCharacter.inventory;
+    }
     List result = [];
     for (var item in currentCharacter.inventory) {
-      if (item.name.contains(name) || item.description.contains(name)) {
+      if (item.name.toLowerCase().contains(name) || item.description.toLowerCase().contains(name)) {
         result.add(item);
       }
     }
-    return result;
+    displayInventory = result;
+    notifyListeners();
+  
   }
 }

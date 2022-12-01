@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( 
       title: 'Material App',
       home: CheckAuthPage(),
       theme: ThemeData(
@@ -33,4 +33,4 @@ class MyApp extends StatelessWidget {
               headline5: TextStyle(fontWeight: FontWeight.bold))),
     );
   }
-}
+} 
