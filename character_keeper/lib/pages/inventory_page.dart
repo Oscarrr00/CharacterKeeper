@@ -88,13 +88,25 @@ class InventoryPage extends StatelessWidget {
               TextButton(
                 child: const Text('Done'),
                 onPressed: () {
-                  context.read<Character_Provide>().addItem(nameItem.text,
-                      descItem.text, int.parse(quantityItem.text));
-                  context.read<Character_Provide>().searchItem(searchItem.text);
-                  nameItem.text = "";
-                  descItem.text = "";
-                  quantityItem.text = "";
-                  Navigator.of(context).pop();
+                  int n = 0;
+                  try {
+                    n = int.parse(quantityItem.text);
+                  } catch(e) {
+                    n = 0;
+                  }
+
+                  try {
+                    context.read<Character_Provide>().addItem(nameItem.text,
+                        descItem.text, n);
+                    context.read<Character_Provide>().searchItem(searchItem.text);
+                    nameItem.text = "";
+                    descItem.text = "";
+                    quantityItem.text = "";
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -158,13 +170,19 @@ class InventoryPage extends StatelessWidget {
                   } catch (e) {
                     n = 0;
                   }
-                  context.read<Character_Provide>().updateItem(
-                      currentIndex, nameItem.text, descItem.text, n);
-                  context.read<Character_Provide>().searchItem(searchItem.text);
-                  nameItem.text = "";
-                  descItem.text = "";
-                  quantityItem.text = "";
-                  Navigator.of(context).pop();
+
+                  try {
+                    context.read<Character_Provide>().updateItem(
+                        currentIndex, nameItem.text, descItem.text, n);
+                    context.read<Character_Provide>().searchItem(searchItem.text);
+                    nameItem.text = "";
+                    descItem.text = "";
+                    quantityItem.text = "";
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -314,6 +332,7 @@ class InventoryPage extends StatelessWidget {
                                               icon: Icon(Icons.delete),
                                               splashColor: Colors.red[200],
                                               onPressed: () async {
+                                                try {
                                                 await context
                                                     .read<Character_Provide>()
                                                     .deleteItem(index);
@@ -321,6 +340,10 @@ class InventoryPage extends StatelessWidget {
                                                     .read<Character_Provide>()
                                                     .searchItem(
                                                         searchItem.text);
+                                                } catch(e) {
+                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                                  Navigator.of(context).pop();
+                                                }
                                               })
                                         ],
                                       ),

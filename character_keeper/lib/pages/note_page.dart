@@ -77,13 +77,18 @@ class NotePage extends StatelessWidget {
               TextButton(
                 child: const Text('Done'),
                 onPressed: () {
-                  context
-                      .read<Character_Provide>()
-                      .addNote(titleNote.text, textNote.text, imageToAddPath);
-                  context.read<Character_Provide>().searchNote(searchNote.text);
-                  titleNote.text = "";
-                  textNote.text = "";
-                  Navigator.of(context).pop();
+                  try {
+                    context
+                        .read<Character_Provide>()
+                        .addNote(titleNote.text, textNote.text, imageToAddPath);
+                    context.read<Character_Provide>().searchNote(searchNote.text);
+                    titleNote.text = "";
+                    textNote.text = "";
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -147,12 +152,17 @@ class NotePage extends StatelessWidget {
               TextButton(
                 child: const Text('Edit Note'),
                 onPressed: () {
-                  context
-                      .read<Character_Provide>()
-                      .updateNote(currentIndex, titleNote.text, textNote.text);
-                  titleNote.text = "";
-                  textNote.text = "";
-                  Navigator.of(context).pop();
+                  try {
+                    context
+                        .read<Character_Provide>()
+                        .updateNote(currentIndex, titleNote.text, textNote.text);
+                    titleNote.text = "";
+                    textNote.text = "";
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],

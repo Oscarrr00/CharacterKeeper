@@ -166,10 +166,22 @@ class SpellPage extends StatelessWidget {
               TextButton(
                 child: const Text('Ok'),
                 onPressed: () {
-                  context
-                      .read<Character_Provide>()
-                      .addSpell(nameSpell.text, int.parse(lvlSpell.text));
-                  Navigator.of(context).pop();
+                  int n;
+                  try {
+                    n = int.parse(lvlSpell.text);
+                  } catch(e) {
+                    n = 0;
+                  }
+
+                  try {
+                    context
+                        .read<Character_Provide>()
+                        .addSpell(nameSpell.text, n);
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -385,13 +397,18 @@ class SpellPage extends StatelessWidget {
                                             IconButton(
                                                 icon: Icon(Icons.delete),
                                                 onPressed: () {
-                                                  context
-                                                      .read<Character_Provide>()
-                                                      .deleteSpell(index);
-                                                  spells = context
-                                                      .read<Character_Provide>()
-                                                      .currentCharacter
-                                                      .spells;
+                                                  try {
+                                                    context
+                                                        .read<Character_Provide>()
+                                                        .deleteSpell(index);
+                                                    spells = context
+                                                        .read<Character_Provide>()
+                                                        .currentCharacter
+                                                        .spells;
+                                                  } catch(e) {
+                                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                                    Navigator.of(context).pop();
+                                                  }
                                                 })
                                           ],
                                         ),
