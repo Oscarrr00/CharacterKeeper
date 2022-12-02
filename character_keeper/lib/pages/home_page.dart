@@ -16,9 +16,11 @@ class HomePage extends StatelessWidget {
     var passwordController = TextEditingController();
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        body: SafeArea(
+        body: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 80),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("D&D Character Keeper",
                   style: TextStyle(

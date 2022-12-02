@@ -17,47 +17,49 @@ class NewAcount extends StatelessWidget {
     var newPasswordController = TextEditingController();
     var confirmPasswordController = TextEditingController();
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(title: Text("Create a new acount")),
-        body: Column(
-          children: [
-            SizedBox(height: 10),
-            InputText(
-                label: "Choose a username",
-                hintText: "New username",
-                controller: newUsernameController,
-                color: Colors.black),
-            InputText(
-                label: "Enter an email",
-                hintText: "email@email.com",
-                controller: emailController,
-                color: Colors.black),
-            SizedBox(height: 10),
-            Text("Choose a password", style: TextStyle(fontSize: 19)),
-            Text("It must be at least 8 characters long",
-                style: TextStyle(fontSize: 19)),
-            InputText(
-                label: "",
-                hintText: "New password",
-                controller: newPasswordController,
-                color: Colors.black),
-            InputText(
-                label: "",
-                hintText: "Confirm new password",
-                controller: confirmPasswordController,
-                color: Colors.black),
-            SizedBox(height: 20),
-            MaterialButton(
-                onPressed: () {
-                  context.read<Character_Provide>().createUser(
-                      emailController.text,
-                      confirmPasswordController.text,
-                      newUsernameController.text);
-                },
-                child: Text("Done"),
-                color: Colors.grey,
-                minWidth: 340),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              InputText(
+                  label: "Choose a username",
+                  hintText: "New username",
+                  controller: newUsernameController,
+                  color: Colors.black),
+              InputText(
+                  label: "Enter an email",
+                  hintText: "email@email.com",
+                  controller: emailController,
+                  color: Colors.black),
+              SizedBox(height: 10),
+              Text("Choose a password", style: TextStyle(fontSize: 19)),
+              Text("It must be at least 8 characters long",
+                  style: TextStyle(fontSize: 19)),
+              InputText(
+                  label: "",
+                  hintText: "New password",
+                  controller: newPasswordController,
+                  color: Colors.black),
+              InputText(
+                  label: "",
+                  hintText: "Confirm new password",
+                  controller: confirmPasswordController,
+                  color: Colors.black),
+              SizedBox(height: 20),
+              MaterialButton(
+                  onPressed: () {
+                    context.read<Character_Provide>().createUser(
+                        emailController.text,
+                        confirmPasswordController.text,
+                        newUsernameController.text);
+                  },
+                  child: Text("Done"),
+                  color: Colors.grey,
+                  minWidth: 340),
+            ],
+          ),
         ));
   }
 }
