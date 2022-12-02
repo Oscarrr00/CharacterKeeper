@@ -87,6 +87,7 @@ flutter:
   assets:
      - assets/images/main_image.jpg
      - assets/images/background_dnd.jpg
+     - assets/images/dado.png
   #   - images/a_dot_ham.jpeg
 
   fonts:

@@ -138,38 +138,44 @@ class SpellPage extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text('Add New Spell',
+            title: Text('ADD NEW SPELL',
                 style: Theme.of(context).textTheme.headline6),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   InputText(
-                      label: "",
-                      hintText: "Name",
-                      controller: nameSpell,
-                      color: Theme.of(context).colorScheme.tertiary),
+                    label: "",
+                    hintText: "Name",
+                    controller: nameSpell,
+                    color: Colors.white,
+                  ),
                   InputText(
-                      label: "",
-                      hintText: "Level",
-                      controller: lvlSpell,
-                      color: Theme.of(context).colorScheme.tertiary),
+                    label: "",
+                    hintText: "Level",
+                    controller: lvlSpell,
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: const Text('Ok'),
+                child: Text('Ok',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   int n;
                   try {
                     n = int.parse(lvlSpell.text);
-                  } catch(e) {
+                  } catch (e) {
                     n = 0;
                   }
 
@@ -178,8 +184,9 @@ class SpellPage extends StatelessWidget {
                         .read<Character_Provide>()
                         .addSpell(nameSpell.text, n);
                     Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
                     Navigator.of(context).pop();
                   }
                 },
@@ -366,6 +373,7 @@ class SpellPage extends StatelessWidget {
                                             ),
                                             IconButton(
                                                 icon: Icon(Icons.search),
+                                                splashRadius: 1,
                                                 onPressed: () async {
                                                   spellFound = await context
                                                       .read<Character_Provide>()
@@ -396,17 +404,24 @@ class SpellPage extends StatelessWidget {
                                                 }),
                                             IconButton(
                                                 icon: Icon(Icons.delete),
+                                                splashRadius: 1,
                                                 onPressed: () {
                                                   try {
                                                     context
-                                                        .read<Character_Provide>()
+                                                        .read<
+                                                            Character_Provide>()
                                                         .deleteSpell(index);
                                                     spells = context
-                                                        .read<Character_Provide>()
+                                                        .read<
+                                                            Character_Provide>()
                                                         .currentCharacter
                                                         .spells;
-                                                  } catch(e) {
-                                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                                                  } catch (e) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                e.toString())));
                                                     Navigator.of(context).pop();
                                                   }
                                                 })
@@ -422,6 +437,9 @@ class SpellPage extends StatelessWidget {
           )),
           ElevatedButton(
               child: Text("Add a spell"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
               onPressed: () {
                 _showDialogAddSpell();
               })

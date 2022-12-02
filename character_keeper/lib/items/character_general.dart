@@ -70,13 +70,13 @@ class ItemCharacter extends StatelessWidget {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
             children: [
               Row(
                 children: [
-                  SizedBox(width: 35),
+                  SizedBox(width: 45),
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
@@ -87,7 +87,8 @@ class ItemCharacter extends StatelessWidget {
                   ),
                   IconButton(
                       icon: Icon(Icons.delete),
-                      splashColor: Colors.red[200],
+                      splashColor:
+                          Theme.of(context).colorScheme.primaryContainer,
                       onPressed: () async {
                         _showDialogDeleteCharacter(index);
                       })

@@ -78,7 +78,7 @@ class DetailsCharacter extends StatelessWidget {
 
                             try {
                               num = int.parse(value);
-                            } catch(e) {
+                            } catch (e) {
                               num = 10;
                             }
 
@@ -86,8 +86,9 @@ class DetailsCharacter extends StatelessWidget {
                               context
                                   .read<Character_Provide>()
                                   .updateArmorClass(num);
-                            } catch(e) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())));
                             }
                           },
                         ),
@@ -153,7 +154,6 @@ class DetailsCharacter extends StatelessWidget {
                       width: 35,
                       child: TextFormField(
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                         ),

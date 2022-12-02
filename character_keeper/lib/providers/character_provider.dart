@@ -79,7 +79,7 @@ class Character_Provide with ChangeNotifier {
     notifyListeners();
   }
 
-  void addNote(String title, String description, String image) async {
+  Future addNote(String title, String description, String image) async {
     String imageURL = "";
     if (image != "") {
       File file = File(image);

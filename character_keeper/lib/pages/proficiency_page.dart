@@ -44,11 +44,6 @@ class ProficiencyPage extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Center(
-                child: Text(
-              "SKILL PROFICIENCIES",
-              style: Theme.of(context).textTheme.headline6,
-            )),
             Expanded(
                 child: Container(
               child: Column(

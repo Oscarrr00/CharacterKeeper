@@ -27,54 +27,31 @@ class CharactersUser extends StatelessWidget {
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: characterName,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Your character's name",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Your character's name",
+                      )),
                   SizedBox(height: 20),
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: characterClass,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Your character's class",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Your character's class",
+                      )),
                   SizedBox(height: 20),
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: characterRace,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Your character's race",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Your character's race",
+                      )),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Row(
                       children: [
-                        Text("Character Level   "),
+                        Text("Character Level   ",
+                            style: Theme.of(context).textTheme.headline3),
                         SizedBox(
                           height: 25,
                           width: 30,
@@ -109,10 +86,10 @@ class CharactersUser extends StatelessWidget {
               TextButton(
                 child: const Text('Done'),
                 onPressed: () {
-                  int n; 
+                  int n;
                   try {
                     n = int.parse(characterLevel.text);
-                  } catch(e) {
+                  } catch (e) {
                     n = 1;
                   }
 
@@ -127,8 +104,9 @@ class CharactersUser extends StatelessWidget {
                     characterLevel.text = "";
                     characterRace.text = "";
                     Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
                     Navigator.of(context).pop();
                   }
                 },
@@ -176,7 +154,8 @@ class CharactersUser extends StatelessWidget {
               ),
               FloatingActionButton(
                   child: Icon(Icons.add),
-                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
                   onPressed: (() {
                     _showDialogAddCharacter();
                   }))

@@ -12,7 +12,11 @@ class ShowData extends StatelessWidget {
     return Container(
         width: 250,
         decoration: BoxDecoration(
-            color: Colors.grey, border: Border.all(color: Colors.black)),
-        child: Center(child: Text("${content}")));
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(15)),
+        child: Center(
+            child: Text("${content}",
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.tertiary))));
   }
 }

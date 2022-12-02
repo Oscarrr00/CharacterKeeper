@@ -15,71 +15,83 @@ class HomePage extends StatelessWidget {
     var usernameController = TextEditingController();
     var passwordController = TextEditingController();
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         body: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 80),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("D&D Character Keeper",
-                  style: TextStyle(
-                      fontSize: 49, fontFamily: "Araboto", color: Colors.white),
-                  textAlign: TextAlign.center),
-              SizedBox(height: 10),
-              InputText(
-                  label: "E-mail",
-                  hintText: "E-mail Here",
-                  controller: usernameController,
-                  color: Colors.white),
-              InputText(
-                  label: "Password",
-                  hintText: "Password Here",
-                  controller: passwordController,
-                  color: Colors.white),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(right: 30.0, left: 30),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: MaterialButton(
-                        onPressed: () {
-                          context.read<Character_Provide>().loginUser(
-                              usernameController.text, passwordController.text);
-                        },
-                        color: Color.fromARGB(255, 101, 26, 21),
-                        child: Text("Login",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(right: 30.0, left: 30),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: MaterialButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => NewAcount(),
-                            ),
-                          );
-                        },
-                        child: Text("Create New Acount",
-                            style: TextStyle(color: Colors.white)),
-                        color: Color.fromARGB(255, 102, 84, 84),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      padding: EdgeInsets.only(top: 80),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            'assets/images/dado.png',
+            height: MediaQuery.of(context).size.height / 4,
+            width: MediaQuery.of(context).size.width / 3,
           ),
-        ));
+          Text("D&D CHARACTER KEEPER",
+              style: TextStyle(
+                fontSize: 26,
+                fontFamily: "Araboto",
+              ),
+              textAlign: TextAlign.center),
+          SizedBox(height: 10),
+          InputText(
+              label: "E-MAIL",
+              hintText: "E-mail Here",
+              controller: usernameController,
+              color: Theme.of(context).colorScheme.tertiary),
+          InputText(
+              label: "PASSWORD",
+              hintText: "Password Here",
+              controller: passwordController,
+              color: Theme.of(context).colorScheme.tertiary),
+          SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0, left: 30),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    onPressed: () {
+                      context.read<Character_Provide>().loginUser(
+                          usernameController.text, passwordController.text);
+                    },
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Text("Login", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0, left: 30),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => NewAcount(),
+                        ),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Text("Create New Acount",
+                        style: TextStyle(color: Colors.white)),
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }

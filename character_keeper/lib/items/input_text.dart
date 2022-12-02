@@ -19,18 +19,26 @@ class InputText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
       child: Column(
         children: [
-          Text("${label}", style: TextStyle(fontSize: 19, color: color)),
+          Text("${label}", style: Theme.of(context).textTheme.headline6),
           TextField(
-              style: TextStyle(color: color),
               controller: controller,
               decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.secondary,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: color),
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).colorScheme.tertiary),
                   ),
                   hintText: "${hintText}",
-                  hintStyle: TextStyle(color: color),
+                  hintStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.tertiary),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: color),
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).colorScheme.primaryContainer),
                   ))),
         ],
       ),

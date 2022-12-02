@@ -27,17 +27,29 @@ class AbilityPage extends StatelessWidget {
                   TextField(
                       controller: abilityName,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Ability name",
-                      )),
+                          border: OutlineInputBorder(),
+                          hintText: "Ability name",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          ))),
                   SizedBox(height: 20),
                   Expanded(
                     child: TextField(
                         decoration: InputDecoration(
-                          hintText: "Ability description",
-                          contentPadding: EdgeInsets.all(8.0),
-                          border: OutlineInputBorder(),
-                        ),
+                            hintText: "Ability description",
+                            contentPadding: EdgeInsets.all(8.0),
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer),
+                            )),
                         maxLines: 10,
                         controller: abilityDescription),
                   ),
@@ -83,32 +95,37 @@ class AbilityPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Your ability'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: abilityName,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(),
                           hintText: "Ability name",
-                          hintStyle: TextStyle(color: Colors.black),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
                           ))),
                   SizedBox(height: 20),
                   Expanded(
                     child: TextField(
                         decoration: InputDecoration(
-                          hintText: "Ability description",
-                          contentPadding: EdgeInsets.all(8.0),
-                          border: OutlineInputBorder(),
-                        ),
+                            hintText: "Ability description",
+                            contentPadding: EdgeInsets.all(8.0),
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer),
+                            )),
                         maxLines: 10,
                         controller: abilityDescription),
                   ),
@@ -117,7 +134,9 @@ class AbilityPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   abilityName.text = "";
                   abilityDescription.text = "";
@@ -125,7 +144,9 @@ class AbilityPage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Edit'),
+                child: Text('Edit',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   context.read<Character_Provide>().updateAbility(
                       currentIndex, abilityName.text, abilityDescription.text);
@@ -157,12 +178,7 @@ class AbilityPage extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Center(
-                child: Text(
-              "ABILITIES",
-              style: Theme.of(context).textTheme.headline6,
-            )),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Expanded(
                 child: Container(
               child: Column(
@@ -193,12 +209,19 @@ class AbilityPage extends StatelessWidget {
                       }),
                       controller: searchAbility,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        hintText: "Search for an Ability",
-                      ),
+                          contentPadding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          hintText: "Search for an Ability",
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          )),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -233,6 +256,9 @@ class AbilityPage extends StatelessWidget {
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Align(
                                                           alignment: Alignment
@@ -255,7 +281,7 @@ class AbilityPage extends StatelessWidget {
                                                         child: Text(
                                                           abilities[index]
                                                               .description,
-                                                          maxLines: 4,
+                                                          maxLines: 3,
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         ),
@@ -298,6 +324,9 @@ class AbilityPage extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                       child: Text("Add an ability"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
                       onPressed: () {
                         _showDialogAddAbility();
                       }),

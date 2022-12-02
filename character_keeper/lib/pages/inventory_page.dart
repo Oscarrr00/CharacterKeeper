@@ -25,33 +25,39 @@ class InventoryPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Adding an Item'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: nameItem,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(),
                           hintText: "Name of the Item",
-                          hintStyle: TextStyle(color: Colors.black),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
                           ))),
                   SizedBox(height: 20),
                   TextField(
                       decoration: InputDecoration(
-                        hintText: "Write the description of the Item here",
-                        contentPadding: EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(),
-                      ),
+                          hintText: "Write the description of the Item here",
+                          contentPadding: EdgeInsets.all(8.0),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          )),
                       maxLines: 9,
                       controller: descItem),
+                  SizedBox(height: 8),
                   Row(
                     children: [
                       Text("Quantity: "),
@@ -61,9 +67,15 @@ class InventoryPage extends StatelessWidget {
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(8.0),
-                            border: OutlineInputBorder(),
-                          ),
+                              contentPadding: EdgeInsets.all(8.0),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer),
+                              )),
                           controller: quantityItem,
                           keyboardType: TextInputType.numberWithOptions(
                             decimal: false,
@@ -77,7 +89,9 @@ class InventoryPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   nameItem.text = "";
                   descItem.text = "";
@@ -86,25 +100,31 @@ class InventoryPage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Done'),
+                child: Text('Done',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   int n = 0;
                   try {
                     n = int.parse(quantityItem.text);
-                  } catch(e) {
+                  } catch (e) {
                     n = 0;
                   }
 
                   try {
-                    context.read<Character_Provide>().addItem(nameItem.text,
-                        descItem.text, n);
-                    context.read<Character_Provide>().searchItem(searchItem.text);
+                    context
+                        .read<Character_Provide>()
+                        .addItem(nameItem.text, descItem.text, n);
+                    context
+                        .read<Character_Provide>()
+                        .searchItem(searchItem.text);
                     nameItem.text = "";
                     descItem.text = "";
                     quantityItem.text = "";
                     Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
                     Navigator.of(context).pop();
                   }
                 },
@@ -121,31 +141,36 @@ class InventoryPage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Your Item'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: nameItem,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(),
                           hintText: "Name of the Item",
-                          hintStyle: TextStyle(color: Colors.black),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
                           ))),
                   SizedBox(height: 20),
                   TextField(
                       decoration: InputDecoration(
-                        hintText: "Write the description of the Item here",
-                        contentPadding: EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(),
-                      ),
+                          hintText: "Write the description of the Item here",
+                          contentPadding: EdgeInsets.all(8.0),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          )),
                       maxLines: 9,
                       controller: descItem),
                 ],
@@ -153,7 +178,9 @@ class InventoryPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   nameItem.text = "";
                   descItem.text = "";
@@ -162,7 +189,9 @@ class InventoryPage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Edit'),
+                child: Text('Edit',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   int n;
                   try {
@@ -174,13 +203,16 @@ class InventoryPage extends StatelessWidget {
                   try {
                     context.read<Character_Provide>().updateItem(
                         currentIndex, nameItem.text, descItem.text, n);
-                    context.read<Character_Provide>().searchItem(searchItem.text);
+                    context
+                        .read<Character_Provide>()
+                        .searchItem(searchItem.text);
                     nameItem.text = "";
                     descItem.text = "";
                     quantityItem.text = "";
                     Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
                     Navigator.of(context).pop();
                   }
                 },
@@ -206,26 +238,24 @@ class InventoryPage extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Center(
-                child: Text(
-              "Inventory",
-              style: Theme.of(context).textTheme.headline6,
-            )),
+            SizedBox(height: 20),
             Expanded(
-                child: Card(
+                child: Container(
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.secondary,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                             child: Center(
-                                child: Text("Item Amount, Name and Description",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))))
+                                child: Text("ITEM AMOUNT, NAME AND DESCRIPTION",
+                                    style:
+                                        Theme.of(context).textTheme.headline3)))
                       ],
                     ),
                   ),
@@ -242,11 +272,20 @@ class InventoryPage extends StatelessWidget {
                         contentPadding: EdgeInsets.only(
                             top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25)),
+                            borderRadius: BorderRadius.circular(27)),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer),
+                        ),
                         hintText: "Search for an item",
                       ),
                     ),
                   ),
+                  SizedBox(height: 8),
                   (inventory.length <= 0)
                       ? Container()
                       : Expanded(
@@ -258,94 +297,115 @@ class InventoryPage extends StatelessWidget {
                             childAspectRatio: 3.0,
                             children: List.generate(
                                 inventory.length,
-                                (index) => Container(
-                                      padding: EdgeInsets.all(4),
-                                      color: index % 2 == 1
-                                          ? Color.fromARGB(51, 162, 161, 161)
-                                          : null,
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                SizedBox(),
-                                                DataDeIncrementMedium(
-                                                    startingValue:
-                                                        inventory[index].amount,
-                                                    controller:
-                                                        itemAcountController[
-                                                            index],
-                                                    index: index),
-                                                SizedBox(height: 20),
-                                              ],
+                                (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Container(
+                                        padding: EdgeInsets.all(9),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  SizedBox(height: 13),
+                                                  DataDeIncrementMedium(
+                                                      startingValue:
+                                                          inventory[index]
+                                                              .amount,
+                                                      controller:
+                                                          itemAcountController[
+                                                              index],
+                                                      index: index),
+                                                  SizedBox(height: 20),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: InkWell(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    Align(
+                                            Expanded(
+                                              child: InkWell(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            "${inventory[index].name}",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          )),
+                                                      Align(
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: Text(
-                                                          "${inventory[index].name}",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                          maxLines: 1,
+                                                          "${inventory[index].description}",
+                                                          maxLines: 3,
+                                                          textAlign:
+                                                              TextAlign.left,
                                                           overflow: TextOverflow
                                                               .ellipsis,
-                                                        )),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        "${inventory[index].description}",
-                                                        maxLines: 4,
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    )
-                                                  ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
+                                                onTap: () {
+                                                  _showDialogNoteWithInitialValues(
+                                                      inventory[index].name,
+                                                      inventory[index]
+                                                          .description,
+                                                      inventory[index].amount,
+                                                      index);
+                                                },
                                               ),
-                                              onTap: () {
-                                                _showDialogNoteWithInitialValues(
-                                                    inventory[index].name,
-                                                    inventory[index]
-                                                        .description,
-                                                    inventory[index].amount,
-                                                    index);
-                                              },
                                             ),
-                                          ),
-                                          IconButton(
-                                              icon: Icon(Icons.delete),
-                                              splashColor: Colors.red[200],
-                                              onPressed: () async {
-                                                try {
-                                                await context
-                                                    .read<Character_Provide>()
-                                                    .deleteItem(index);
-                                                context
-                                                    .read<Character_Provide>()
-                                                    .searchItem(
-                                                        searchItem.text);
-                                                } catch(e) {
-                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                                                  Navigator.of(context).pop();
-                                                }
-                                              })
-                                        ],
+                                            IconButton(
+                                                icon: Icon(Icons.delete),
+                                                splashColor: Colors.red[200],
+                                                onPressed: () async {
+                                                  try {
+                                                    await context
+                                                        .read<
+                                                            Character_Provide>()
+                                                        .deleteItem(index);
+                                                    context
+                                                        .read<
+                                                            Character_Provide>()
+                                                        .searchItem(
+                                                            searchItem.text);
+                                                  } catch (e) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                e.toString())));
+                                                    Navigator.of(context).pop();
+                                                  }
+                                                })
+                                          ],
+                                        ),
                                       ),
                                     )),
                           ),
@@ -357,6 +417,9 @@ class InventoryPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
                       child: Text("Add an inventory entry"),
                       onPressed: () {
                         _showDialogAddItem();

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -31,24 +30,17 @@ class NotePage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Adding a Note'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: titleNote,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Title of the note",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Title of the note",
+                      )),
                   SizedBox(height: 20),
                   Expanded(
                     child: TextField(
@@ -70,7 +62,9 @@ class NotePage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   titleNote.text = "";
                   textNote.text = "";
@@ -78,20 +72,17 @@ class NotePage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Done'),
-                onPressed: () {
-                  try {
-                    context
-                        .read<Character_Provide>()
-                        .addNote(titleNote.text, textNote.text, imageToAddPath);
-                    context.read<Character_Provide>().searchNote(searchNote.text);
-                    titleNote.text = "";
-                    textNote.text = "";
-                    Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-                    Navigator.of(context).pop();
-                  }
+                child: Text('Done',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
+                onPressed: () async {
+                  await context
+                      .read<Character_Provide>()
+                      .addNote(titleNote.text, textNote.text, imageToAddPath);
+                  context.read<Character_Provide>().searchNote(searchNote.text);
+                  titleNote.text = "";
+                  textNote.text = "";
+                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -106,24 +97,17 @@ class NotePage extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Your Note'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: titleNote,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "Title of the note",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "Title of the note",
+                      )),
                   SizedBox(height: 20),
                   Expanded(
                     child: TextField(
@@ -138,7 +122,7 @@ class NotePage extends StatelessWidget {
                   imagePath == ""
                       ? Text("")
                       : Container(
-                        padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: 10),
                           child: Image.network(imagePath),
                         )
                 ],
@@ -146,7 +130,9 @@ class NotePage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   titleNote.text = "";
                   textNote.text = "";
@@ -154,17 +140,19 @@ class NotePage extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Edit Note'),
+                child: Text('Edit Note',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   try {
-                    context
-                        .read<Character_Provide>()
-                        .updateNote(currentIndex, titleNote.text, textNote.text);
+                    context.read<Character_Provide>().updateNote(
+                        currentIndex, titleNote.text, textNote.text);
                     titleNote.text = "";
                     textNote.text = "";
                     Navigator.of(context).pop();
-                  } catch(e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
                     Navigator.of(context).pop();
                   }
                 },
@@ -187,7 +175,7 @@ class NotePage extends StatelessWidget {
       imagePath = "";
     }
 
-    void getImage(int mode) async {
+    Future getImage(int mode) async {
       final ImagePicker _imagePicker = ImagePicker();
       final XFile? image;
 
@@ -208,26 +196,24 @@ class NotePage extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Center(
-                child: Text(
-              "Notes",
-              style: Theme.of(context).textTheme.headline6,
-            )),
+            SizedBox(height: 20),
             Expanded(
-                child: Card(
+                child: Container(
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.secondary,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                             child: Center(
-                                child: Text("Note Title and Description",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))))
+                                child: Text("NOTE TITLE AND DESCRIPTION",
+                                    style:
+                                        Theme.of(context).textTheme.headline3)))
                       ],
                     ),
                   ),
@@ -241,14 +227,22 @@ class NotePage extends StatelessWidget {
                       }),
                       controller: searchNote,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        hintText: "Search for an Note",
-                      ),
+                          contentPadding: EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, right: 10.0, left: 18.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          hintText: "Search for an Note",
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          )),
                     ),
                   ),
+                  SizedBox(height: 8),
                   (notes.length <= 0)
                       ? Container()
                       : Expanded(
@@ -260,112 +254,138 @@ class NotePage extends StatelessWidget {
                             childAspectRatio: 3.0,
                             children: List.generate(
                                 notes.length,
-                                (index) => Container(
-                                      padding: EdgeInsets.all(4),
-                                      color: index % 2 == 1
-                                          ? Color.fromARGB(24, 71, 71, 71)
-                                          : null,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    Align(
+                                (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Container(
+                                        padding: EdgeInsets.all(11),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: InkWell(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Row(
+                                                            children: [
+                                                              notes[index].image !=
+                                                                      ""
+                                                                  ? Icon(Icons
+                                                                      .image)
+                                                                  : Text(""),
+                                                              Text(
+                                                                "${notes[index].title}",
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        16),
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                      Align(
                                                         alignment: Alignment
                                                             .centerLeft,
-                                                        child: Row(
-                                                          children: [
-                                                            notes[index].image !=
-                                                                    ""
-                                                                ? Icon(
-                                                                    Icons.image)
-                                                                : Text(""),
-                                                            Text(
-                                                              "${notes[index].title}",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                            ),
-                                                          ],
-                                                        )),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        "${notes[index].description}",
-                                                        maxLines: 4,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        child: Text(
+                                                          "${notes[index].description}",
+                                                          maxLines: 3,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
+                                                onTap: () async {
+                                                  CircularProgressIndicator();
+                                                  await _showDialogNoteWithInitialValues(
+                                                      notes[index].title,
+                                                      notes[index].description,
+                                                      notes[index].image,
+                                                      index);
+                                                },
                                               ),
-                                              onTap: () async {
-                                                CircularProgressIndicator();
-                                                await _showDialogNoteWithInitialValues(
-                                                    notes[index].title,
-                                                    notes[index].description,
-                                                    notes[index].image,
-                                                    index);
-                                              },
                                             ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              IconButton(
-                                                  icon: Icon(Icons.share),
-                                                  onPressed: () async {
-                                                    if(notes[index].image == "") {
-                                                      Share.share(
-                                                          notes[index].title +
-                                                              '\n' +
-                                                              notes[index]
-                                                                  .description);
-                                                    } else {
-                                                      final response = await http.get(Uri.parse(notes[index].image));
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    icon: Icon(Icons.share),
+                                                    splashRadius: 1,
+                                                    onPressed: () async {
+                                                      if (notes[index].image ==
+                                                          "") {
+                                                        Share.share(notes[index]
+                                                                .title +
+                                                            '\n' +
+                                                            notes[index]
+                                                                .description);
+                                                      } else {
+                                                        final response =
+                                                            await http.get(
+                                                                Uri.parse(notes[
+                                                                        index]
+                                                                    .image));
 
-                                                      final documentDirectory = await getApplicationDocumentsDirectory();
+                                                        final documentDirectory =
+                                                            await getApplicationDocumentsDirectory();
 
-                                                      final file = File(join(documentDirectory.path, 'imagetest.png'));
+                                                        final file = File(join(
+                                                            documentDirectory
+                                                                .path,
+                                                            'imagetest.png'));
 
-                                                      file.writeAsBytesSync(response.bodyBytes);
-                                                      XFile fileT = new XFile(file.path);
+                                                        file.writeAsBytesSync(
+                                                            response.bodyBytes);
+                                                        XFile fileT = new XFile(
+                                                            file.path);
 
-                                                      Share.shareXFiles([fileT], text: notes[index].title +
-                                                              '\n' +
-                                                              notes[index]
-                                                                  .description);
-
-                                                    }
-                                                  }),
-                                              IconButton(
-                                                  icon: Icon(Icons.delete),
-                                                  splashColor: Colors.red[200],
-                                                  onPressed: () async {
-                                                    await context
-                                                        .read<
-                                                            Character_Provide>()
-                                                        .deleteNote(index);
-                                                    context
-                                                        .read<
-                                                            Character_Provide>()
-                                                        .searchNote(
-                                                            searchNote.text);
-                                                  }),
-                                            ],
-                                          )
-                                        ],
+                                                        Share.shareXFiles(
+                                                            [fileT],
+                                                            text: notes[index]
+                                                                    .title +
+                                                                '\n' +
+                                                                notes[index]
+                                                                    .description);
+                                                      }
+                                                    }),
+                                                IconButton(
+                                                    icon: Icon(Icons.delete),
+                                                    splashRadius: 1,
+                                                    onPressed: () async {
+                                                      await context
+                                                          .read<
+                                                              Character_Provide>()
+                                                          .deleteNote(index);
+                                                      context
+                                                          .read<
+                                                              Character_Provide>()
+                                                          .searchNote(
+                                                              searchNote.text);
+                                                    }),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     )),
                           ),
@@ -377,6 +397,9 @@ class NotePage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
                       child: Text("Add a note"),
                       onPressed: () {
                         _showDialogAddNote();
@@ -386,17 +409,21 @@ class NotePage extends StatelessWidget {
                     child: Icon(Icons.camera_alt),
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
                     ),
                     onPressed: () async {
-                      getImage(0);
+                      await getImage(0);
                     }),
                 ElevatedButton(
                     child: Icon(Icons.image),
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
                     ),
                     onPressed: () async {
-                      getImage(1);
+                      await getImage(1);
                     }),
               ],
             )

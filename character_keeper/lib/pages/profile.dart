@@ -20,36 +20,33 @@ class Profile extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             title: const Text('Change Username'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                      style: TextStyle(color: Colors.black),
                       controller: usernameController,
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black),
-                          ),
-                          hintText: "${profile["username"]}",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black),
-                          ))),
+                        border: OutlineInputBorder(),
+                        hintText: "${profile["username"]}",
+                      )),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: const Text('Done'),
+                child: Text('Done',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   context
                       .read<Character_Provide>()
@@ -76,13 +73,15 @@ class Profile extends StatelessWidget {
                   child: Text("Username")),
               Column(children: [
                 ShowData(content: "${profile["username"]}"),
+                SizedBox(height: 10),
                 MaterialButton(
+                    color: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       _showDialogUpdateUsername();
                     },
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.black)),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: Text("Change Username"),
                     minWidth: 250)
               ])
@@ -108,10 +107,10 @@ class Profile extends StatelessWidget {
                 },
                 child: Text("Logout"),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    side: BorderSide(color: Colors.black)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 minWidth: 300,
-                color: Colors.grey),
+                color: Theme.of(context).colorScheme.primary),
           ],
         ));
   }

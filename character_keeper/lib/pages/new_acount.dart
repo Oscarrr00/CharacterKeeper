@@ -24,19 +24,20 @@ class NewAcount extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               InputText(
-                  label: "Choose a username",
+                  label: "CHOOSE A USERNAME",
                   hintText: "New username",
                   controller: newUsernameController,
                   color: Colors.black),
               InputText(
-                  label: "Enter an email",
+                  label: "ENTER AN EMAIL",
                   hintText: "email@email.com",
                   controller: emailController,
                   color: Colors.black),
               SizedBox(height: 10),
-              Text("Choose a password", style: TextStyle(fontSize: 19)),
-              Text("It must be at least 8 characters long",
-                  style: TextStyle(fontSize: 19)),
+              Text(
+                "*Choose a password It must be at least 8 characters long",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               InputText(
                   label: "",
                   hintText: "New password",
@@ -56,7 +57,10 @@ class NewAcount extends StatelessWidget {
                         newUsernameController.text);
                   },
                   child: Text("Done"),
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   minWidth: 340),
             ],
           ),

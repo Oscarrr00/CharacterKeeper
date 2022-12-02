@@ -12,11 +12,15 @@ class AbilityAndProficiencyPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           automaticallyImplyLeading: false,
-          title: const TabBar(
+          title: TabBar(
+            indicatorColor: Theme.of(context).colorScheme.primaryContainer,
+            labelColor: Theme.of(context).colorScheme.primaryContainer,
+            unselectedLabelColor: Theme.of(context).colorScheme.tertiary,
             tabs: [
-              Tab(text: "Proficiencies"),
-              Tab(text: "Abilities"),
+              Tab(text: "PROFICIENCIES"),
+              Tab(text: "ABILITIES"),
             ],
           ),
         ),
