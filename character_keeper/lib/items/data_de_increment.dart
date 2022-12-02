@@ -39,10 +39,19 @@ class DataDeIncrement extends StatelessWidget {
                 decimal: false,
               ),
               onFieldSubmitted: (value) {
-                var num = int.parse(value);
-                context
-                    .read<Character_Provide>()
-                    .updateHitpoints(nameValue, num);
+                var num;
+                try {
+                  num = int.parse(value);
+                } catch(e) {
+                  num = 0;
+                }
+                try {
+                  context
+                      .read<Character_Provide>()
+                      .updateHitpoints(nameValue, num);                  
+                } catch(e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                }
               },
             ),
           ),

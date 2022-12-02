@@ -44,10 +44,23 @@ class DataDeIncrementSmaller extends StatelessWidget {
                     decimal: false,
                   ),
                   onFieldSubmitted: (value) {
-                    var num = int.parse(value);
-                    context
-                        .read<Character_Provide>()
-                        .updateSpellslot(index, num);
+                    var num;
+
+                    try {
+                      num = int.parse(value);
+                    } catch(e) {
+                      num = 0;
+                    }
+
+                    try {
+                      context
+                          .read<Character_Provide>()
+                          .updateSpellslot(index, num);
+                    } catch(e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                      Navigator.of(context).pop();
+                    }
+
                   },
                 ),
               ),

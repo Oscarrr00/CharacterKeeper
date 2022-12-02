@@ -69,8 +69,7 @@ class ItemCharacter extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 6.5,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.grey,
-            border: Border.all(color: Colors.blueAccent),
+            color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(

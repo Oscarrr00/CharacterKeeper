@@ -109,16 +109,28 @@ class CharactersUser extends StatelessWidget {
               TextButton(
                 child: const Text('Done'),
                 onPressed: () {
-                  context.read<Character_Provide>().addCharacter(
-                      characterName.text,
-                      characterClass.text,
-                      int.parse(characterLevel.text),
-                      characterRace.text);
-                  characterName.text = "";
-                  characterClass.text = "";
-                  characterLevel.text = "";
-                  characterRace.text = "";
-                  Navigator.of(context).pop();
+                  int n; 
+                  try {
+                    n = int.parse(characterLevel.text);
+                  } catch(e) {
+                    n = 1;
+                  }
+
+                  try {
+                    context.read<Character_Provide>().addCharacter(
+                        characterName.text,
+                        characterClass.text,
+                        n,
+                        characterRace.text);
+                    characterName.text = "";
+                    characterClass.text = "";
+                    characterLevel.text = "";
+                    characterRace.text = "";
+                    Navigator.of(context).pop();
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -147,27 +159,29 @@ class CharactersUser extends StatelessWidget {
                 icon: Icon(Icons.account_circle_rounded))
           ],
         )),
-        body: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 1.3,
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: characters.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ItemCharacter(
-                    index: index,
-                  );
-                },
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height / 1.3,
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: characters.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ItemCharacter(
+                      index: index,
+                    );
+                  },
+                ),
               ),
-            ),
-            FloatingActionButton(
-                child: Icon(Icons.add),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                onPressed: (() {
-                  _showDialogAddCharacter();
-                }))
-          ],
+              FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  onPressed: (() {
+                    _showDialogAddCharacter();
+                  }))
+            ],
+          ),
         ));
   }
 }

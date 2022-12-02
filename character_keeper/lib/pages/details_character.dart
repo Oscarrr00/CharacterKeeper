@@ -74,10 +74,21 @@ class DetailsCharacter extends StatelessWidget {
                             decimal: false,
                           ),
                           onFieldSubmitted: (value) {
-                            int num = int.parse(value);
-                            context
-                                .read<Character_Provide>()
-                                .updateArmorClass(num);
+                            int num;
+
+                            try {
+                              num = int.parse(value);
+                            } catch(e) {
+                              num = 10;
+                            }
+
+                            try {
+                              context
+                                  .read<Character_Provide>()
+                                  .updateArmorClass(num);
+                            } catch(e) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                            }
                           },
                         ),
                       ),

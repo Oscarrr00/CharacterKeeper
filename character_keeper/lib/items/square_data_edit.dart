@@ -34,8 +34,18 @@ class SquareDataEdit extends StatelessWidget {
                   decimal: false,
                 ),
                 onFieldSubmitted: (value) {
-                  int num = int.parse(value);
-                  context.read<Character_Provide>().updateSpeed(num);
+                  int num;
+                  try {
+                    num = int.parse(value);
+                  } catch(e) {
+                    num = 0;
+                  }
+
+                  try {
+                    context.read<Character_Provide>().updateSpeed(num);
+                  } catch(e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
                 },
               ),
             ),

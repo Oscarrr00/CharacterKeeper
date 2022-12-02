@@ -1,5 +1,8 @@
-import 'dart:io';
 
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:character_keeper/providers/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -135,6 +138,7 @@ class NotePage extends StatelessWidget {
                   imagePath == ""
                       ? Text("")
                       : Container(
+                        padding: EdgeInsets.only(top: 10),
                           child: Image.network(imagePath),
                         )
                 ],
@@ -321,12 +325,29 @@ class NotePage extends StatelessWidget {
                                             children: [
                                               IconButton(
                                                   icon: Icon(Icons.share),
-                                                  onPressed: () {
-                                                    Share.share(
-                                                        notes[index].title +
-                                                            '\n' +
-                                                            notes[index]
-                                                                .description);
+                                                  onPressed: () async {
+                                                    if(notes[index].image == "") {
+                                                      Share.share(
+                                                          notes[index].title +
+                                                              '\n' +
+                                                              notes[index]
+                                                                  .description);
+                                                    } else {
+                                                      final response = await http.get(Uri.parse(notes[index].image));
+
+                                                      final documentDirectory = await getApplicationDocumentsDirectory();
+
+                                                      final file = File(join(documentDirectory.path, 'imagetest.png'));
+
+                                                      file.writeAsBytesSync(response.bodyBytes);
+                                                      XFile fileT = new XFile(file.path);
+
+                                                      Share.shareXFiles([fileT], text: notes[index].title +
+                                                              '\n' +
+                                                              notes[index]
+                                                                  .description);
+
+                                                    }
                                                   }),
                                               IconButton(
                                                   icon: Icon(Icons.delete),

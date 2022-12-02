@@ -68,8 +68,19 @@ class DataPrimaryStats extends StatelessWidget {
                 decimal: false,
               ),
               onFieldSubmitted: (value) {
-                int num = int.parse(value);
-                context.read<Character_Provide>().updateStatPrimary(num, stat);
+
+                int num;
+                try {
+                  num = int.parse(value);
+                } catch(e) {
+                  num = 10;
+                }
+
+                try {
+                  context.read<Character_Provide>().updateStatPrimary(num, stat);
+                } catch(e) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+                }
               },
             ),
           ),
