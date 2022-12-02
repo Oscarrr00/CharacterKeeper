@@ -28,8 +28,8 @@ class HomePage extends StatelessWidget {
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
               InputText(
-                  label: "Username",
-                  hintText: "Username Here",
+                  label: "E-mail",
+                  hintText: "E-mail Here",
                   controller: usernameController,
                   color: Colors.white),
               InputText(
