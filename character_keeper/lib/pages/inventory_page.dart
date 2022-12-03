@@ -383,7 +383,7 @@ class InventoryPage extends StatelessWidget {
                                             ),
                                             IconButton(
                                                 icon: Icon(Icons.delete),
-                                                splashColor: Colors.red[200],
+                                                splashRadius: 1,
                                                 onPressed: () async {
                                                   try {
                                                     await context

@@ -77,7 +77,7 @@ class AbilityPage extends StatelessWidget {
                       .addAbility(abilityName.text, abilityDescription.text);
                   context
                       .read<Character_Provide>()
-                      .searchNote(searchAbility.text);
+                      .searchAbility(searchAbility.text);
                   abilityName.text = "";
                   abilityDescription.text = "";
                   Navigator.of(context).pop();
@@ -152,7 +152,7 @@ class AbilityPage extends StatelessWidget {
                       currentIndex, abilityName.text, abilityDescription.text);
                   context
                       .read<Character_Provide>()
-                      .searchNote(searchAbility.text);
+                      .searchAbility(searchAbility.text);
                   abilityName.text = "";
                   abilityDescription.text = "";
                   Navigator.of(context).pop();
@@ -307,7 +307,7 @@ class AbilityPage extends StatelessWidget {
                                                       .deleteAbility(index);
                                                   context
                                                       .read<Character_Provide>()
-                                                      .searchNote(
+                                                      .searchAbility(
                                                           searchAbility.text);
                                                 })
                                           ],

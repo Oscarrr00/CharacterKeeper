@@ -23,6 +23,7 @@ class ItemCharacter extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.background,
             title: const Text('Adding an Item'),
             content: SingleChildScrollView(
               child: ListBody(

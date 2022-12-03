@@ -22,6 +22,7 @@ class CharactersUser extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.background,
             title: const Text('Create a new character'),
             content: SingleChildScrollView(
               child: ListBody(
@@ -75,7 +76,9 @@ class CharactersUser extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   characterName.text = "";
                   characterClass.text = "";
@@ -84,7 +87,9 @@ class CharactersUser extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: const Text('Done'),
+                child: Text('Done',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer)),
                 onPressed: () {
                   int n;
                   try {
